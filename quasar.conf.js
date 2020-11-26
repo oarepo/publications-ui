@@ -7,7 +7,12 @@
 // https://quasar.dev/quasar-cli/quasar-conf-js
 /* eslint-env node */
 
-module.exports = function (/* ctx */) {
+const
+  API_DEV = 'https://127.0.0.1:8080/api',
+  API_STAGING = 'https://repozitar-test.cesnet.cz/api',
+  API_PROD = 'https://repozitar.cesnet.cz/api'
+
+module.exports = function (ctx) {
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
     supportTS: false,
@@ -19,11 +24,12 @@ module.exports = function (/* ctx */) {
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
+      'axios',
+      'composition',
+      'login',
       'filters',
       'gdpr',
       'i18n',
-      'axios',
-      'invenio',
       'query',
       'validation'
     ],
@@ -49,7 +55,14 @@ module.exports = function (/* ctx */) {
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      env: {
+        API: ctx.dev
+          ? API_DEV
+          : process.env.PUBLISH
+            ? API_PROD
+            : API_STAGING
+      },
+      vueRouterMode: 'history', // available values: 'hash', 'history'
 
       // transpile: false,
 
@@ -75,20 +88,27 @@ module.exports = function (/* ctx */) {
           loader: 'eslint-loader',
           exclude: /node_modules/
         })
+        cfg.module.rules.push({
+          test: /\.pug$/,
+          loader: 'pug-plain-loader'
+        })
       }
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
     devServer: {
       https: true,
-      port: 8080,
+      port: 5000,
+      host: '127.0.0.1',
       open: false, // opens browser window automatically
       // vueDevtools: true,
       proxy: {
         '/api': {
-          target: 'https://repozitar-test.cesnet.cz',
+          target: API_DEV,
           changeOrigin: false,
-          secure: false
+          secure: false,
+          debug: true,
+          pathRewrite: { '^/api': '' }
         }
       }
     },
@@ -108,7 +128,10 @@ module.exports = function (/* ctx */) {
       // (like functional components as one of the examples),
       // you can manually specify Quasar components/directives to be available everywhere:
       //
-      // components: [],
+      components: [
+        'QList',
+        'QItem'
+      ],
       // directives: [],
 
       // Quasar plugins
