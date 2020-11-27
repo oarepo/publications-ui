@@ -11,6 +11,7 @@ export default {
     detail: 'Detail'
   },
   error: {
+    popupLoginFail: 'We were unable to log you in, please allow pop-ups for this website.',
     validationFail: 'Please correct the errors and try again',
     validation: {
       required: 'This field is required',
@@ -18,20 +19,40 @@ export default {
     }
   },
   action: {
+    retry: 'Retry',
     close: 'Close',
     login: 'Log In',
-    logout: 'Log Out'
+    altLogin: 'Try alternative Log In',
+    logout: 'Log Out',
+    openTOS: 'Terms of service',
+    openPrivacyPolicy: 'Privacy policy',
+    accept: 'Accept',
+    decline: 'Decline',
+    uploadDataset: 'Upload'
   },
   accessibility: {},
   label: {
+    searchInput: 'Search by title',
+    localeSwitcher: 'Language',
     role: {
-      admin: 'administrator',
+      admin: 'admin',
       curator: 'curator'
     }
   },
   section: {
+    loginRequired: 'Authentication required',
+    gdpr: 'Terms of Service Consent',
+    error: 'Error',
     roles: 'Roles'
   },
-  message: {},
-  input: {}
+  message: {
+    gdprPrompt: 'By clicking on "Accept", you give your consent with our Terms of Service and Privacy Policy for this service.',
+    authRequired: 'This page requires authentication.'
+  },
+  value: {
+    lang: {
+      csCZ: 'Czech',
+      enUS: 'English'
+    }
+  }
 }

@@ -9,11 +9,19 @@ export default {
     detail: 'Detail'
   },
   action: {
+    retry: 'Zkusit znovu',
     close: 'Zavřít',
     login: 'Přihlásit se',
-    logout: 'Odhlásit se'
+    altLogin: 'Přejít na alternativní přihlášení',
+    logout: 'Odhlásit se',
+    openTOS: 'Pravidla využití',
+    openPrivacyPolicy: 'Zpracování osobních údajů',
+    accept: 'Souhlasím',
+    decline: 'Nesouhlasím',
+    uploadDataset: 'Nahrát dataset'
   },
   error: {
+    popupLoginFail: 'Nebylo možno se přihlásit, prosím povolte v prohlížeči vyskakovací okna pro tento web',
     validationFail: 'Prosím opravte chyby a zkuste to znovu',
     validation: {
       required: 'Toto pole je vyžadováno',
@@ -22,14 +30,27 @@ export default {
   },
   accessibility: {},
   label: {
+    searchInput: 'Hledat podle názvu',
+    localeSwitcher: 'Jazyk',
     role: {
-      admin: 'admin', // 'administrátor',
+      admin: 'admin',
       curator: 'kurátor'
     }
   },
   section: {
+    loginRequired: 'Vyžadováno přihlášení',
+    error: 'Chyba',
+    gdpr: 'Souhlas s podmínkami',
     roles: 'Role'
   },
-  message: {},
-  input: {}
+  message: {
+    gdprPrompt: 'Kliknutím na "Souhlasím", vyjadřujete souhlas s našimi pravidly využití služeb a podmínkami zpracování osobních údajů.',
+    authRequired: 'Tato stránka vyžaduje autentizaci. Kliknutím na tlačítko níže se přihlásíte.'
+  },
+  value: {
+    lang: {
+      csCZ: 'Česky',
+      enUS: 'Anglicky'
+    }
+  }
 }

@@ -11,18 +11,23 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@oarepo/invenio-api-vue-composition": "^1.0.6",
+    "@oarepo/invenio-api-vue-composition": "^1.0.4",
     "@oarepo/quasar-uploader": "^1.0.0",
     "@oarepo/vue-popup-login": "^2.3.1",
     "@oarepo/vue-query-synchronizer": "^2.4.1",
     "@quasar/extras": "^1.0.0",
     "@vue/composition-api": "^1.0.0-beta.20",
     "axios": "^0.21.0",
+    "bleach": "^0.3.0",
     "core-js": "^3.6.5",
+    "fast-json-patch": "^3.0.0-1",
+    "portal-vue": "^2.1.7",
     "quasar": "^1.0.0",
+    "swrv": "^0.8.1",
     "vue-class-component": "^7.2.6",
     "vue-i18n": "^8.0.0",
     "vue-property-decorator": "^9.1.2",
+    "vue-runtime-helpers": "^1.1.2",
     "vuelidate": "^0.7.6"
   },
   "devDependencies": {

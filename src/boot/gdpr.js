@@ -1,62 +1,77 @@
-import { Cookies, Notify, openURL } from 'quasar'
+import { Cookies, openURL } from 'quasar'
 
 // TODO: make this a generic library for oarepo?
+const
+  TOS = 'https://du.cesnet.cz/en/provozni_pravidla/start',
+  PRIVACY_POLICY = 'https://www.cesnet.cz/cesnet/personal-data-protection/?lang=en'
 
 class Gdpr {
   isGdprAccepted () {
     return Cookies.has('gdpr') === true
   }
 
-  showGdprPrompt (acceptedFn, app) {
-    if (this.isGdprAccepted()) {
-      acceptedFn()
-    } else {
-      Notify.create({
-        message: app.$t('messages.gdprPrompt'), // `By clicking on 'Accept', you give your consent with our <strong>Terms of Service</strong> and <strong>Privacy Policy</strong> for this service.`,
-        multiline: true,
+  showGdprPrompt (app) {
+    return new Promise((resolve, reject) => {
+      if (this.isGdprAccepted()) {
+        resolve()
+        return
+      }
+      app.$q.bottomSheet({
+        title: app.$t('section.gdpr'),
+        message: app.$t('message.gdprPrompt'),
+        dark: true,
+        persistent: true,
         icon: 'policy',
-        html: true,
-        classes: 'doc-gdpr',
-        timeout: 0,
-        position: 'center',
         actions: [
           {
-            label: app.$t('labels.tosBtn'),
+            id: 'tos',
+            label: app.$t('action.openTOS'),
             size: 'sm',
             icon: 'launch',
-            color: 'grey-3',
             noDismiss: true,
-            handler () {
-              openURL('https://du.cesnet.cz/en/provozni_pravidla/start')
-            }
+            color: 'grey-3'
           },
           {
-            label: app.$t('labels.privacyPolicyBtn'),
+            id: 'privacy',
+            label: app.$t('action.openPrivacyPolicy'),
             size: 'sm',
             icon: 'launch',
-            color: 'grey-3',
             noDismiss: true,
-            handler () {
-              openURL('https://www.cesnet.cz/cesnet/personal-data-protection/?lang=en')
-            }
+            color: 'grey-3'
           },
           {
-            label: app.$t('labels.declineBtn'),
-            color: 'red',
-            handler () {
-            }
+            id: 'accept',
+            icon: 'check',
+            label: app.$t('action.accept'),
+            color: 'yellow'
           },
           {
-            label: app.$t('labels.acceptBtn'),
-            color: 'yellow',
-            handler () {
-              Cookies.set('gdpr', 'true', { expires: 5 * 365 })
-              acceptedFn()
-            }
+            id: 'decline',
+            icon: 'close',
+            label: app.$t('action.decline'),
+            color: 'red'
           }
         ]
-      })
-    }
+      }).onOk((action) => {
+        switch (action.id) {
+          case 'accept':
+            Cookies.set('gdpr', 'true', { expires: 5 * 365 })
+            resolve()
+            break
+          case 'decline':
+            reject()
+            break
+          case 'tos':
+            console.log('tos')
+            openURL(TOS)
+            break
+          case 'privacy':
+            openURL(PRIVACY_POLICY)
+            break
+        }
+      }).onCancel(() => reject())
+        .onDismiss(() => reject())
+    })
   }
 }
 

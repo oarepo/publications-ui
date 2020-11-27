@@ -29,6 +29,7 @@ module.exports = function (ctx) {
       'login',
       'filters',
       'gdpr',
+      'portal',
       'i18n',
       'query',
       'validation'
@@ -47,9 +48,9 @@ module.exports = function (ctx) {
       // 'eva-icons',
       // 'themify',
       // 'line-awesome',
-      // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
+      'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
-      'roboto-font', // optional, you are not bound to it
+      // 'roboto-font', // optional, you are not bound to it
       'material-icons' // optional, you are not bound to it
     ],
 
@@ -135,7 +136,10 @@ module.exports = function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Cookies',
+        'BottomSheet'
+      ]
     },
 
     // animations: 'all', // --- includes all animations

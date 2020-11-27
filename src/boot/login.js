@@ -9,6 +9,6 @@ export default ({ Vue, router }) => {
     logoutUrl: '/api/logout',
     logoutMethod: 'POST',
     completeUrl: '/api/oauth/complete/',
-    stateUrl: '/api/oauth/state'
+    stateUrl: '/api/oauth/state/'
   })
 }

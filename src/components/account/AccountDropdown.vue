@@ -1,9 +1,11 @@
 <template lang="pug">
-  q-btn-dropdown.full-height(
+  q-btn-dropdown(
+    stretch
     no-caps
     dense
     size="md"
     ripple
+    padding="md md"
     unelevated
     icon="person"
     text-color="white"
@@ -22,6 +24,8 @@
               .row.q-col-gutter-sm
                 .col-auto(v-for="role in currentUser.roles" :key="role.id")
                   q-badge {{ $t(`label.role.${role.id}`) }}
+        .row.no-wrap.q-pa-md.justify-center
+          locale-switcher.col-12
         .row.no-wrap.q-pa-sm.justify-center.bg-grey-3
           q-list.full-width(color="grey")
             q-item(
@@ -43,18 +47,17 @@
 </template>
 
 <script>
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
+import LocaleSwitcher from 'components/i18n/LocaleSwitcher'
+import { AuthStateMixin } from 'src/mixins/AuthStateMixin'
 
 export default @Component({
   name: 'AccountDropdown',
-  props: {
-    authenticated: {
-      type: Boolean,
-      default: false
-    }
+  components: {
+    LocaleSwitcher
   }
 })
-class AccountDropdown extends Vue {
+class AccountDropdown extends Mixins(AuthStateMixin) {
   authenticating = false
 
   adminMenuItems = [
@@ -74,49 +77,6 @@ class AccountDropdown extends Vue {
       action: this.logout
     }
   ]
-
-  get authState () {
-    return this.$auth.state.value
-  }
-
-  get currentUser () {
-    if (this.authState) {
-      return this.authState.user
-    }
-  }
-
-  get currentUserMenuItems () {
-    if (this.currentUser?.roles.find(rol => rol.id === 'admin')) {
-      return [
-        ...this.adminMenuItems,
-        ...this.menuItems
-      ]
-    }
-    return this.menuItems
-  }
-
-  get currentUserInfo () {
-    if (this.authState) {
-      return this.authState.userInfo
-    }
-  }
-
-  get currentUserName () {
-    if (this.authState) {
-      return this.authState.userInfo?.givenName || this.authState.user?.email
-    }
-  }
-
-  login () {
-    this.authenticating = true
-    this.$auth.login().finally(() => {
-      this.authenticating = false
-    })
-  }
-
-  logout () {
-    this.$auth.logout()
-  }
 }
 </script>
 
