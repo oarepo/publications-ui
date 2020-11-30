@@ -1,11 +1,10 @@
 <template lang="pug">
-  q-page(padding v-touch-swipe.mouse.right.left="swipePage").q-mx-lg-xl
-    div Records length: {{ records && records.length }}, loading {{ loading }}, loaded {{ loaded }}
+  q-page.q-mx-lg-xl(padding v-touch-swipe.mouse.right.left="swipePage")
     .row.justify-between.items-center.q-col-gutter-x-lg.q-mt-md.q-mt-lg-xl.q-mb-md
       .col-12.col-lg-8
-        .text-h3.gt-md {{ $t('section.itemsList') }}
-        .text-h4.lt-lg.gt-sm.q-mt-none.q-mb-lg {{ $t('section.itemsList') }}
-        .text-h6.lt-md.q-mt-none.q-mb-md {{ $t('section.itemsList') }}
+        .text-h3.gt-md {{ $t('section.datasetList') }}
+        .text-h4.lt-lg.gt-sm.q-mt-none.q-mb-lg {{ $t('section.datasetList') }}
+        .text-h6.lt-md.q-mt-none.q-mb-md {{ $t('section.datasetList') }}
     .column.q-mt-md.q-gutter-y-md(v-if="items.length || loaded")
       div(v-for="item in items" :key="item.id")
         item-list-entry.col.cursor-pointer.non-selectable(
@@ -15,13 +14,11 @@
           @click.native="navigateDetail(item)")
       .row.justify-around
         q-pagination.q-mt-lg(v-model="$query.page" :max="pages" :max-pages="9" color="accent"
-          direction-links boundary-numbers size="lg" v-if="loaded")
-
+          direction-links boundary-numbers size="lg" v-if="loaded && items.length")
     no-data-placeholder.full-height(v-else)
     portal(to="drawer")
-      .column.bg-secondary.q-gutter-y-md.q-pa-xl
+      .column.q-gutter-y-md.q-pa-xl
         .col-auto.row.q-mb-xl.justify-center
-          logo.col-auto
         facet-list(:facets="facets" v-if="loaded")
 </template>
 <script>
@@ -29,9 +26,8 @@ import { Component, Mixins } from 'vue-property-decorator'
 import SearchInput from 'components/search/SearchInput'
 import ItemListEntry from 'components/datasets/list/DatasetListEntry'
 import { SearchMixin } from 'src/mixins/SearchMixin'
-// import NoDataPlaceholder from 'src/components/common/NoDataPlaceholder'
-// import { EmitSearchMixin } from 'src/mixins/Search'
-// import FacetList from 'src/components/search/FacetList'
+import NoDataPlaceholder from 'src/components/common/NoDataPlaceholder'
+import FacetList from 'components/search/FacetList'
 // import { NewItemMixin } from 'src/mixins/NewItem'
 // import Logo from 'src/components/Logo'
 
@@ -48,9 +44,9 @@ export default @Component({
   components: {
     // Logo,
     SearchInput,
-    ItemListEntry
-    // NoDataPlaceholder,
-    // FacetList
+    ItemListEntry,
+    NoDataPlaceholder,
+    FacetList
   }
 })
 class DatasetList extends Mixins(SearchMixin) {
@@ -60,7 +56,6 @@ class DatasetList extends Mixins(SearchMixin) {
   }
 
   get items () {
-    console.log('items getter called', this.loaded)
     if (!this.loaded) {
       return Array.from({ length: this.$query.size }).map(x => ({}))
     }

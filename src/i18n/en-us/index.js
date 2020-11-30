@@ -32,6 +32,7 @@ export default {
   },
   accessibility: {},
   label: {
+    createdAt: 'Created',
     searchInput: 'Search by title',
     localeSwitcher: 'Language',
     role: {
@@ -40,12 +41,14 @@ export default {
     }
   },
   section: {
+    datasetList: 'Datasets',
     loginRequired: 'Authentication required',
     gdpr: 'Terms of Service Consent',
     error: 'Error',
     roles: 'Roles'
   },
   message: {
+    noData: 'No data',
     gdprPrompt: 'By clicking on "Accept", you give your consent with our Terms of Service and Privacy Policy for this service.',
     authRequired: 'This page requires authentication.'
   },

@@ -1,5 +1,5 @@
 <template lang="pug">
-  q-input(
+  q-input.search(
     clearable
     type="search"
     clear-icon="clear"
@@ -7,7 +7,7 @@
     hide-bottom-space
     standout
     square
-    input-class="full-height"
+    input-class="full-height search__input"
     @clear="query.q = ''"
     @input="doSearch"
     :debounce="1000"
@@ -15,25 +15,36 @@
     v-model.trim="query"
     @keydown.enter.prevent="doSearch")
     template(v-slot:append)
-      q-icon(name="search")
+      q-icon(v-if="query === ''" name="search")
 </template>
 
 <script>
-import { Component } from 'vue-property-decorator'
-import { SearchMixin } from 'src/mixins/SearchMixin'
-import { mixins } from 'vue-class-component'
+import { Component, Emit, Vue } from 'vue-property-decorator'
 export default @Component({
-  name: 'Searchbar',
-  props: {
-    query: {
-      type: String,
-      default: ''
-    }
-  }
+  name: 'Searchbar'
 })
-class Searchbar extends mixins(SearchMixin) {
+class SearchInput extends Vue {
+  query = ''
+
+  @Emit('search')
+  doSearch () {
+    console.debug('search query', this.query)
+    if (this.$route.name !== 'publications/all-datasets') {
+      this.$router.push({ name: 'publications/all-datasets' })
+    }
+    this.$query.q = this.query
+    this.$query.page = 1
+    return this.query
+  }
+
+  mounted () {
+    this.query = this.$query.q || ''
+  }
 }
 </script>
 
 <style lang="sass" scoped>
+.search
+  &__input
+    padding-left: 1rem
 </style>

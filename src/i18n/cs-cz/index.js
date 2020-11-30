@@ -1,6 +1,6 @@
 export default {
   app: {
-    productName: 'Publikace',
+    productName: 'Repozitář publikací',
     description: 'Repozitář vědeckých publikací a datasetů',
     copyright: '©  2020 CESNET'
   },
@@ -30,6 +30,7 @@ export default {
   },
   accessibility: {},
   label: {
+    createdAt: 'Vytvořeno',
     searchInput: 'Hledat podle názvu',
     localeSwitcher: 'Jazyk',
     role: {
@@ -38,12 +39,14 @@ export default {
     }
   },
   section: {
+    datasetList: 'Datasety',
     loginRequired: 'Vyžadováno přihlášení',
     error: 'Chyba',
     gdpr: 'Souhlas s podmínkami',
     roles: 'Role'
   },
   message: {
+    noData: 'Žádná data',
     gdprPrompt: 'Kliknutím na "Souhlasím", vyjadřujete souhlas s našimi pravidly využití služeb a podmínkami zpracování osobních údajů.',
     authRequired: 'Tato stránka vyžaduje autentizaci. Kliknutím na tlačítko níže se přihlásíte.'
   },

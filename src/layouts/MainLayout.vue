@@ -5,15 +5,13 @@
     )
     q-page-container
       router-view
-    q-drawer(
+    q-drawer.scrolling-drawer(
       v-if="$route.meta.useFacets"
       v-model="facetsDrawer"
       :width="320"
       :breakpoint="700"
       content-class="bg-grey-3 text-white")
-      q-scroll-area.fit
-        .q-pa-md
-          facet-list()
+        portal-target(name="drawer")
 </template>
 
 <script>
