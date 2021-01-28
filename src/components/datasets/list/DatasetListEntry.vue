@@ -28,16 +28,6 @@
 
 <script>
 import { Component, Emit, Vue } from 'vue-property-decorator'
-// import ItemListThumbnail from 'components/items/list/ItemListThumbnail'
-import bleach from 'bleach'
-import { sanitize } from 'src/utils/bleach'
-
-const options = {
-  mode: 'white',
-  list: [
-    'em'
-  ]
-}
 
 export default @Component({
   name: 'DatasetListEntry',
@@ -57,37 +47,6 @@ class ItemListEntry extends Vue {
 
   get d () {
     return this.item.metadata || {}
-  }
-
-  get highlight () {
-    return bleach.sanitize(Object.values(this.item.highlight || {}).flat().join(' ... '), options)
-  }
-
-  get hasHighlight () {
-    return this.item.highlight && Object.keys(this.item.highlight).length
-  }
-
-  get shortDescription () {
-    let maxLen = {
-      xs: 0,
-      sm: 0,
-      md: 100,
-      lg: 200,
-      xl: 700
-    }[this.$q.screen.name]
-    if (this.$q.screen.md && this.$q.screen.width < 1200) {
-      maxLen = 0
-    }
-    if (maxLen) {
-      const ret = ((this.d.description && this.d.description.cs) || '')
-      if (ret.length >= maxLen) {
-        return sanitize(ret.substr(0, maxLen) + ' ...')
-      } else {
-        return sanitize(ret)
-      }
-    } else {
-      return ''
-    }
   }
 
   get imageSize () {
