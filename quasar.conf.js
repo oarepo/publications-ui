@@ -8,9 +8,9 @@
 /* eslint-env node */
 
 const
-  API_DEV = 'https://127.0.0.1:8080/api',
-  API_STAGING = 'https://repozitar-test.cesnet.cz/api',
-  API_PROD = 'https://repozitar.cesnet.cz/api'
+  API_DEV = 'https://127.0.0.1:8080/',
+  API_STAGING = 'https://repozitar-test.cesnet.cz/',
+  API_PROD = 'https://repozitar.cesnet.cz/'
 
 module.exports = function (ctx) {
   return {
@@ -29,6 +29,7 @@ module.exports = function (ctx) {
       'login',
       'filters',
       'gdpr',
+      'portal',
       'i18n',
       'query',
       'validation'
@@ -47,9 +48,9 @@ module.exports = function (ctx) {
       // 'eva-icons',
       // 'themify',
       // 'line-awesome',
-      // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
+      'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
-      'roboto-font', // optional, you are not bound to it
+      // 'roboto-font', // optional, you are not bound to it
       'material-icons' // optional, you are not bound to it
     ],
 
@@ -108,7 +109,6 @@ module.exports = function (ctx) {
           changeOrigin: false,
           secure: false,
           debug: true,
-          pathRewrite: { '^/api': '' }
         }
       }
     },
@@ -135,7 +135,10 @@ module.exports = function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Cookies',
+        'BottomSheet'
+      ]
     },
 
     // animations: 'all', // --- includes all animations

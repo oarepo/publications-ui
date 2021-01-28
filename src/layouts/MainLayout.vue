@@ -1,12 +1,21 @@
 <template lang="pug">
-  q-layout(view="hhh Lpr lFf")
-    navbar
+  q-layout.bg-grey-1(view="hhh lpR lFf")
+    navbar(
+      @facets="facetsDrawer = !facetsDrawer"
+    )
     q-page-container
       router-view
+    q-drawer.scrolling-drawer(
+      v-if="$route.meta.useFacets"
+      v-model="facetsDrawer"
+      :width="320"
+      :breakpoint="700"
+      content-class="bg-grey-3 text-white")
+        portal-target(name="drawer")
 </template>
 
 <script>
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import Navbar from 'components/navigation/Navbar'
 
 export default @Component({
@@ -16,6 +25,12 @@ export default @Component({
   }
 })
 class MainLayout extends Vue {
+  facetsDrawer = true
+
+  @Watch('$route', { immediate: false, deep: true })
+  routeChanged (to) {
+    console.log(this.$route)
+  }
 }
 </script>
 <style lang="sass">

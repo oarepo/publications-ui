@@ -1,14 +1,13 @@
 <template lang="pug">
   q-page.full-height.flex.flex-center
-    .text-h1 INDEX
+    .text-h1 DATASET UPLOAD
 </template>
 <script>
 import { Component, Vue } from 'vue-property-decorator'
 
 export default @Component({
-  name: 'Index',
-  components: {
-  }
+  name: 'DatasetUpload',
+  components: {}
 })
 class Index extends Vue {
 }
