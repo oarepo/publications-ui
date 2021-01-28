@@ -8,9 +8,12 @@
         q-skeleton.q-mt-sm(type="text" width="300px")
         q-skeleton.q-mx-md.q-mb-sm.absolute-bottom.q-card__section--vert(type="text" :width="`${imageSize}px`")
       q-card-section(v-else)
-        .text-h5.q-mt-sm.q-mb-xs.gt-xs {{ d.titles.cs }}
-        .text-bold.q-mt-sm.q-mb-xs.lt-sm {{ d.titles }}
-        .text-subtitle2.text-grey-8.absolute-bottom.q-card__section--vert {{ $t('label.createdAt') }} {{ $d(new Date(d.created)) }}
+        .text-h5.q-mt-sm.q-mb-xs.gt-xs {{ d.titles[0].en }}
+        q-separator
+        q-card-section
+          .text-subtitle1.ellipsis-3-lines {{ d.abstract.description.en }}
+        q-card-section
+          .text-subtitle2.text-grey-8 {{ $t('label.createdAt') }} {{ $d(new Date(d.created)) }}
       q-skeleton.absolute-bottom-right.q-px-sm.q-ma-md(
         v-if="loading"
         animation="pulse"
