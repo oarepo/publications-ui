@@ -8,9 +8,9 @@
 /* eslint-env node */
 
 const
-  API_DEV = 'https://127.0.0.1:8080/api',
-  API_STAGING = 'https://repozitar-test.cesnet.cz/api',
-  API_PROD = 'https://repozitar.cesnet.cz/api'
+  API_DEV = 'https://127.0.0.1:8080/',
+  API_STAGING = 'https://repozitar-test.cesnet.cz/',
+  API_PROD = 'https://repozitar.cesnet.cz/'
 
 module.exports = function (ctx) {
   return {
@@ -109,7 +109,6 @@ module.exports = function (ctx) {
           changeOrigin: false,
           secure: false,
           debug: true,
-          pathRewrite: { '^/api': '' }
         }
       }
     },

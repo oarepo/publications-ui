@@ -7,7 +7,8 @@ import { Component, Vue } from 'vue-property-decorator'
 
 export default @Component({
   name: 'Index',
-  components: {}
+  components: {
+  }
 })
 class Index extends Vue {
 }
