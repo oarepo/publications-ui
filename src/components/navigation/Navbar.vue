@@ -1,6 +1,14 @@
 <template lang="pug">
   q-header.row.z-top.no-wrap.navbar__header
     q-toolbar.q-pl-xl.col-grow.no-padding
+      q-btn.on-right(
+        flat
+        rounded
+        dense
+        v-go-back.single
+        color="white"
+        icon="arrow_back"
+      )
       q-btn.q-mx-md(
         v-if="$route.meta.useFacets"
         flat

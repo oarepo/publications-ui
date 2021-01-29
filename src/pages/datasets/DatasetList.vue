@@ -32,7 +32,7 @@ import FacetList from 'components/search/FacetList'
 // import Logo from 'src/components/Logo'
 
 export default @Component({
-  name: 'ItemList',
+  name: 'DatasetList',
   props: {
     records: Array,
     facets: Array,
@@ -51,7 +51,6 @@ export default @Component({
 })
 class DatasetList extends Mixins(SearchMixin) {
   navigateDetail (item) {
-    console.log(item.links.ui)
     this.$router.push(item.links.ui)
   }
 
