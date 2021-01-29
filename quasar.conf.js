@@ -24,15 +24,21 @@ module.exports = function (ctx) {
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
+      'polyfill-broadcast-channel',
       'axios',
       'composition',
-      'login',
       'filters',
-      'gdpr',
-      'portal',
       'i18n',
+      'validation',
+      'sanitize',
+      'forms',
       'query',
-      'validation'
+      'portal',
+      'taxonomies',
+      'login',
+      'uploader',
+      'gdpr',
+      'addressbar-color'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -45,11 +51,10 @@ module.exports = function (ctx) {
       // 'ionicons-v4',
       // 'mdi-v5',
       // 'fontawesome-v5',
-      // 'eva-icons',
+      'eva-icons',
       // 'themify',
-      // 'line-awesome',
-      'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
-
+      'line-awesome',
+      // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
       // 'roboto-font', // optional, you are not bound to it
       'material-icons' // optional, you are not bound to it
     ],
@@ -116,7 +121,7 @@ module.exports = function (ctx) {
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
       iconSet: 'material-icons', // Quasar icon set
-      lang: 'en-us', // Quasar language pack
+      lang: 'cs', // Quasar language pack
       config: {},
 
       // Possible values for "importStrategy":
@@ -129,15 +134,26 @@ module.exports = function (ctx) {
       // you can manually specify Quasar components/directives to be available everywhere:
       //
       components: [
+        'QAvatar',
+        'QCard',
+        'QCardSection',
+        'QChip',
         'QList',
-        'QItem'
+        'QItem',
+        'QStepper',
+        'QTooltip',
+        'QUploader'
       ],
       // directives: [],
 
       // Quasar plugins
       plugins: [
+        'AddressbarColor',
         'Cookies',
-        'BottomSheet'
+        'BottomSheet',
+        'Loading',
+        'LoadingBar',
+        'Meta'
       ]
     },
 

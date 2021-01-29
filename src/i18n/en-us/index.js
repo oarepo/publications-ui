@@ -19,6 +19,9 @@ export default {
     }
   },
   action: {
+    attachArticle: 'Attach Article',
+    submitDataset: 'Submit dataset record',
+    addIdentifier: 'Přidat identifikátor',
     retry: 'Retry',
     close: 'Close',
     login: 'Log In',
@@ -33,8 +36,12 @@ export default {
   accessibility: {},
   label: {
     createdAt: 'Created',
+    identifierScheme: 'Scheme',
     searchInput: 'Search by title',
     localeSwitcher: 'Language',
+    language: 'Language',
+    datasetBasicInfo: 'Basic Info',
+    titles: 'Titles',
     role: {
       admin: 'admin',
       curator: 'curator'
@@ -42,6 +49,13 @@ export default {
   },
   section: {
     datasetList: 'Datasets',
+    addFiles: 'Add files',
+    datasetDetail: 'Dataset Detail',
+    datasetUpload: 'Dataset Upload',
+    identifiers: 'Additional Identifiers',
+    license: 'License',
+    files: 'Attachments',
+    size: 'Size',
     loginRequired: 'Authentication required',
     gdpr: 'Terms of Service Consent',
     error: 'Error',
@@ -56,6 +70,15 @@ export default {
     lang: {
       csCZ: 'Czech',
       enUS: 'English'
+    }
+  },
+  route: {
+    title: {
+      datasetList: 'Datasets',
+      datasetEdit: 'Edit Dataset',
+      datasetUpload: 'Upload dataset',
+      datasetDetail: 'Dataset',
+      admin: 'Administration'
     }
   }
 }

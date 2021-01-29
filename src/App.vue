@@ -9,17 +9,20 @@ import { REDIRECT_LOGIN, usePopupLogin } from '@oarepo/vue-popup-login'
 
 export default {
   name: 'App',
-  meta: {
-    title: i18n.t('app.productName')
-  },
-  computed: {
-    pageTitle () {
-      return i18n.t('app.productName')
-    }
-  },
-  watch: {
-    '$route' (to, from) {
-      document.title = to.meta.title ? `${to.meta.title} | ${this.pageTitle}` : this.pageTitle
+  meta () {
+    return {
+      title: this.appTitle,
+      titleTemplate: title => this.fullAppTitle,
+      meta: {
+        twitterTitle: {
+          name: 'twitter:title',
+          content: this.fullAppTitle
+        },
+        ogTitle: {
+          name: 'og:title',
+          content: this.fullAppTitle
+        }
+      }
     }
   },
   setup () {
@@ -68,6 +71,14 @@ export default {
         })
       })
     })
+  },
+  computed: {
+    appTitle () {
+      return this.$i18n.t('app.productName')
+    },
+    fullAppTitle () {
+      return `${this.appTitle}${this.$route.meta.title ? ' - ' : ''}${this.$t(this.$route.meta.title) || ''}`
+    }
   }
 }
 </script>

@@ -11,7 +11,8 @@
         .text-h5.q-mt-sm.q-mb-xs.gt-xs {{ d.titles[0].en }}
         q-separator
         q-card-section
-          .text-subtitle1.ellipsis-3-lines {{ d.abstract.description.en }}
+          .text-subtitle1.ellipsis-3-lines
+            span(v-html="$sanitize(d.abstract.description.en)")
         q-card-section
           .text-subtitle2.text-grey-8 {{ $t('label.createdAt') }} {{ $d(new Date(d.created)) }}
       q-skeleton.absolute-bottom-right.q-px-sm.q-ma-md(
@@ -36,7 +37,6 @@ export default @Component({
     item: Object
   },
   components: {
-    // ItemThumbnail: ItemListThumbnail
   }
 })
 class ItemListEntry extends Vue {
