@@ -1,11 +1,17 @@
 <template lang="pug">
   q-page.full-height.flex.flex-center
-    .row.justify-between.items-center.q-col-gutter-x-lg.q-mt-md.q-mt-lg-xl.q-mb-md
-      .col-12
-        .text-h3.gt-md {{ $t('section.datasetDetail') }}
-        .text-h4.lt-lg.gt-sm.q-mt-none.q-mb-lg {{ $t('section.datasetDetail') }}
-        .text-h6.lt-md.q-mt-none.q-mb-md {{ $t('section.datasetDetail') }}
-    .row.justify-center
+    .row.justify-center.q-pt-lg
+      .col-10
+        .block.bg-dark-secondary.full-height.float-right.q-pa-md.no-margin.q-mt-md
+          q-btn(
+            v-if="needOwner"
+            size="md"
+            outline
+            dark
+            icon="las la-paperclip"
+            rounded
+            color="dark"
+            :label="$t('action.attachArticle')")
       q-card.q-mb-xl.col-10.q-pa-lg.bg-grey-3(flat clickable)
         q-card-section(horizontal)
           .row.full-width.items-baseline.justify-between
@@ -64,6 +70,11 @@ class DatasetDraftDetail extends Vue {
     return {
       title: this.draftId
     }
+  }
+
+  get needOwner () {
+    // TODO: check if the logged in user is owner of the dataset
+    return true
   }
 
   download (file) {

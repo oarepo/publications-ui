@@ -9,6 +9,7 @@ export default {
     detail: 'Detail'
   },
   action: {
+    attachArticle: 'Připojit článek',
     submitDataset: 'Nahrát dataset',
     retry: 'Zkusit znovu',
     close: 'Zavřít',

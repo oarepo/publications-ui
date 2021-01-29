@@ -1,8 +1,24 @@
 <template lang="pug">
   q-page.full-height.flex.flex-center
-    FormulateForm(
-      v-model="values"
-      :schema="formSchema")
+    q-stepper(
+      v-model="step"
+      ref="stepper"
+      color="primary"
+      animated)
+      q-step(
+        :name="1"
+        title="Create DRAFT record"
+        icon="pencil"
+        :done="step > 1")
+        FormulateForm(
+          @submit="step = 2"
+          v-model="values"
+          :schema="formSchema")
+      q-step(
+        :name="2"
+        title="Upload dataset files")
+        oarepo-uploader()
+        // TODO: configure uploader
     .row.full-width.justify-center.q-mt-xl
       .col-11
         .text-h5 DEBUG: form values
@@ -46,12 +62,19 @@ export default @Component({
 })
 class DatasetUpload extends Vue {
   values = {}
+  step = 1
 
+  // TODO(alzpeta): implement form validation
+  // TODO(alzpeta): check&fix translations
+  // Schema docs: https://vueformulate.com/guide/forms/generating-forms/#schemas
   personsScheme (name = 'creators') {
     let groupLabel, addLabel = ''
-    if (name) {
+    if (name === 'creators') {
       groupLabel = 'label.creators'
       addLabel = 'action.addCreator'
+    } else if (name === 'contributors') {
+      groupLabel = 'label.contributors'
+      addLabel = 'action.addContributor'
     }
 
     return {
@@ -118,9 +141,6 @@ class DatasetUpload extends Vue {
     }
   }
 
-  // TODO(alzpeta): implement form validation
-  // TODO(alzpeta): check&fix translations
-  // Schema docs: https://vueformulate.com/guide/forms/generating-forms/#schemas
   identifiersScheme = {
     type: 'group',
     name: 'identifiers',
@@ -186,6 +206,17 @@ class DatasetUpload extends Vue {
     ]
   }
 
+  licensesScheme = {
+    label: this.$t('label.licenses'),
+    type: 'group',
+    name: 'rights',
+    repeatable: true,
+    addLabel: `+ ${this.$t('action.addLicense')}`,
+    children: [
+      { name: 'rights', class: 'col-auto self-center' }
+    ]
+  }
+
   basicInfoScheme = {
     type: 'group',
     name: 'basicInfo',
@@ -195,7 +226,9 @@ class DatasetUpload extends Vue {
     children: [
       this.titlesScheme,
       this.personsScheme(),
-      this.descriptionsScheme
+      this.personsScheme('contributors'),
+      this.descriptionsScheme,
+      this.licensesScheme
     ]
   }
 
@@ -207,13 +240,8 @@ class DatasetUpload extends Vue {
     this.identifiersScheme,
     this.basicInfoScheme,
     {
-      type: 'file',
-      component: 'OARepoUploader',
-      name: 'files',
-      label: this.$t('label.addFiles')
-    },
-    {
       type: 'submit',
+      class: 'text-bold q-mt-xl full-width text-uppercase',
       label: this.$t('action.submitDataset')
     }
   ]

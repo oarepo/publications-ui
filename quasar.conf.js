@@ -140,8 +140,9 @@ module.exports = function (ctx) {
         'QChip',
         'QList',
         'QItem',
+        'QStepper',
         'QTooltip',
-        'QUploader',
+        'QUploader'
       ],
       // directives: [],
 

@@ -19,7 +19,8 @@ export default {
     }
   },
   action: {
-    submitDataset: 'Submit dataset',
+    attachArticle: 'Attach Article',
+    submitDataset: 'Submit dataset record',
     addIdentifier: 'Přidat identifikátor',
     retry: 'Retry',
     close: 'Close',
