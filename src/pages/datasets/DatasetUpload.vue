@@ -2,7 +2,11 @@
   q-page.full-height.flex.flex-center
     FormulateForm(
       v-model="values"
-      :schema="schema")
+      :schema="formSchema")
+    .row.full-width.justify-center.q-mt-xl
+      .col-11
+        .text-h5 DEBUG: form values
+        pre.q-pa-md.bg-dark.text-white {{ values }}
 </template>
 <script>
 import { Component, Vue } from 'vue-property-decorator'
@@ -18,19 +22,19 @@ const LANG_CODES = {
   _: 'Unknown'
 }
 
-const CREATOR_TYPES = {
+const PERSON_TYPES = {
   personal: 'Person',
   organization: 'Organisation'
 }
 
-const CREATOR_ROLES = {
+const PERSON_ROLES = {
   editor: 'Editor',
   curator: 'Data Curator',
   manager: 'Data Manager',
   project: 'Project Manager'
 }
 
-const CREATOR_ID_SCHEMES = {
+const PERSON_ID_SCHEMES = {
   orcid: 'ORCID'
 }
 
@@ -43,6 +47,79 @@ export default @Component({
 class DatasetUpload extends Vue {
   values = {}
 
+  personsScheme (name = 'creators') {
+    let groupLabel, addLabel = ''
+    if (name) {
+      groupLabel = 'label.creators'
+      addLabel = 'action.addCreator'
+    }
+
+    return {
+      type: 'group',
+      name: name,
+      label: this.$t(groupLabel),
+      repeatable: true,
+      addLabel: `+ ${this.$t(addLabel)}`,
+      children: [
+        {
+          component: 'div',
+          class: 'row q-gutter-sm',
+          children: [{
+            type: 'select',
+            class: 'col-auto',
+            name: 'type',
+            label: this.$t('label.type'),
+            validation: 'required',
+            value: 'personal',
+            options: PERSON_TYPES
+          },
+          { name: 'family_name', label: this.$t('label.familyName'), class: 'col-auto' },
+          { name: 'given_name', label: this.$t('label.givenName'), class: 'col-auto' },
+          {
+            name: 'role',
+            type: 'select',
+            label: this.$t('label.personRole'),
+            class: 'col-auto',
+            value: '',
+            options: PERSON_ROLES
+          },
+          {
+            name: 'identifiers',
+            type: 'group',
+            repeatable: true,
+            class: 'self-center col-auto',
+            addLabel: `+ ${this.$t('action.addIdentifier')}`,
+            label: this.$t('label.identifiers'),
+            children: [
+              {
+                type: 'select',
+                class: 'col-auto',
+                name: 'scheme',
+                label: this.$t('label.scheme'),
+                validation: 'required',
+                value: 'orcid',
+                options: PERSON_ID_SCHEMES
+              },
+              { name: 'identifier', label: this.$t('label.identifier'), class: 'col-auto' }
+            ]
+          },
+          {
+            name: 'affiliations',
+            type: 'group',
+            repeatable: true,
+            addLabel: `+ ${this.$t('action.addAffiliation')}`,
+            label: this.$t('label.creatorAffiliations'),
+            children: [
+              { name: 'name', label: this.$t('label.affiliation'), class: 'col-auto' }
+            ]
+          }]
+        }
+      ]
+    }
+  }
+
+  // TODO(alzpeta): implement form validation
+  // TODO(alzpeta): check&fix translations
   // Schema docs: https://vueformulate.com/guide/forms/generating-forms/#schemas
   identifiersScheme = {
     type: 'group',
@@ -54,7 +131,7 @@ class DatasetUpload extends Vue {
     children: [
       {
         component: 'div',
-        class: 'row',
+        class: 'row q-gutter-sm',
         children: [{
           class: 'col-auto',
           type: 'select',
@@ -62,7 +139,7 @@ class DatasetUpload extends Vue {
           label: this.$t('label.identifierScheme'),
           value: 'doi',
           options: ID_SCHEMES
-        }, { name: 'identifier', class: 'col-auto' }]
+        }, { name: 'identifier', class: 'col-auto self-center' }]
       }
     ]
   }
@@ -76,7 +153,7 @@ class DatasetUpload extends Vue {
     children: [
       {
         component: 'div',
-        class: 'row',
+        class: 'row q-gutter-sm',
         children: [{
           type: 'select',
           class: 'col-auto',
@@ -84,69 +161,7 @@ class DatasetUpload extends Vue {
           label: this.$t('label.language'),
           value: 'cs',
           options: LANG_CODES
-        }, { name: 'description', class: 'col-auto' }]
-      }
-    ]
-  }
-
-  creatorsScheme = {
-    type: 'group',
-    name: 'creators',
-    label: this.$t('label.creators'),
-    repeatable: true,
-    addLabel: `+ ${this.$t('action.addCreator')}`,
-    children: [
-      {
-        component: 'div',
-        class: 'row',
-        children: [{
-          type: 'select',
-          class: 'col-auto',
-          name: 'type',
-          label: this.$t('label.type'),
-          validation: 'required',
-          value: 'personal',
-          options: CREATOR_TYPES
-        },
-        { name: 'family_name', label: this.$t('label.familyName'), class: 'col-auto' },
-        { name: 'given_name', label: this.$t('label.givenName'), class: 'col-auto' },
-        {
-          name: 'role',
-          type: 'select',
-          label: this.$t('label.creatorRole'),
-          class: 'col-auto',
-          value: 'personal',
-          options: CREATOR_ROLES
-        },
-        {
-          name: 'identifiers',
-          type: 'group',
-          repeatable: true,
-          addLabel: `+ ${this.$t('action.addIdentifier')}`,
-          label: this.$t('label.creatorIdentifiers'),
-          children: [
-            {
-              type: 'select',
-              class: 'col-auto',
-              name: 'scheme',
-              label: this.$t('label.scheme'),
-              validation: 'required',
-              value: 'orcid',
-              options: CREATOR_ID_SCHEMES
-            },
-            { name: 'identifier', label: this.$t('label.identifier'), class: 'col-auto' }
-          ]
-        },
-        {
-          name: 'affiliations',
-          type: 'group',
-          repeatable: true,
-          addLabel: `+ ${this.$t('action.addAffiliation')}`,
-          label: this.$t('label.creatorAffiliations'),
-          children: [
-            { name: 'name', label: this.$t('label.affiliation'), class: 'col-auto' }
-          ]
-        }]
+        }, { name: 'description', class: 'self-center col-grow' }]
       }
     ]
   }
@@ -154,10 +169,11 @@ class DatasetUpload extends Vue {
   descriptionsScheme = {
     label: this.$t('label.abstract'),
     type: 'group',
+    name: 'abstract',
     children: [
       {
         component: 'div',
-        class: 'row',
+        class: 'row q-gutter-sm',
         children: [{
           type: 'select',
           class: 'col-auto',
@@ -165,24 +181,25 @@ class DatasetUpload extends Vue {
           label: this.$t('label.language'),
           value: 'cs',
           options: LANG_CODES
-        }, { name: 'description', type: 'textarea', class: 'col-auto' }]
+        }, { name: 'description', type: 'textarea', class: 'col-grow self-center' }]
       }
     ]
   }
 
   basicInfoScheme = {
     type: 'group',
+    name: 'basicInfo',
     label: this.$t('label.datasetBasicInfo'),
     repeatable: false,
     value: [{}],
     children: [
       this.titlesScheme,
-      this.creatorsScheme,
+      this.personsScheme(),
       this.descriptionsScheme
     ]
   }
 
-  schema = [
+  formSchema = [
     {
       component: 'h3',
       children: this.$t('section.datasetUpload')

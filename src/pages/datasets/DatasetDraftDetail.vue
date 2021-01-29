@@ -1,7 +1,7 @@
 <template lang="pug">
   q-page.full-height.flex.flex-center
     .row.justify-between.items-center.q-col-gutter-x-lg.q-mt-md.q-mt-lg-xl.q-mb-md
-      .col-12.col-lg-8
+      .col-12
         .text-h3.gt-md {{ $t('section.datasetDetail') }}
         .text-h4.lt-lg.gt-sm.q-mt-none.q-mb-lg {{ $t('section.datasetDetail') }}
         .text-h6.lt-md.q-mt-none.q-mb-md {{ $t('section.datasetDetail') }}
@@ -45,7 +45,7 @@
                 q-card-actions(vertical)
                   q-avatar.cursor-pointer(icon="las la-download" @click="download(f)")
         .text-overline.text-uppercase.text-accent.q-mt-md JSON Metadata
-        pre.bg-dark.text-code.text-white.wrap.overflow-auto(:style="{ maxWidth: '90vw' }") {{ dataset }}
+        pre.q-pa-md.bg-dark.text-code.text-white.wrap.overflow-auto(:style="{ maxWidth: '90vw' }") {{ dataset }}
 </template>
 <script>
 import { Component, Vue } from 'vue-property-decorator'
