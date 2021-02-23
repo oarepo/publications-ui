@@ -153,7 +153,8 @@ module.exports = function (ctx) {
         'BottomSheet',
         'Loading',
         'LoadingBar',
-        'Meta'
+        'Meta',
+        'Dialog'
       ]
     },
 

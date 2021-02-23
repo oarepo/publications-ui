@@ -1,4 +1,6 @@
+
 <template lang="pug">
+
   q-page.full-height.flex.flex-center
     .row.justify-center.q-pt-lg
       .col-10
@@ -11,6 +13,7 @@
             icon="las la-paperclip"
             rounded
             color="dark"
+            @click="prompt"
             :label="$t('action.attachArticle')")
       q-card.q-mb-xl.col-10.q-pa-lg.bg-grey-3(flat clickable)
         q-card-section(horizontal)
@@ -54,6 +57,7 @@
         pre.q-pa-md.bg-dark.text-code.text-white.wrap.overflow-auto(:style="{ maxWidth: '90vw' }") {{ dataset }}
 </template>
 <script>
+import axios from 'axios'
 import { Component, Vue } from 'vue-property-decorator'
 
 export default @Component({
@@ -61,9 +65,45 @@ export default @Component({
   props: {
     record: Object,
     loading: Boolean,
-    recordApi: Object
+    recordApi: Object,
+    DOI: Text,
+    recordId: {
+      type: String,
+      required: true
+    }
   },
-  components: {}
+  components: {},
+  methods: {
+    prompt () {
+      this.$q.dialog({
+        title: 'DOI',
+        message: 'DOI',
+        prompt: {
+          model: '',
+          type: 'text' // optional
+        },
+        cancel: true,
+        persistent: true
+      }).onOk(async data => {
+        this.DOI = data
+        var datasetURL = `https://127.0.0.1:5000/datasets/detail/${this.recordId}`
+
+        var url = (await axios.post(`https://127.0.0.1:5000/api/draft/publications/articles/document/${this.DOI}`)).request.responseURL
+        var response = (await axios.post(`https://127.0.0.1:5000/api/draft/publications/articles/document/${this.DOI}`)).data
+        var datasetsArray = response.metadata.datasets
+
+        if (datasetsArray === undefined) { axios.patch(url, [{ op: 'add', path: '/datasets', value: [datasetURL] }], { headers: { 'Content-Type': 'application/json-patch+json' } })
+        }
+        else { axios.patch(url, [{ op: 'add', path: '/datasets/-', value: datasetURL }], { headers: {'Content-Type': 'application/json-patch+json' } }) }
+        url = (await axios.post(`https://127.0.0.1:5000/api/draft/publications/articles/document/${this.DOI}`)).request.responseURL
+        window.location.href = url
+       }).onCancel(() => {
+        // console.log('>>>> Cancel')
+      }).onDismiss(() => {
+        // console.log('I am triggered on both OK and Cancel')
+      })
+    }
+  }
 })
 class DatasetDraftDetail extends Vue {
   meta () {
