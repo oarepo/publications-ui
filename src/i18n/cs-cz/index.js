@@ -47,6 +47,8 @@ export default {
     license: 'Licence',
     searchInput: 'Hledat podle názvu',
     localeSwitcher: 'Jazyk',
+    documentType: 'Typ dokumentu',
+    datasets: 'Datasety',
     role: {
       admin: 'admin',
       curator: 'kurátor'
@@ -59,7 +61,8 @@ export default {
     loginRequired: 'Vyžadováno přihlášení',
     error: 'Chyba',
     gdpr: 'Souhlas s podmínkami',
-    roles: 'Role'
+    roles: 'Role',
+    articleList: 'Články'
   },
   message: {
     noData: 'Žádná data',
@@ -78,7 +81,8 @@ export default {
       datasetEdit: 'Editace datasetu',
       datasetUpload: 'Nový dataset',
       datasetDetail: 'Dataset',
-      admin: 'Administrace'
+      admin: 'Administrace',
+      articleList: 'Články'
     }
   }
 }

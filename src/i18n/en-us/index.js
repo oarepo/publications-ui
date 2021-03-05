@@ -42,6 +42,8 @@ export default {
     language: 'Language',
     datasetBasicInfo: 'Basic Info',
     titles: 'Titles',
+    documentType: 'Document type',
+    datasets: 'Datasets',
     role: {
       admin: 'admin',
       curator: 'curator'
@@ -59,7 +61,8 @@ export default {
     loginRequired: 'Authentication required',
     gdpr: 'Terms of Service Consent',
     error: 'Error',
-    roles: 'Roles'
+    roles: 'Roles',
+    articleList: 'Articles'
   },
   message: {
     noData: 'No data',
@@ -78,7 +81,8 @@ export default {
       datasetEdit: 'Edit Dataset',
       datasetUpload: 'Upload dataset',
       datasetDetail: 'Dataset',
-      admin: 'Administration'
+      admin: 'Administration',
+      articleList: 'Articles'
     }
   }
 }
