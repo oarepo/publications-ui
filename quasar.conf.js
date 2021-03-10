@@ -109,11 +109,17 @@ module.exports = function (ctx) {
       open: false, // opens browser window automatically
       // vueDevtools: true,
       proxy: {
-        '/api': {
+        '/': {
           target: API_DEV,
           changeOrigin: false,
           secure: false,
           debug: true,
+          bypass: function (req, res, proxyOptions) {
+            if (req.headers.accept.indexOf('html') !== -1) {
+              console.log('Skipping proxy for browser request.')
+              return '/index.html'
+            }
+          }
         }
       }
     },

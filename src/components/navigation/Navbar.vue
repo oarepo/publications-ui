@@ -36,6 +36,8 @@
         icon="cloud_upload"
         :to="{ name: 'dataset-upload' }"
         :label="$t('action.uploadDataset')")
+      router-link(to="/articles") Art
+      router-link(to="/datasets") Dat
     q-toolbar.col-auto
       q-space.q-ml-xl
       account-dropdown(:authenticated="authenticated")

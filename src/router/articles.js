@@ -1,15 +1,17 @@
 // Datasets interface routes
 
 import { collection, record } from '@oarepo/invenio-api-vue-composition'
+import { ARTICLES_COLLECTION_CODE, ARTICLES_DRAFT_COLLECTION_CODE } from 'src/constants'
 
 const articles = [
   collection(
     {
       path: '/',
-      collectionCode: 'publications/all-articles',
+      collectionCode: ARTICLES_COLLECTION_CODE,
       name: 'publications/all-articles',
       component: () => import('pages/articles/ArticleList'),
       loadingComponent: 'viewer',
+      apiUrl: '/',
       recordRouteName: (record) => {
         if (record.links.self.indexOf('draft') > 0) {
           return 'draft-publications/article/record'
@@ -45,8 +47,9 @@ const articles = [
     children: [
       record({
         name: 'draft-publications/article/record',
-        collectionCode: 'draft/publications/articles',
+        collectionCode: ARTICLES_DRAFT_COLLECTION_CODE,
         path: ':recordId',
+        apiUrl: '/',
         component: () => import('pages/articles/ArticleDraftDetail'),
         loadingComponent: 'viewer',
         httpGetProps: {
