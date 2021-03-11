@@ -6,7 +6,7 @@ import { ARTICLES_COLLECTION_CODE, ARTICLES_DRAFT_COLLECTION_CODE } from 'src/co
 const articles = [
   collection(
     {
-      path: '/',
+      path: '/articles',
       collectionCode: ARTICLES_COLLECTION_CODE,
       name: 'publications/all-articles',
       component: () => import('pages/articles/ArticleList'),

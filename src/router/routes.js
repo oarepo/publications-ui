@@ -8,6 +8,7 @@ const routes = [
     component: () => import('layouts/MainLayout'),
     children: [
       ...datasets,
+      ...articles,
       {
         name: 'logged-out',
         path: 'logged-out',
@@ -20,25 +21,6 @@ const routes = [
       //   path: '*',
       //   component: () => import('pages/Error404.vue')
       // }
-    ]
-  },
-  { /* Article collection list routes */
-    path: '/articles',
-    component: () => import('layouts/MainLayout'),
-    children: [
-      ...articles,
-      {
-        name: 'logged-out',
-        path: 'logged-out',
-        component: () => import('pages/Logout.vue')
-      },
-      admin,
-      // Always leave this as last one,
-      // but you can also remove it
-      {
-        path: '*',
-        component: () => import('pages/Error404.vue')
-      }
     ]
   }
 ]

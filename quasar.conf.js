@@ -115,7 +115,7 @@ module.exports = function (ctx) {
           secure: false,
           debug: true,
           bypass: function (req, res, proxyOptions) {
-            if (req.headers.accept.indexOf('html') !== -1) {
+            if (req.headers.accept.indexOf('html') !== -1 && !req.path.startsWith('/oauth')) {
               console.log('Skipping proxy for browser request.')
               return '/index.html'
             }
