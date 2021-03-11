@@ -10,23 +10,30 @@
         title="Create DRAFT record"
         icon="pencil"
         :done="step > 1")
-        FormulateForm(
-          @submit="step = 2"
-          v-model="values"
-          :schema="formSchema")
+        pre {{ collectionApi }}
+        saving-support(:saving="saving")
+          template(#default)
+            FormulateForm(
+              @submit="submitDatasetMetadata"
+              v-model="metadata"
+              :schema="formSchema")
+          .row.full-width.justify-center.q-mt-xl
+            .col-11
+              .text-h5 DEBUG: form values
+              pre.q-pa-md.bg-dark.text-white {{ metadata }}
       q-step(
         :name="2"
         title="Upload dataset files")
-        oarepo-uploader()
-        // TODO: configure uploader
-    .row.full-width.justify-center.q-mt-xl
-      .col-11
-        .text-h5 DEBUG: form values
-        pre.q-pa-md.bg-dark.text-white {{ values }}
+        FormulateForm(
+          @submit="submissionComplete"
+          v-model="files"
+          :schema="formSchema")
 </template>
 <script>
-import { Component, Vue } from 'vue-property-decorator'
-import OARepoUploader from '@oarepo/quasar-uploader'
+import { Component } from 'vue-property-decorator'
+import SavingSupport from 'components/common/SavingSupport'
+import { mixins } from 'vue-class-component'
+import { NotifyMixin } from 'src/mixins/Notify'
 
 const ID_SCHEMES = {
   doi: 'DOI'
@@ -56,13 +63,19 @@ const PERSON_ID_SCHEMES = {
 
 export default @Component({
   name: 'DatasetUpload',
+  props: {
+    collectionApi: Object
+  },
   components: {
-    'oarepo-uploader': OARepoUploader
+    SavingSupport
   }
 })
-class DatasetUpload extends Vue {
-  values = {}
+class DatasetUpload extends mixins(NotifyMixin) {
+  metadata = {}
+  files = {}
   step = 1
+  saving = false
+  datasetSavedId = null
 
   // TODO(alzpeta): implement form validation
   // TODO(alzpeta): check&fix translations
@@ -96,8 +109,8 @@ class DatasetUpload extends Vue {
             value: 'personal',
             options: PERSON_TYPES
           },
-          { name: 'family_name', label: this.$t('label.familyName'), class: 'col-auto' },
           { name: 'given_name', label: this.$t('label.givenName'), class: 'col-auto' },
+          { name: 'family_name', label: this.$t('label.familyName'), class: 'col-auto' },
           {
             name: 'role',
             type: 'select',
@@ -139,6 +152,23 @@ class DatasetUpload extends Vue {
         }
       ]
     }
+  }
+
+  async submitDatasetMetadata () {
+    this.saving = true
+    try {
+      this.datasetSavedId = (await this.api.createRecord(this.metadata, { collectionCode: 'draft/publications/datasets/' })).id
+      this.saved = true
+      this.step = 2
+    } catch (e) {
+      this.notifyError(e)
+    } finally {
+      this.saving = false
+    }
+  }
+
+  submissionComplete () {
+
   }
 
   identifiersScheme = {
@@ -237,7 +267,6 @@ class DatasetUpload extends Vue {
       component: 'h3',
       children: this.$t('section.datasetUpload')
     },
-    this.identifiersScheme,
     this.basicInfoScheme,
     {
       type: 'submit',

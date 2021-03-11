@@ -121,6 +121,7 @@ module.exports = function (ctx) {
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
       iconSet: 'material-icons', // Quasar icon set
+      cssAddon: true,
       lang: 'cs', // Quasar language pack
       config: {},
 
@@ -135,6 +136,7 @@ module.exports = function (ctx) {
       //
       components: [
         'QAvatar',
+        'QBtnGroup',
         'QCard',
         'QCardSection',
         'QChip',
@@ -153,6 +155,7 @@ module.exports = function (ctx) {
         'BottomSheet',
         'Loading',
         'LoadingBar',
+        'Notify',
         'Meta'
       ]
     },
