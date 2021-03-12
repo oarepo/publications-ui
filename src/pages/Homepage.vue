@@ -1,29 +1,31 @@
 <template lang="pug">
   q-page.hero.full-height.no-padding.row.overflow-hidden
     .hero-content.text-white.col-12.col-md-7.q-pa-xl
-      .column
-        h2.col-auto.lt-md.text-bold {{ $t('app.productName') }}
-        h1.col-auto.gt-sm.q-px-md-xl.q-mr-xl.text-bold.text-left {{ $t('app.productName') }}
-        .text-cesnet.text-bold.text-warning.row.justify-center.justify-md-start.items-center.q-px-md-xl.q-mr-xl.q-gutter-sm.q-mb-lg
-          q-icon.col-auto(size="2rem" name="alternate_email")
-          p.col-auto.inline-block.q-pt-md CESNET
+      .column.justify-between.full-height
+        .title.col-auto.q-mr-xl.q-mb-xl.full-width
+          h1.gt-xs.q-px-md-xl.q-mr-xl.q-pr-xl.text-bold.text-left.z-top.q-mb-none {{ $t('app.productName') }}
+          h2.lt-sm.q-px-md-xl.q-mr-xl.q-pr-xl.text-bold.text-left.z-top.q-mb-none {{ $t('app.productName') }}
+          .text-cesnet.text-bold.text-warning.row.justify-start.items-center.q-px-md-xl.q-mr-xl.q-gutter-sm.q-mb-lg
+            q-icon.col-auto(size="2rem" name="alternate_email")
+            p.col-auto.inline-block.q-pt-md CESNET
         q-space
-        q-btn-group.col-auto(rounded).q-mt-lg.text-bold.q-mx-md-xl.q-mr-md-xl
-          q-btn.full-width.no-box-shadow(
-            color="dark"
-            rounded
-            icon="leaderboard"
-            padding="lg"
-            :to="{name: 'publications/all-datasets'}"
-            :label="$t('section.datasetList')")
-          q-btn.full-width.no-box-shadow(
-            color="primary"
-            rounded
-            icon-right="article"
-            padding="lg"
-            :to="{name: 'all-articles'}"
-            :label="$t('section.articleList')")
-    .col-0.hero-tiles.gt-sm.q-pt-xl
+        .cta.col-auto.q-my-lg.q-px-md-xl.q-mr-xl.z-top.full-width
+          q-btn-group.full-width.text-bold.z-top(rounded)
+            q-btn.full-width.shadow-3(
+              color="primary"
+              rounded
+              icon="leaderboard"
+              padding="lg"
+              :to="{name: 'publications/all-datasets'}"
+              :label="$t('section.datasetList')")
+            q-btn.full-width.shadow-5(
+              color="dark"
+              rounded
+              icon-right="article"
+              padding="lg"
+              :to="{name: 'all-articles'}"
+              :label="$t('section.articleList')")
+    .col-0.hero-tiles.gt-xs.q-pt-xl
     .col-5.right-graphic.gt-sm
     .col-0.right-tiles.gt-sm
 
@@ -61,7 +63,7 @@ class Homepage extends Vue {
     height: 100%
     z-index: 1
     filter: drop-shadow(30px 10px 30px $dark)
-    transform: translateX(-46%)
+    transform: translateX(-46%) translateY(15%)
     background: url('../assets/landing/center-tiles.png') no-repeat
     background-size: contain
 

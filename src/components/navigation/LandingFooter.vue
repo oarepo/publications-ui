@@ -1,32 +1,30 @@
 <template lang="pug">
-  q-footer.q-pa-md
-    .links-container.column.row-md.items-center.q-mt-lg.q-pl-md-xl.q-ml-xl
-      q-item.col.col-md-2(v-for="item in navItems" :key="item.label"
-             clickable v-ripple @click="openURL(item.link)")
-        q-item-section(avatar).q-pa-md
-          q-icon(:name="item.icon")
-        q-item-section.q-pl-md {{ $t(item.label) }}
-      q-space.gt-sm
-      .gt-sm.col-md-5.self-md-end
-        .copyright-container.q-mb-lg.text-center.text-caption.text-grey-4
-          p.no-padding.no-margin {{ $t('app.copyrightNotice') }}
-          p.text-warning {{ $t('app.copyright') }}
-    .lt-md.copyright-container.q-mt-xl.text-center.text-caption.text-grey-4
-      p.no-padding.no-margin {{ $t('app.copyrightNotice') }}
-      p.text-warning {{ $t('app.copyright') }}
+  q-footer.row
+    .col-12.col-md-7.q-pl-xl.q-pr-xl.q-pr-md-none.q-mt-lg.q-pb-xl
+      .links-container.column.no-wrap.row-md.items-start.q-mt-lg.q-pl-md-xl.q-gutter-lg.self-start
+        q-item.col-3(
+          v-for="item in navItems" :key="item.label"
+          clickable v-ripple
+          @click="openURL(item.link)")
+          q-item-section(avatar).q-pa-md
+            q-icon(:name="item.icon")
+          q-item-section.q-pl-md {{ $t(item.label) }}
+    .col-12.col-md-5.q-pl-xl.q-pl-md-none.q-pr-xl.q-pr-md-none.self-start.q-py-lg.bg-dark-primary
+      .copyright-container.q-mt-xl.q-mb-lg.text-caption.text-grey-4.text-center
+        p.no-padding.no-margin {{ $t('app.copyrightNotice') }}
+        p.no-padding.no-margin.text-warning {{ $t('app.copyright') }}
 </template>
-
 <script>
 import { Component, Vue } from 'vue-property-decorator'
 import { openURL } from 'quasar'
 
 export default @Component({
-  name: 'LandingHeader',
+  name: 'LandingFooter',
   components: {
   },
   props: {}
 })
-class LandingHeader extends Vue {
+class LandingFooter extends Vue {
   openURL = openURL
   navItems = [
     {
