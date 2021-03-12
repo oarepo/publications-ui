@@ -1,5 +1,6 @@
 <template lang="pug">
   q-btn-dropdown(
+    :text-color="dark? 'black': 'white'"
     stretch
     no-caps
     dense
@@ -8,7 +9,6 @@
     padding="md md"
     unelevated
     icon="person"
-    text-color="white"
     :label="currentUserName"
     v-if="authenticated")
     slot(name="authenticated")
@@ -53,6 +53,9 @@ import { AuthStateMixin } from 'src/mixins/AuthStateMixin'
 
 export default @Component({
   name: 'AccountDropdown',
+  props: {
+    dark: Boolean
+  },
   components: {
     LocaleSwitcher
   }

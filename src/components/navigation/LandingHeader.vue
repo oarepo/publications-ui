@@ -6,7 +6,7 @@
         q-space
         account-dropdown.lt-md.q-mr-sm(:authenticated="authenticated")
       q-toolbar.gt-sm.col-5.q-py-md.q-pr-xl.bg-white.justify-end.items-center
-        account-dropdown.q-mr-sm(:authenticated="authenticated")
+        account-dropdown.q-mr-sm(dark :authenticated="authenticated")
 </template>
 
 <script>
