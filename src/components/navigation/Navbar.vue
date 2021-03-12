@@ -34,7 +34,7 @@
         stretch
         flat
         icon="cloud_upload"
-        :to="{ name: 'dataset-upload' }"
+        :to="{ name: 'draft-publications/datasets/upload' }"
         :label="$t('action.uploadDataset')")
     q-toolbar.col-auto
       q-space.q-ml-xl
