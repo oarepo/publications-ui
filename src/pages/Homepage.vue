@@ -10,7 +10,7 @@
             p.col-auto.inline-block.q-pt-md CESNET
         q-space
         .cta.col-auto.q-my-lg.q-px-md-xl.q-mr-xl.z-top.full-width
-          q-btn-group.full-width.text-bold.z-top(rounded)
+          q-btn-group.full-width.text-bold(rounded)
             q-btn.full-width.shadow-3(
               color="primary"
               rounded
@@ -55,6 +55,9 @@ class Homepage extends Vue {
     .text-cesnet
       p
         font-size: 2rem
+
+    .cta
+      z-index: 6000 !important
 
   .hero-tiles::before
     content: ""

@@ -58,6 +58,7 @@ export default {
     login.registerLoginRequiredHandler(() => {
       return new Promise((resolve) => {
         BottomSheet.create({
+          class: 'z-top',
           dark: true,
           title: i18n.t('section.loginRequired'),
           message: i18n.t('message.authRequired'),
