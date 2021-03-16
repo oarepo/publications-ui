@@ -115,7 +115,7 @@ module.exports = function (ctx) {
           secure: false,
           debug: true,
           bypass: function (req, res, proxyOptions) {
-            if (req.headers.accept.indexOf('html') !== -1 && !req.path.startsWith('/oauth')) {
+            if (req.headers.accept.indexOf('html') !== -1 && !req.path.startsWith('/oauth') && !req.path.startsWith('/api/oauth')) {
               console.log('Skipping proxy for browser request.')
               return '/index.html'
             }
@@ -148,7 +148,8 @@ module.exports = function (ctx) {
         'QItem',
         'QStepper',
         'QTooltip',
-        'QUploader'
+        'QUploader',
+        'QInput'
       ],
       // directives: [],
 

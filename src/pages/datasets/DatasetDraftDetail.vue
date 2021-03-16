@@ -59,6 +59,7 @@
 <script>
 import axios from 'axios'
 import { Component, Vue } from 'vue-property-decorator'
+import NewArticleDialog from "components/dialogs/articles/NewArticleDialog";
 
 export default @Component({
   name: 'DatasetDraftDetail',
@@ -66,7 +67,6 @@ export default @Component({
     record: Object,
     loading: Boolean,
     recordApi: Object,
-    DOI: Text,
     recordId: {
       type: String,
       required: true
@@ -76,16 +76,11 @@ export default @Component({
   methods: {
     prompt () {
       this.$q.dialog({
-        title: 'DOI',
-        message: 'DOI',
-        prompt: {
-          model: '',
-          type: 'text' // optional
-        },
-        cancel: true,
-        persistent: true
+       parent:this,
+        component:NewArticleDialog,
       }).onOk(async data => {
-        this.DOI = data
+        return
+        var DOI = data
         var datasetURL = `https://127.0.0.1:5000/datasets/detail/${this.recordId}`
 
         var url = (await axios.post(`https://127.0.0.1:5000/api/draft/publications/articles/document/${this.DOI}`)).request.responseURL
@@ -96,7 +91,8 @@ export default @Component({
         }
         else { axios.patch(url, [{ op: 'add', path: '/datasets/-', value: datasetURL }], { headers: {'Content-Type': 'application/json-patch+json' } }) }
         url = (await axios.post(`https://127.0.0.1:5000/api/draft/publications/articles/document/${this.DOI}`)).request.responseURL
-        window.location.href = url
+        // window.location.href = url
+        this.$router.push(url)
        }).onCancel(() => {
         // console.log('>>>> Cancel')
       }).onDismiss(() => {

@@ -44,7 +44,6 @@ export default @Component({
     record: Object,
     loading: Boolean,
     recordApi: Object,
-    DOI: Text,
     recordId: {
       type: String,
       required: true
