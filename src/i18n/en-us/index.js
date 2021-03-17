@@ -4,7 +4,8 @@ export default {
   app: {
     productName: productName,
     description: productName,
-    copyright: '©  2020 CESNET'
+    copyrightNotice: 'This service is a part of CESNET e-infrastructure',
+    copyright: '©  2020 CESNET a. l. e., Zikova 4, 160 00 Praha 6, Czech Republic'
   },
   nav: {
     admin: 'Administration',
@@ -44,12 +45,16 @@ export default {
     titles: 'Titles',
     documentType: 'Document type',
     datasets: 'Datasets',
+    contact: 'Contact Us',
+    privacy: 'Privacy Policy',
+    docs: 'User Documentation',
     role: {
       admin: 'admin',
       curator: 'curator'
     }
   },
   section: {
+    articleList: 'Articles',
     datasetList: 'Datasets',
     addFiles: 'Add files',
     datasetDetail: 'Dataset Detail',

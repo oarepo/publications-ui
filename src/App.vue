@@ -26,9 +26,9 @@ export default {
     }
   },
   setup () {
-    const api = usePopupLogin({})
-    api.check(false)
-    api.registerPopupFailedHandler(() => {
+    const login = usePopupLogin({})
+    login.check(false)
+    login.registerPopupFailedHandler(() => {
       return new Promise((resolve) => {
         BottomSheet.create({
           dark: true,
@@ -47,7 +47,7 @@ export default {
             }]
         }).onOk(action => {
           if (action.id === 'retry') {
-            resolve(api.login())
+            resolve(login.login())
           } else {
             resolve(REDIRECT_LOGIN)
           }
@@ -55,9 +55,10 @@ export default {
       })
     })
 
-    api.registerLoginRequiredHandler(() => {
+    login.registerLoginRequiredHandler(() => {
       return new Promise((resolve) => {
         BottomSheet.create({
+          class: 'z-top',
           dark: true,
           title: i18n.t('section.loginRequired'),
           message: i18n.t('message.authRequired'),
@@ -67,7 +68,7 @@ export default {
             id: 'log-in'
           }]
         }).onOk(() => {
-          resolve(api.login())
+          resolve(login.login())
         })
       })
     })

@@ -1,5 +1,6 @@
 <template lang="pug">
   q-btn-dropdown(
+    :text-color="dark? 'black': 'white'"
     stretch
     no-caps
     dense
@@ -8,23 +9,21 @@
     padding="md md"
     unelevated
     icon="person"
-    text-color="white"
     :label="currentUserName"
     v-if="authenticated")
     slot(name="authenticated")
-      .bg-white
+      .bg-white.account
         .row.no-wrap.q-pa-md.justify-start.q-mr-md
           .col-2.column
             slot.col-auto(name="avatar")
               q-icon.q-my-sm.text-h4.content-center.text-primary(name="face")
           .col-8.q-ml-md.column.no-wrap.justify-start
             .col-auto.text-subtitle1.text-bold.no-wrap.text-dark {{ currentUserInfo.givenName }} {{ currentUserInfo.familyName }}
-            .col-3.text-grey.text-caption {{ currentUserInfo.email }}
+            .col-auto.text-grey.text-caption {{ currentUserInfo.email }}
             .col-auto.q-pt-md
-              .row.q-col-gutter-sm
-                .col-auto(v-for="role in currentUser.roles" :key="role.id")
-                  q-badge {{ $t(`label.role.${role.id}`) }}
-        .row.no-wrap.q-pa-md.justify-center
+              .row
+                q-badge.q-ma-xs(v-for="role in currentUser.roles" :key="role.id") {{ $t(`label.role.${role.label}`).replace('label.role.', '').replace(':', ' > ') }}
+        .row.no-wrap.q-px-md.q-pb-md.justify-center
           locale-switcher.col-12
         .row.no-wrap.q-pa-sm.justify-center.bg-grey-3
           q-list.full-width(color="grey")
@@ -38,7 +37,8 @@
               q-item-section(avatar)
                 q-icon(:name="item.icon")
               q-item-section.text-secondary {{ $t(item.label) }}
-  q-btn.full-height(v-else :loading="authenticating" flat icon="vpn_key" @click="login")
+  q-btn(v-else color="warning" text-color="dark"
+    :loading="authenticating" rounded icon="vpn_key" @click="login")
     template(#loading)
       q-spinner-dots
       span.q-pl-sm.q-pt-xs.disabled {{ $t('action.login') }}
@@ -53,6 +53,9 @@ import { AuthStateMixin } from 'src/mixins/AuthStateMixin'
 
 export default @Component({
   name: 'AccountDropdown',
+  props: {
+    dark: Boolean
+  },
   components: {
     LocaleSwitcher
   }
@@ -81,4 +84,6 @@ class AccountDropdown extends Mixins(AuthStateMixin) {
 </script>
 
 <style lang="sass" scoped>
+.account
+  max-width: 400px
 </style>
