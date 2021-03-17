@@ -25,7 +25,7 @@
         v-go-back.single
         color="white"
         icon="arrow_back")
-      q-btn(stretch flat :to="{ name: 'publications/all-datasets' }")
+      q-btn(stretch flat :to="{ name: 'all-datasets' }")
         img.navbar__logo.col-auto(
           src="logos/datacare_White.svg")
       q-toolbar-title.q-py-md.text-uppercase.text-weight-bold {{ productName }}

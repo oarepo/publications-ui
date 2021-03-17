@@ -14,13 +14,13 @@ const routes = [
         path: 'logged-out',
         component: () => import('pages/Logout.vue')
       },
-      admin
+      admin,
       // Always leave this as last one,
       // but you can also remove it
-      // {
-      //   path: '*',
-      //   component: () => import('pages/Error404.vue')
-      // }
+      {
+        path: '*',
+        component: () => import('pages/Error404.vue')
+      }
     ]
   }
 ]

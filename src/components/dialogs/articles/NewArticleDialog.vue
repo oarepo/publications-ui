@@ -10,7 +10,6 @@ q-dialog(ref='dialog' @hide='onDialogHide')
         q-step(name="2" title="Details" :done="step > 2")
           q-input(v-model="article.title" label="Title")
           q-input(v-model="article.abstract" label="Abstract")
-
     //
       ...content
       ... use q-card-section for it?
@@ -18,12 +17,13 @@ q-dialog(ref='dialog' @hide='onDialogHide')
     q-card-actions(align='right' v-if="step==='1'")
       q-btn(color='grey' flat label='Skip DOI' @click='skipDOI')
       q-space
-      q-btn(color='primary' label='Next' @click='next' :loading="validatingDOI" )
+      q-btn(color='primary' label='Next' @click='next' :loading="validatingDOI")
     q-card-actions(align='right' v-if="step==='2'")
+      q-btn(color='primary' label='Submit' @click='onOKClick')
 </template>
 
 <script>
-import DOIInput from 'components/doi_input/DOIInput'
+import DOIInput from 'components/inputs/DOIInput'
 
 export default {
   props: {
@@ -78,7 +78,7 @@ export default {
       // on OK, it is REQUIRED to
       // emit "ok" event (with optional payload)
       // before hiding the QDialog
-      this.$emit('ok')
+      this.$emit('ok', this.article)
       // or with payload: this.$emit('ok', { ... })
 
       // then hiding dialog

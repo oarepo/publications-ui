@@ -1,6 +1,5 @@
 
 <template lang="pug">
-
   q-page.full-height.flex.flex-center
     .row.justify-center.q-pt-lg
       .col-10
@@ -73,33 +72,6 @@ export default @Component({
     }
   },
   components: {},
-  methods: {
-    prompt () {
-      this.$q.dialog({
-       parent:this,
-        component:NewArticleDialog,
-      }).onOk(async data => {
-        return
-        var DOI = data
-        var datasetURL = `https://127.0.0.1:5000/datasets/detail/${this.recordId}`
-
-        var url = (await axios.post(`https://127.0.0.1:5000/api/draft/publications/articles/document/${this.DOI}`)).request.responseURL
-        var response = (await axios.post(`https://127.0.0.1:5000/api/draft/publications/articles/document/${this.DOI}`)).data
-        var datasetsArray = response.metadata.datasets
-
-        if (datasetsArray === undefined) { axios.patch(url, [{ op: 'add', path: '/datasets', value: [datasetURL] }], { headers: { 'Content-Type': 'application/json-patch+json' } })
-        }
-        else { axios.patch(url, [{ op: 'add', path: '/datasets/-', value: datasetURL }], { headers: {'Content-Type': 'application/json-patch+json' } }) }
-        url = (await axios.post(`https://127.0.0.1:5000/api/draft/publications/articles/document/${this.DOI}`)).request.responseURL
-        // window.location.href = url
-        this.$router.push(url)
-       }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
-      })
-    }
-  }
 })
 class DatasetDraftDetail extends Vue {
   meta () {
@@ -115,6 +87,37 @@ class DatasetDraftDetail extends Vue {
 
   download (file) {
     window.open(file.url, '_blank')
+  }
+
+  prompt () {
+    this.$q.dialog({
+      parent: this,
+      component: NewArticleDialog,
+    }).onOk(async article => {
+      return
+      // TODO(alzpeta): create article record with attached dataset in datasets
+      // 1) jako datasetURL pouzij this.dataset.links.self
+      // 2) request do kolekce clanku staci udelat proti url /articles (netreba davat https://...)
+      // 3) na konci dat this.$router.push({name: 'draft-article/record', params: { recordId: article.id }})
+
+      // var DOI = data
+      // var datasetURL = `https://127.0.0.1:5000/datasets/detail/${this.recordId}`
+      //
+      // var url = (await axios.post(`https://127.0.0.1:5000/api/draft/publications/articles/document/${this.DOI}`)).request.responseURL
+      // var response = (await axios.post(`https://127.0.0.1:5000/api/draft/publications/articles/document/${this.DOI}`)).data
+      // var datasetsArray = response.metadata.datasets
+      //
+      // if (datasetsArray === undefined) { axios.patch(url, [{ op: 'add', path: '/datasets', value: [datasetURL] }], { headers: { 'Content-Type': 'application/json-patch+json' } })
+      // }
+      // else { axios.patch(url, [{ op: 'add', path: '/datasets/-', value: datasetURL }], { headers: {'Content-Type': 'application/json-patch+json' } }) }
+      // url = (await axios.post(`https://127.0.0.1:5000/api/draft/publications/articles/document/${this.DOI}`)).request.responseURL
+      // // window.location.href = url
+      // this.$router.push(url)
+    }).onCancel(() => {
+      // console.log('>>>> Cancel')
+    }).onDismiss(() => {
+      // console.log('I am triggered on both OK and Cancel')
+    })
   }
 
   get dataset () {
