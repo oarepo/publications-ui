@@ -26,9 +26,10 @@ export default {
 
   methods: {
     async validate () {
-      const response = (await axios.post('/publications/all-articles/from-doi/', { doi: this.doi })).data
-      if (response.article) {
+      const response = (await axios.post('/articles/from-doi/', { doi: this.doi })).data
+      if (response.article && this.doi !== '') {
         this.$emit('input', this.doi)
+        console.log(response.article)
         return response.article
       } else {
         this.doiError = true
