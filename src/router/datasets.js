@@ -1,20 +1,39 @@
 // Datasets interface routes
 
+import { DATASETS_COLLECTION_CODE, DATASETS_DRAFT_COLLECTION_CODE } from 'src/constants'
 import { collection, collectionApi, record } from '@oarepo/invenio-api-vue-composition'
 
 const datasets = [
+  // Published dataset detail
+  record({
+    name: 'dataset/record',
+    collectionCode: DATASETS_COLLECTION_CODE,
+    path: '/datasets/:recordId',
+    apiUrl: '/',
+    component: () => import('pages/datasets/DatasetDraftDetail'),
+    loadingComponent: 'viewer',
+    httpGetProps: {
+      dedupingInterval: 100,
+      revalidateDebounce: 0,
+      shouldRetryOnError: false
+    },
+    meta: {
+      title: 'route.title.datasetDetail'
+    }
+  }),
   collection(
     {
-      path: '',
-      collectionCode: 'publications/all-datasets',
-      name: 'publications/all-datasets',
+      path: '/datasets',
+      collectionCode: DATASETS_COLLECTION_CODE,
+      name: 'all-datasets',
       component: () => import('pages/datasets/DatasetList'),
       loadingComponent: 'viewer',
+      apiUrl: '/',
       recordRouteName: (record) => {
         if (record.links.self.indexOf('draft') > 0) {
-          return 'draft-publications/dataset/record'
+          return 'draft-dataset/record'
         } else {
-          return 'publications/dataset/record'
+          return 'dataset/record'
         }
       },
       httpGetProps: {
@@ -45,9 +64,10 @@ const datasets = [
     },
     children: [
       record({
-        name: 'draft-publications/datasets/container',
-        collectionCode: 'draft/publications/datasets',
-        path: ':recordId',
+        name: 'draft-datasets/container',
+        collectionCode: DATASETS_DRAFT_COLLECTION_CODE,
+        path: ':recordId/edit',
+        apiUrl: '/',
         component: () => import('pages/datasets/DatasetDraftDetail'),
         loadingComponent: 'viewer',
         httpGetProps: {
@@ -60,16 +80,18 @@ const datasets = [
   },
   { /* Dataset detail routes */
     name: 'dataset-detail',
-    path: '/datasets/detail',
+    path: '/datasets/draft',
     component: () => import('layouts/DatasetDetailLayout'),
     meta: {
       title: 'route.title.datasetDetail'
     },
     children: [
+      // Draft dataset detail
       record({
-        name: 'draft-publications/dataset/record',
-        collectionCode: 'draft/publications/datasets',
+        name: 'draft-dataset/record',
+        collectionCode: DATASETS_DRAFT_COLLECTION_CODE,
         path: ':recordId',
+        apiUrl: '/',
         component: () => import('pages/datasets/DatasetDraftDetail'),
         loadingComponent: 'viewer',
         httpGetProps: {
@@ -85,8 +107,8 @@ const datasets = [
   },
   collectionApi({
     collectionCode: 'draft-publications/datasets', /* Dataset submission route */
-    name: 'draft-publications/datasets/upload',
-    path: 'dataset-upload',
+    name: 'draft-datasets/upload',
+    path: '/datasets/draft/upload',
     component: () => import('pages/datasets/DatasetUpload')
   }, {
     meta: {

@@ -48,6 +48,8 @@ export default {
     license: 'Licence',
     searchInput: 'Hledat podle názvu',
     localeSwitcher: 'Jazyk',
+    documentType: 'Typ dokumentu',
+    datasets: 'Datasety',
     contact: 'Kontaktujte nás',
     privacy: 'Ochrana osobních údajů',
     docs: 'Uživatelská dokumentace',
@@ -83,7 +85,8 @@ export default {
       datasetEdit: 'Editace datasetu',
       datasetUpload: 'Nový dataset',
       datasetDetail: 'Dataset',
-      admin: 'Administrace'
+      admin: 'Administrace',
+      articleList: 'Články'
     }
   }
 }

@@ -109,11 +109,17 @@ module.exports = function (ctx) {
       open: false, // opens browser window automatically
       // vueDevtools: true,
       proxy: {
-        '/api': {
+        '/': {
           target: API_DEV,
           changeOrigin: false,
           secure: false,
           debug: true,
+          bypass: function (req, res, proxyOptions) {
+            if (req.headers.accept.indexOf('html') !== -1 && !req.path.startsWith('/oauth') && !req.path.startsWith('/api/oauth')) {
+              console.log('Skipping proxy for browser request.')
+              return '/index.html'
+            }
+          }
         }
       }
     },
@@ -144,7 +150,8 @@ module.exports = function (ctx) {
         'QItem',
         'QStepper',
         'QTooltip',
-        'QUploader'
+        'QUploader',
+        'QInput'
       ],
       // directives: [],
 
@@ -155,8 +162,9 @@ module.exports = function (ctx) {
         'BottomSheet',
         'Loading',
         'LoadingBar',
-        'Notify',
-        'Meta'
+        'Meta',
+        'Dialog',
+        'Notify'
       ]
     },
 

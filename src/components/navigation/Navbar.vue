@@ -25,7 +25,7 @@
         v-go-back.single
         color="white"
         icon="arrow_back")
-      q-btn(stretch flat :to="{ name: 'publications/all-datasets' }")
+      q-btn(stretch flat :to="{ name: 'homepage' }")
         img.navbar__logo.col-auto(
           src="logos/datacare_White.svg")
       q-toolbar-title.q-py-md.text-uppercase.text-weight-bold {{ productName }}
@@ -34,8 +34,10 @@
         stretch
         flat
         icon="cloud_upload"
-        :to="{ name: 'draft-publications/datasets/upload' }"
+        :to="{ name: 'draft-datasets/upload' }"
         :label="$t('action.uploadDataset')")
+      router-link(to="/articles") Art
+      router-link(to="/datasets") Dat
     q-toolbar.col-auto
       q-space.q-ml-xl
       account-dropdown(:authenticated="authenticated")

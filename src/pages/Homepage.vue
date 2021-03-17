@@ -16,7 +16,7 @@
               rounded
               icon="leaderboard"
               padding="lg"
-              :to="{name: 'publications/all-datasets'}"
+              :to="{name: 'all-datasets'}"
               :label="$t('section.datasetList')")
             q-btn.full-width.shadow-5(
               color="dark"
