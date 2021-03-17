@@ -17,12 +17,6 @@ const routes = [
         name: 'logged-out',
         path: 'logged-out',
         component: () => import('pages/Logout.vue')
-      },
-      // Always leave this as last one,
-      // but you can also remove it
-      {
-        path: '*',
-        component: () => import('pages/Error404.vue')
       }
     ]
   },
@@ -31,8 +25,14 @@ const routes = [
     component: () => import('layouts/MainLayout'),
     children: [
       ...datasets,
-      ...articles,
+      ...articles
     ]
+  },
+  // Always leave this as last one,
+  // but you can also remove it
+  {
+    path: '*',
+    component: () => import('pages/Error404.vue')
   }
 ]
 

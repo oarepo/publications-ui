@@ -66,8 +66,7 @@ export default {
     loginRequired: 'Authentication required',
     gdpr: 'Terms of Service Consent',
     error: 'Error',
-    roles: 'Roles',
-    articleList: 'Articles'
+    roles: 'Roles'
   },
   message: {
     noData: 'No data',

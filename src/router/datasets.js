@@ -107,8 +107,8 @@ const datasets = [
   },
   collectionApi({
     collectionCode: 'draft-publications/datasets', /* Dataset submission route */
-    name: 'draft-publications/datasets/upload',
-    path: 'dataset-upload',
+    name: 'draft-datasets/upload',
+    path: '/datasets/draft/upload',
     component: () => import('pages/datasets/DatasetUpload')
   }, {
     meta: {

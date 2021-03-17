@@ -66,8 +66,7 @@ export default {
     loginRequired: 'Vyžadováno přihlášení',
     error: 'Chyba',
     gdpr: 'Souhlas s podmínkami',
-    roles: 'Role',
-    articleList: 'Články'
+    roles: 'Role'
   },
   message: {
     noData: 'Žádná data',

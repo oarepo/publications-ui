@@ -163,8 +163,8 @@ module.exports = function (ctx) {
         'Loading',
         'LoadingBar',
         'Meta',
-        'Dialog'
-        'Notify',
+        'Dialog',
+        'Notify'
       ]
     },
 
