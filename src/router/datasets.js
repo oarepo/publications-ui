@@ -3,119 +3,121 @@
 import { DATASETS_COLLECTION_CODE, DATASETS_DRAFT_COLLECTION_CODE } from 'src/constants'
 import { collection, collectionApi, record } from '@oarepo/invenio-api-vue-composition'
 
-const datasets = [
-  // Published dataset detail
-  record({
-    name: 'dataset/record',
-    collectionCode: DATASETS_COLLECTION_CODE,
-    path: '/datasets/:recordId',
-    apiUrl: '/',
-    component: () => import('pages/datasets/DatasetDraftDetail'),
-    loadingComponent: 'viewer',
-    httpGetProps: {
-      dedupingInterval: 100,
-      revalidateDebounce: 0,
-      shouldRetryOnError: false
-    },
-    meta: {
-      title: 'route.title.datasetDetail'
-    }
-  }),
-  collection(
-    {
-      path: '/datasets',
+function datasets (communityId) {
+  return [
+    // Published dataset detail
+    record({
+      name: `${communityId}/dataset/record`,
       collectionCode: DATASETS_COLLECTION_CODE,
-      name: 'all-datasets',
-      component: () => import('pages/datasets/DatasetList'),
-      loadingComponent: 'viewer',
+      path: `${communityId}/datasets/:recordId`,
       apiUrl: '/',
-      recordRouteName: (record) => {
-        if (record.links.self.indexOf('draft') > 0) {
-          return 'draft-dataset/record'
-        } else {
-          return 'dataset/record'
-        }
-      },
+      component: () => import('pages/datasets/DatasetDraftDetail'),
+      loadingComponent: 'viewer',
       httpGetProps: {
         dedupingInterval: 100,
         revalidateDebounce: 0,
-        shouldRetryOnError: false,
-        keepData: (data, error, oldUrl, oldQuery, newUrl, newQuery, options) => {
-          if (oldUrl === newUrl) {
-            return true // collection not changed
-          }
-          return false
-        }
-      }
-    },
-    {
+        shouldRetryOnError: false
+      },
       meta: {
-        title: 'route.title.datasetList',
-        useFacets: true
+        title: 'route.title.datasetDetail'
       }
     }),
-  { /* Dataset editation routes */
-    name: 'dataset-edit',
-    path: '/datasets/edit',
-    component: () => import('layouts/DatasetDetailLayout'),
-    meta: {
-      authorization: {},
-      title: 'route.title.datasetEdit'
-    },
-    children: [
-      record({
-        name: 'draft-datasets/container',
-        collectionCode: DATASETS_DRAFT_COLLECTION_CODE,
-        path: ':recordId/edit',
-        apiUrl: '/',
-        component: () => import('pages/datasets/DatasetDraftDetail'),
+    collection(
+      {
+        path: `${communityId}/datasets`,
+        collectionCode: DATASETS_COLLECTION_CODE,
+        name: `${communityId}/all-datasets`,
+        component: () => import('pages/datasets/DatasetList'),
         loadingComponent: 'viewer',
-        httpGetProps: {
-          dedupingInterval: 100,
-          revalidateDebounce: 0,
-          shouldRetryOnError: false
-        }
-      })
-    ]
-  },
-  { /* Dataset detail routes */
-    name: 'dataset-detail',
-    path: '/datasets/draft',
-    component: () => import('layouts/DatasetDetailLayout'),
-    meta: {
-      title: 'route.title.datasetDetail'
-    },
-    children: [
-      // Draft dataset detail
-      record({
-        name: 'draft-dataset/record',
-        collectionCode: DATASETS_DRAFT_COLLECTION_CODE,
-        path: ':recordId',
-        apiUrl: '/',
-        component: () => import('pages/datasets/DatasetDraftDetail'),
-        loadingComponent: 'viewer',
-        httpGetProps: {
-          dedupingInterval: 100,
-          revalidateDebounce: 0,
-          shouldRetryOnError: false
+        apiUrl: `/${communityId}`,
+        recordRouteName: (record) => {
+          if (record.links.self.indexOf('draft') > 0) {
+            return `${communityId}/draft-dataset/record`
+          } else {
+            return `${communityId}/dataset/record`
+          }
         },
-        meta: {
-          title: 'route.title.datasetDetail'
+        httpGetProps: {
+          dedupingInterval: 100,
+          revalidateDebounce: 0,
+          shouldRetryOnError: false,
+          keepData: (data, error, oldUrl, oldQuery, newUrl, newQuery, options) => {
+            if (oldUrl === newUrl) {
+              return true // collection not changed
+            }
+            return false
+          }
         }
-      })
-    ]
-  },
-  collectionApi({
-    collectionCode: 'draft-publications/datasets', /* Dataset submission route */
-    name: 'draft-datasets/upload',
-    path: '/datasets/draft/upload',
-    component: () => import('pages/datasets/DatasetUpload')
-  }, {
-    meta: {
-      authorization: {},
-      title: 'route.title.datasetUpload'
-    }
-  })
-]
+      },
+      {
+        meta: {
+          title: 'route.title.datasetList',
+          useFacets: true
+        }
+      }),
+    { /* Dataset editation routes */
+      name: `${communityId}/dataset-edit`,
+      path: `${communityId}/datasets/edit`,
+      component: () => import('layouts/DatasetDetailLayout'),
+      meta: {
+        authorization: {},
+        title: 'route.title.datasetEdit'
+      },
+      children: [
+        record({
+          name: `${communityId}/draft-datasets/container`,
+          collectionCode: DATASETS_DRAFT_COLLECTION_CODE,
+          path: `${communityId}/:recordId/edit`,
+          apiUrl: '/',
+          component: () => import('pages/datasets/DatasetDraftDetail'),
+          loadingComponent: 'viewer',
+          httpGetProps: {
+            dedupingInterval: 100,
+            revalidateDebounce: 0,
+            shouldRetryOnError: false
+          }
+        })
+      ]
+    },
+    { /* Dataset detail routes */
+      name: `${communityId}/dataset-detail`,
+      path: `${communityId}/datasets/draft`,
+      component: () => import('layouts/DatasetDetailLayout'),
+      meta: {
+        title: 'route.title.datasetDetail'
+      },
+      children: [
+        // Draft dataset detail
+        record({
+          name: `${communityId}/draft-dataset/record`,
+          collectionCode: DATASETS_DRAFT_COLLECTION_CODE,
+          path: `${communityId}/:recordId`,
+          apiUrl: '/',
+          component: () => import('pages/datasets/DatasetDraftDetail'),
+          loadingComponent: 'viewer',
+          httpGetProps: {
+            dedupingInterval: 100,
+            revalidateDebounce: 0,
+            shouldRetryOnError: false
+          },
+          meta: {
+            title: 'route.title.datasetDetail'
+          }
+        })
+      ]
+    },
+    collectionApi({
+      collectionCode: DATASETS_DRAFT_COLLECTION_CODE,
+      name: `${communityId}/draft-datasets/upload`,
+      path: `${communityId}/datasets/draft/upload`,
+      component: () => import('pages/datasets/DatasetUpload')
+    }, {
+      meta: {
+        authorization: {},
+        title: 'route.title.datasetUpload'
+      }
+    })
+  ]
+}
 
 export default datasets
