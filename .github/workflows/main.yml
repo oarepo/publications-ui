@@ -23,7 +23,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install @quasar/cli
+          npm install
       - name: Build for production
         run: quasar build
       - name: Set RELEASE_VERSION
