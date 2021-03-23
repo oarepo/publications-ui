@@ -21,6 +21,7 @@ jobs:
         with:
           name: workspace
           path: ${{ github.workspace }}
+          retention-days: 1
   build_and_publish:
     runs-on: ubuntu-latest
     needs: lint_and_test
