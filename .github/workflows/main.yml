@@ -52,5 +52,11 @@ jobs:
           name: dist-spa-${{ env.RELEASE_VERSION }}
       - name: Publishing distribution
         run: ls -R
-      - name: Package distribution asset
-        run: tar czvf /tmp/dist-spa-${{ env.RELEASE_VERSION }}.tar.gz ./
+      - name: Package SPA distribution asset
+        run: tar czvf /tmp/dist-spa-${{ env.RELEASE_VERSION }}.tar.gz spa
+      - name: Release SPA distribution asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: /tmp/dist-spa-${{ env.RELEASE_VERSION }}.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
