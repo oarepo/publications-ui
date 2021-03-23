@@ -10,7 +10,7 @@ function datasets (communityId) {
       name: `${communityId}/dataset/record`,
       collectionCode: DATASETS_COLLECTION_CODE,
       path: `${communityId}/datasets/:recordId`,
-      apiUrl: '/',
+      apiUrl: `/${communityId}`,
       component: () => import('pages/datasets/DatasetDraftDetail'),
       loadingComponent: 'viewer',
       httpGetProps: {
@@ -24,7 +24,7 @@ function datasets (communityId) {
     }),
     collection(
       {
-        path: `${communityId}/datasets`,
+        path: `${communityId}/datasets/`,
         collectionCode: DATASETS_COLLECTION_CODE,
         name: `${communityId}/all-datasets`,
         component: () => import('pages/datasets/DatasetList'),
@@ -68,7 +68,7 @@ function datasets (communityId) {
           name: `${communityId}/draft-datasets/container`,
           collectionCode: DATASETS_DRAFT_COLLECTION_CODE,
           path: `${communityId}/:recordId/edit`,
-          apiUrl: '/',
+          apiUrl: `/${communityId}`,
           component: () => import('pages/datasets/DatasetDraftDetail'),
           loadingComponent: 'viewer',
           httpGetProps: {
@@ -81,7 +81,7 @@ function datasets (communityId) {
     },
     { /* Dataset detail routes */
       name: `${communityId}/dataset-detail`,
-      path: `${communityId}/datasets/draft`,
+      path: `${communityId}/datasets/draft/`,
       component: () => import('layouts/DatasetDetailLayout'),
       meta: {
         title: 'route.title.datasetDetail'
@@ -91,8 +91,8 @@ function datasets (communityId) {
         record({
           name: `${communityId}/draft-dataset/record`,
           collectionCode: DATASETS_DRAFT_COLLECTION_CODE,
-          path: `${communityId}/:recordId`,
-          apiUrl: '/',
+          path: ':recordId',
+          apiUrl: `/${communityId}`,
           component: () => import('pages/datasets/DatasetDraftDetail'),
           loadingComponent: 'viewer',
           httpGetProps: {
