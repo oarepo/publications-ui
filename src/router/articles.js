@@ -4,19 +4,36 @@ import { collection, record } from '@oarepo/invenio-api-vue-composition'
 import { ARTICLES_COLLECTION_CODE, ARTICLES_DRAFT_COLLECTION_CODE } from 'src/constants'
 
 const articles = [
+  // Published article detail
+  record({
+    name: 'article/record',
+    collectionCode: ARTICLES_COLLECTION_CODE,
+    path: '/articles/:recordId',
+    apiUrl: '/',
+    component: () => import('pages/articles/ArticleDraftDetail'),
+    loadingComponent: 'viewer',
+    httpGetProps: {
+      dedupingInterval: 100,
+      revalidateDebounce: 0,
+      shouldRetryOnError: false
+    },
+    meta: {
+      title: 'route.title.articleDetail'
+    }
+  }),
   collection(
     {
       path: '/articles',
       collectionCode: ARTICLES_COLLECTION_CODE,
-      name: 'publications/all-articles',
+      name: 'all-articles',
       component: () => import('pages/articles/ArticleList'),
       loadingComponent: 'viewer',
       apiUrl: '/',
       recordRouteName: (record) => {
         if (record.links.self.indexOf('draft') > 0) {
-          return 'draft-publications/article/record'
+          return 'draft-article/record'
         } else {
-          return 'publications/article/record'
+          return 'article/record'
         }
       },
       httpGetProps: {
@@ -37,16 +54,16 @@ const articles = [
         useFacets: false
       }
     }),
-  { /* Dataset detail routes */
+  {
     name: 'article-detail',
-    path: '/articles/detail',
+    path: '/articles/draft',
     component: () => import('layouts/DatasetDetailLayout'),
     meta: {
       title: 'route.title.articleDetail'
     },
     children: [
       record({
-        name: 'draft-publications/article/record',
+        name: 'draft-article/record',
         collectionCode: ARTICLES_DRAFT_COLLECTION_CODE,
         path: ':recordId',
         apiUrl: '/',

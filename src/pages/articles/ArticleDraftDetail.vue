@@ -31,7 +31,9 @@
             q-chip() {{ article.document_type}}
           .text-overline.text-uppercase.text-accent.q-mt-md {{ $t('label.datasets') }}
             .row
-            q-chip(v-for="d in article.datasets" :key="d") {{ d }}
+            q-chip(v-for="d in article.datasets" :key="d")
+              a(v-bind:href="createUrl(d)") {{ d }}
+
         .text-overline.text-uppercase.text-accent.q-mt-md JSON Metadata
         pre.q-pa-md.bg-dark.text-code.text-white.wrap.overflow-auto(:style="{ maxWidth: '90vw' }") {{ article }}
 </template>
@@ -51,6 +53,11 @@ export default @Component({
   },
   components: {},
   methods: {
+    createUrl (url) {
+      const host = window.location.host
+      var newUrl = url.replace(host, '')
+      return newUrl
+    }
   }
 })
 class ArticleDraftDetail extends Vue {

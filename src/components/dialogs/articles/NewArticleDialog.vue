@@ -6,20 +6,19 @@ q-dialog(ref='dialog' @hide='onDialogHide')
     q-card-section
       q-stepper(v-model="step" flat)
         q-step(name="1" title="Import from DOI" :done="step > 1")
-          // i.fas.fa-minus-circle(@click='remove(k)' v-show='k || ( !k && inputs.length > 1)')
-          // i.fas.fa-plus-circle(@click='add(k)' v-show='k == inputs.length-1')
-          doi-input(v-model="article.doi" ref="doi") // podle toho co je v ref pak na to odkazuju dole v metodach a btw to doi-input je nazev komponenty z components
+          doi-input(v-model="article.doi" ref="doi")
         q-step(name="2" title="Details" :done="step > 2")
           q-input(v-model="article.title_lang" label="Title language")
-          q-input(v-model="article.title[this.article.title_lang]" label="Title value")
+          q-input(v-model="article.title_val" label="Title value")
           q-input(v-model="article.abstract_lang" label="Abstract language")
-          q-input(v-model="article.abstract[this.article.abstract_lang]" label="Abstract value" type="textarea")
+          q-input(v-model="article.abstract_val" label="Abstract value" type="textarea")
+          q-input(v-model="article.document_type" label="Document type")
           .text Authors
           q-card-section(v-for='(input,k) in authors_inputs' :key='k')
-            q-input(type='text' label="Author" :label='String(k + 1)' v-model='input.fullname')
-          q-btn( label='Add author' @click='add(k)')
-          q-btn( label='Remove author' @click='remove(k)' v-show='authors_inputs.length > 1')
-          // q-input(v-model="article.authors" label= "Authors")
+            q-input(type='text' label="Author" :label='String(k + 1)' v-model='input.full_name')
+          q-btn( label='Add author' rounded @click='add(k)')
+            q-space
+          q-btn( label='Remove author' rounded  @click='remove(k)' v-show='authors_inputs.length > 1')
     q-card-actions(align='right' v-if="step==='1'")
       q-btn(color='grey' flat label='Skip DOI' @click='skipDOI')
       q-space
@@ -33,6 +32,7 @@ q-dialog(ref='dialog' @hide='onDialogHide')
 
 <script>
 import DOIInput from 'components/doi_input/DOIInput'
+import axios from 'axios'
 
 export default {
   props: {
@@ -45,16 +45,17 @@ export default {
     return {
       k: 0,
       step: '1',
-      author_label: 'Author', // blbost, napsat lidsky
       validatingDOI: false,
+      generated_article: {},
       article: {
         doi: '',
         title_lang: '',
         abstract_lang: '',
-        title: '',
-        abstract: ''
+        abstract_val: '',
+        title_val: '',
+        document_type: ''
       },
-      authors_inputs: [{ fullname: '' }]
+      authors_inputs: [{ full_name: '' }]
     }
   },
 
@@ -74,7 +75,7 @@ export default {
     },
 
     add (index) {
-      this.authors_inputs.push({ fullname: '' })
+      this.authors_inputs.push({ full_name: '' })
     },
 
     remove (index) {
@@ -85,23 +86,30 @@ export default {
     async next () {
       this.validatingDOI = true
       try {
-        console.log(this.$refs.doi.doi)
         const article = await this.$refs.doi.validate()
         if (article) {
-          this.article = article
+          this.generated_article = article
+          this.article.document_type = article.document_type
+          try {
+            this.article.abstract_val = article.abstract[Object.keys(article.abstract)[0]]
+            this.article.abstract_lang = Object.keys(article.abstract)[0]
+          } catch { // article is not required
+            this.article.abstract_val = ''
+            this.article.abstract_lang = '_' // default language value
+          }
+
+          this.article.title_val = article.title[Object.keys(article.title)[0]]
+          this.article.doi = this.$refs.doi.doi
           this.article.title_lang = Object.keys(article.title)[0]
-          this.article.abstract_lang = Object.keys(article.abstract)[0]
 
           for (var i = 0; i < article.authors.length; i++) {
             if (i === 0) {
-              this.authors_inputs[0].fullname = article.authors[0].full_name
+              this.authors_inputs[0].full_name = article.authors[0].full_name
             } else {
-              this.authors_inputs.push({ fullname: article.authors[i].full_name })
+              this.authors_inputs.push({ full_name: article.authors[i].full_name })
             }
           }
 
-          // console.log(article.title.titleLang)
-          // this.article.title_value = article.title.titleLang
           this.step = '2'
         }
       } finally {
@@ -114,8 +122,32 @@ export default {
     back () {
       this.step = '1'
     },
-    createArticle () {
+    async createArticle () {
+      var urlEnd = 'create_article'
+      const currentUrl = window.location.pathname
+      const host = window.location.host
+      const dataSetUrl = host + currentUrl
+      if (this.article.doi !== '') {
+        await axios.post(`/articles/draft/${urlEnd}/`, { changes: this.article, authors: this.authors_inputs, generated_article: this.generated_article })
+        const url = (await axios.post(`/articles/draft/document/${this.article.doi}`)).request.responseURL
+        const response = (await axios.post(`/articles/draft/document/${this.article.doi}`)).data
+        this.updateDatasetArray(response, dataSetUrl, url)
+        window.location.href = url
 
+        this.hide()
+      } else {
+        urlEnd = 'without_doi'
+        const resp = (await axios.post(`/articles/draft/${urlEnd}/`, { changes: this.article, authors: this.authors_inputs, generated_article: this.generated_article })).data
+        window.location.href = resp.links.self
+        this.hide()
+      }
+    },
+    updateDatasetArray (response, dataSetUrl, url) {
+      const datasetsArray = response.metadata.datasets
+
+      if (datasetsArray === undefined) {
+        axios.patch(url, [{ op: 'add', path: '/datasets', value: [dataSetUrl] }], { headers: { 'Content-Type': 'application/json-patch+json' } })
+      } else { axios.patch(url, [{ op: 'add', path: '/datasets/-', value: dataSetUrl }], { headers: { 'Content-Type': 'application/json-patch+json' } }) }
     },
     onOKClick () {
       // on OK, it is REQUIRED to

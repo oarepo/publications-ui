@@ -80,19 +80,7 @@ export default @Component({
         component:NewArticleDialog,
       }).onOk(async data => {
         return
-        var DOI = data
-        var datasetURL = `https://127.0.0.1:5000/datasets/detail/${this.recordId}`
 
-        var url = (await axios.post(`https://127.0.0.1:5000/api/draft/publications/articles/document/${this.DOI}`)).request.responseURL
-        var response = (await axios.post(`https://127.0.0.1:5000/api/draft/publications/articles/document/${this.DOI}`)).data
-        var datasetsArray = response.metadata.datasets
-
-        if (datasetsArray === undefined) { axios.patch(url, [{ op: 'add', path: '/datasets', value: [datasetURL] }], { headers: { 'Content-Type': 'application/json-patch+json' } })
-        }
-        else { axios.patch(url, [{ op: 'add', path: '/datasets/-', value: datasetURL }], { headers: {'Content-Type': 'application/json-patch+json' } }) }
-        url = (await axios.post(`https://127.0.0.1:5000/api/draft/publications/articles/document/${this.DOI}`)).request.responseURL
-        // window.location.href = url
-        this.$router.push(url)
        }).onCancel(() => {
         // console.log('>>>> Cancel')
       }).onDismiss(() => {
