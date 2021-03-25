@@ -5,12 +5,12 @@ import { ARTICLES_COLLECTION_CODE, ARTICLES_DRAFT_COLLECTION_CODE } from 'src/co
 
 function articles (communityId) {
   return [
-    // Published articles detail
+    // Published article detail
     record({
       name: `${communityId}/article/record`,
       collectionCode: ARTICLES_COLLECTION_CODE,
-      path: 'articles/:recordId',
-      apiUrl: '/',
+      path: `${communityId}/articles/:recordId`,
+      apiUrl: `/${communityId}`,
       component: () => import('pages/articles/ArticleDraftDetail'),
       loadingComponent: 'viewer',
       httpGetProps: {
@@ -24,12 +24,12 @@ function articles (communityId) {
     }),
     collection(
       {
-        path: 'articles',
+        path: `${communityId}/articles/`,
         collectionCode: ARTICLES_COLLECTION_CODE,
         name: `${communityId}/all-articles`,
         component: () => import('pages/articles/ArticleList'),
         loadingComponent: 'viewer',
-        apiUrl: '/',
+        apiUrl: `/${communityId}`,
         recordRouteName: (record) => {
           if (record.links.self.indexOf('draft') > 0) {
             return `${communityId}/draft-article/record`
@@ -52,12 +52,14 @@ function articles (communityId) {
       {
         meta: {
           title: 'route.title.articleList',
-          useFacets: false
+          useFacets: true
         }
       }),
     { /* Article detail routes */
       name: `${communityId}/article-detail`,
-      path: 'articles/detail',
+      path: `${communityId}/articles/draft/`,
+      // TODO(alzpeta): implement ArticleDetailLayout
+      // or a common detail layout for both datasets and articles
       component: () => import('layouts/DatasetDetailLayout'),
       meta: {
         title: 'route.title.articleDetail'
@@ -67,7 +69,7 @@ function articles (communityId) {
           name: `${communityId}/draft-article/record`,
           collectionCode: ARTICLES_DRAFT_COLLECTION_CODE,
           path: ':recordId',
-          apiUrl: '/',
+          apiUrl: `/${communityId}`,
           component: () => import('pages/articles/ArticleDraftDetail'),
           loadingComponent: 'viewer',
           httpGetProps: {
