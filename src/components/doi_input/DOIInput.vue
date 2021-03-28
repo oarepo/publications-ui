@@ -18,7 +18,7 @@ export default {
   components: {
     'article-dialog': NewArticleDialog
   },
-  mounted () { // to co se zavola uplne na zacatku
+  mounted () {
     this.doi = this.value
   },
   data () {
