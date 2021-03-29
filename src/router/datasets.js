@@ -1,7 +1,7 @@
 // Datasets interface routes
 
-import { collection, record } from '@oarepo/invenio-api-vue-composition'
 import { DATASETS_COLLECTION_CODE, DATASETS_DRAFT_COLLECTION_CODE } from 'src/constants'
+import { collection, collectionApi, record } from '@oarepo/invenio-api-vue-composition'
 
 const datasets = [
   // Published dataset detail
@@ -105,15 +105,17 @@ const datasets = [
       })
     ]
   },
-  { /* Dataset submission routes */
-    name: 'dataset-upload',
-    path: 'dataset-upload',
-    component: () => import('pages/datasets/DatasetUpload'),
+  collectionApi({
+    collectionCode: 'draft-publications/datasets', /* Dataset submission route */
+    name: 'draft-datasets/upload',
+    path: '/datasets/draft/upload',
+    component: () => import('pages/datasets/DatasetUpload')
+  }, {
     meta: {
       authorization: {},
       title: 'route.title.datasetUpload'
     }
-  }
+  })
 ]
 
 export default datasets

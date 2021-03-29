@@ -39,7 +39,8 @@ export default @Component({
     filters: Array,
     pages: Number,
     loading: Boolean,
-    loaded: Boolean
+    loaded: Boolean,
+    collectionApi: Object
   },
   components: {
     // Logo,

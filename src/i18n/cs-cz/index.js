@@ -1,8 +1,9 @@
 export default {
   app: {
-    productName: 'Repozitář publikací',
-    description: 'Repozitář vědeckých publikací a datasetů',
-    copyright: '©  2020 CESNET'
+    productName: 'Digitální Repozitář',
+    description: 'Digitální Repozitář vědeckých publikací a datasetů',
+    copyrightNotice: 'Tato služba je součástí e-infrastruktury CESNET',
+    copyright: '©  2020 CESNET z.s.p.o.  Zikova 4, 160 00 Praha 6'
   },
   nav: {
     admin: 'Administrace',
@@ -49,20 +50,23 @@ export default {
     localeSwitcher: 'Jazyk',
     documentType: 'Typ dokumentu',
     datasets: 'Datasety',
+    contact: 'Kontaktujte nás',
+    privacy: 'Ochrana osobních údajů',
+    docs: 'Uživatelská dokumentace',
     role: {
       admin: 'admin',
       curator: 'kurátor'
     }
   },
   section: {
+    articleList: 'Články',
     datasetList: 'Datasety',
     datasetDetail: 'Detail datasetu',
     datasetUpload: 'Upload datasetu',
     loginRequired: 'Vyžadováno přihlášení',
     error: 'Chyba',
     gdpr: 'Souhlas s podmínkami',
-    roles: 'Role',
-    articleList: 'Články'
+    roles: 'Role'
   },
   message: {
     noData: 'Žádná data',

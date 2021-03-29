@@ -4,7 +4,7 @@ import { collection, record } from '@oarepo/invenio-api-vue-composition'
 import { ARTICLES_COLLECTION_CODE, ARTICLES_DRAFT_COLLECTION_CODE } from 'src/constants'
 
 const articles = [
-  // Published article detail
+  // Published articles detail
   record({
     name: 'article/record',
     collectionCode: ARTICLES_COLLECTION_CODE,
@@ -54,9 +54,9 @@ const articles = [
         useFacets: false
       }
     }),
-  {
+  { /* Article detail routes */
     name: 'article-detail',
-    path: '/articles/draft',
+    path: '/articles/detail',
     component: () => import('layouts/DatasetDetailLayout'),
     meta: {
       title: 'route.title.articleDetail'

@@ -26,12 +26,12 @@ q-dialog(ref='dialog' @hide='onDialogHide')
     q-card-actions(align='right' v-if="step==='2'")
       q-btn(color='grey' flat label='Back' @click='back')
       q-space
-      q-btn(color='primary' label='Create article' @click='createArticle' :loading="validatingDOI" )
+      q-btn(color='primary' label='Create article' @click='createArticle')
 
 </template>
 
 <script>
-import DOIInput from 'components/doi_input/DOIInput'
+import DOIInput from 'components/inputs/DOIInput'
 import axios from 'axios'
 
 export default {
@@ -191,10 +191,10 @@ export default {
     },
     updateDatasetArray (response, dataSetUrl, url) {
       const datasetsArray = response.metadata.datasets
-
+      console.log(dataSetUrl)
       if (datasetsArray === undefined) {
         axios.patch(url, [{ op: 'add', path: '/datasets', value: [dataSetUrl] }], { headers: { 'Content-Type': 'application/json-patch+json' } })
-      } else { axios.patch(url, [{ op: 'add', path: '/datasets/-', value: dataSetUrl }], { headers: { 'Content-Type': 'application/json-patch+json' } }) }
+      } else if (!datasetsArray.includes(dataSetUrl)) { axios.patch(url, [{ op: 'add', path: '/datasets/-', value: dataSetUrl }], { headers: { 'Content-Type': 'application/json-patch+json' } }) }
     },
     onOKClick () {
       // on OK, it is REQUIRED to
