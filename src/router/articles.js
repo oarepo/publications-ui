@@ -3,84 +3,87 @@
 import { collection, record } from '@oarepo/invenio-api-vue-composition'
 import { ARTICLES_COLLECTION_CODE, ARTICLES_DRAFT_COLLECTION_CODE } from 'src/constants'
 
-const articles = [
-  // Published articles detail
-  record({
-    name: 'article/record',
-    collectionCode: ARTICLES_COLLECTION_CODE,
-    path: '/articles/:recordId',
-    apiUrl: '/',
-    component: () => import('pages/articles/ArticleDraftDetail'),
-    loadingComponent: 'viewer',
-    httpGetProps: {
-      dedupingInterval: 100,
-      revalidateDebounce: 0,
-      shouldRetryOnError: false
-    },
-    meta: {
-      title: 'route.title.articleDetail'
-    }
-  }),
-  collection(
-    {
-      path: '/articles',
+function articles (communityId) {
+  return [
+    // Published article detail
+    record({
+      name: `${communityId}/article/record`,
       collectionCode: ARTICLES_COLLECTION_CODE,
-      name: 'all-articles',
-      component: () => import('pages/articles/ArticleList'),
+      path: `${communityId}/articles/:recordId`,
+      apiUrl: `/${communityId}`,
+      component: () => import('pages/articles/ArticleDraftDetail'),
       loadingComponent: 'viewer',
-      apiUrl: '/',
-      recordRouteName: (record) => {
-        if (record.links.self.indexOf('draft') > 0) {
-          return 'draft-article/record'
-        } else {
-          return 'article/record'
-        }
-      },
       httpGetProps: {
         dedupingInterval: 100,
         revalidateDebounce: 0,
-        shouldRetryOnError: false,
-        keepData: (data, error, oldUrl, oldQuery, newUrl, newQuery, options) => {
-          if (oldUrl === newUrl) {
-            return true // collection not changed
-          }
-          return false
-        }
-      }
-    },
-    {
+        shouldRetryOnError: false
+      },
       meta: {
-        title: 'route.title.articleList',
-        useFacets: false
+        title: 'route.title.articleDetail'
       }
     }),
-  { /* Article detail routes */
-    name: 'article-detail',
-    path: '/articles/detail',
-    component: () => import('layouts/DatasetDetailLayout'),
-    meta: {
-      title: 'route.title.articleDetail'
-    },
-    children: [
-      record({
-        name: 'draft-article/record',
-        collectionCode: ARTICLES_DRAFT_COLLECTION_CODE,
-        path: ':recordId',
-        apiUrl: '/',
-        component: () => import('pages/articles/ArticleDraftDetail'),
+    collection(
+      {
+        path: `${communityId}/articles/`,
+        collectionCode: ARTICLES_COLLECTION_CODE,
+        name: `${communityId}/all-articles`,
+        component: () => import('pages/articles/ArticleList'),
         loadingComponent: 'viewer',
+        apiUrl: `/${communityId}`,
+        recordRouteName: (record) => {
+          if (record.links.self.indexOf('draft') > 0) {
+            return `${communityId}/draft-article/record`
+          } else {
+            return `${communityId}/article/record`
+          }
+        },
         httpGetProps: {
           dedupingInterval: 100,
           revalidateDebounce: 0,
-          shouldRetryOnError: false
-        },
-        meta: {
-          title: 'route.title.articleDetail'
+          shouldRetryOnError: false,
+          keepData: (data, error, oldUrl, oldQuery, newUrl, newQuery, options) => {
+            if (oldUrl === newUrl) {
+              return true // collection not changed
+            }
+            return false
+          }
         }
-      })
-    ]
-  }
-
-]
+      },
+      {
+        meta: {
+          title: 'route.title.articleList',
+          useFacets: true
+        }
+      }),
+    { /* Article detail routes */
+      name: `${communityId}/article-detail`,
+      path: `${communityId}/articles/draft/`,
+      // TODO(alzpeta): implement ArticleDetailLayout
+      // or a common detail layout for both datasets and articles
+      component: () => import('layouts/DatasetDetailLayout'),
+      meta: {
+        title: 'route.title.articleDetail'
+      },
+      children: [
+        record({
+          name: `${communityId}/draft-article/record`,
+          collectionCode: ARTICLES_DRAFT_COLLECTION_CODE,
+          path: ':recordId',
+          apiUrl: `/${communityId}`,
+          component: () => import('pages/articles/ArticleDraftDetail'),
+          loadingComponent: 'viewer',
+          httpGetProps: {
+            dedupingInterval: 100,
+            revalidateDebounce: 0,
+            shouldRetryOnError: false
+          },
+          meta: {
+            title: 'route.title.articleDetail'
+          }
+        })
+      ]
+    }
+  ]
+}
 
 export default articles
