@@ -4,7 +4,8 @@ export default {
   app: {
     productName: productName,
     description: productName,
-    copyright: '©  2020 CESNET'
+    copyrightNotice: 'This service is a part of CESNET e-infrastructure',
+    copyright: '©  2020 CESNET a. l. e., Zikova 4, 160 00 Praha 6, Czech Republic'
   },
   nav: {
     admin: 'Administration',
@@ -19,6 +20,9 @@ export default {
     }
   },
   action: {
+    attachArticle: 'Attach Article',
+    submitDataset: 'Submit dataset record',
+    addIdentifier: 'Přidat identifikátor',
     retry: 'Retry',
     close: 'Close',
     login: 'Log In',
@@ -33,15 +37,32 @@ export default {
   accessibility: {},
   label: {
     createdAt: 'Created',
+    identifierScheme: 'Scheme',
     searchInput: 'Search by title',
     localeSwitcher: 'Language',
+    language: 'Language',
+    datasetBasicInfo: 'Basic Info',
+    titles: 'Titles',
+    documentType: 'Document type',
+    datasets: 'Datasets',
+    contact: 'Contact Us',
+    privacy: 'Privacy Policy',
+    docs: 'User Documentation',
     role: {
       admin: 'admin',
       curator: 'curator'
     }
   },
   section: {
+    articleList: 'Articles',
     datasetList: 'Datasets',
+    addFiles: 'Add files',
+    datasetDetail: 'Dataset Detail',
+    datasetUpload: 'Dataset Upload',
+    identifiers: 'Additional Identifiers',
+    license: 'License',
+    files: 'Attachments',
+    size: 'Size',
     loginRequired: 'Authentication required',
     gdpr: 'Terms of Service Consent',
     error: 'Error',
@@ -56,6 +77,16 @@ export default {
     lang: {
       csCZ: 'Czech',
       enUS: 'English'
+    }
+  },
+  route: {
+    title: {
+      datasetList: 'Datasets',
+      datasetEdit: 'Edit Dataset',
+      datasetUpload: 'Upload dataset',
+      datasetDetail: 'Dataset',
+      admin: 'Administration',
+      articleList: 'Articles'
     }
   }
 }

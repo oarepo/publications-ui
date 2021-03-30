@@ -1,16 +1,20 @@
 export default {
   app: {
-    productName: 'Repozitář publikací',
-    description: 'Repozitář vědeckých publikací a datasetů',
-    copyright: '©  2020 CESNET'
+    productName: 'Digitální Repozitář',
+    description: 'Digitální Repozitář vědeckých publikací a datasetů',
+    copyrightNotice: 'Tato služba je součástí e-infrastruktury CESNET',
+    copyright: '©  2020 CESNET z.s.p.o.  Zikova 4, 160 00 Praha 6'
   },
   nav: {
     admin: 'Administrace',
     detail: 'Detail'
   },
   action: {
+    attachArticle: 'Připojit článek',
+    submitDataset: 'Nahrát dataset',
     retry: 'Zkusit znovu',
     close: 'Zavřít',
+    addTitle: 'Přidat název',
     login: 'Přihlásit se',
     altLogin: 'Přejít na alternativní přihlášení',
     logout: 'Odhlásit se',
@@ -30,16 +34,35 @@ export default {
   },
   accessibility: {},
   label: {
+    addFiles: 'Nahrát přílohy',
+    addIdentifier: 'Přidat identifikátor',
+    abstract: 'Abstrakt',
+    datasetBasicInfo: 'Základní informace',
     createdAt: 'Vytvořeno',
+    titles: 'Název záznamu',
+    identifiers: 'Identifikátory',
+    language: 'Jazyk',
+    identifierScheme: 'Schema',
+    files: 'Soubory',
+    size: 'Velikost',
+    license: 'Licence',
     searchInput: 'Hledat podle názvu',
     localeSwitcher: 'Jazyk',
+    documentType: 'Typ dokumentu',
+    datasets: 'Datasety',
+    contact: 'Kontaktujte nás',
+    privacy: 'Ochrana osobních údajů',
+    docs: 'Uživatelská dokumentace',
     role: {
       admin: 'admin',
       curator: 'kurátor'
     }
   },
   section: {
+    articleList: 'Články',
     datasetList: 'Datasety',
+    datasetDetail: 'Detail datasetu',
+    datasetUpload: 'Upload datasetu',
     loginRequired: 'Vyžadováno přihlášení',
     error: 'Chyba',
     gdpr: 'Souhlas s podmínkami',
@@ -54,6 +77,16 @@ export default {
     lang: {
       csCZ: 'Česky',
       enUS: 'Anglicky'
+    }
+  },
+  route: {
+    title: {
+      datasetList: 'Datasety',
+      datasetEdit: 'Editace datasetu',
+      datasetUpload: 'Nový dataset',
+      datasetDetail: 'Dataset',
+      admin: 'Administrace',
+      articleList: 'Články'
     }
   }
 }

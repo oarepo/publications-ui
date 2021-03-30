@@ -29,8 +29,8 @@ class SearchInput extends Vue {
   @Emit('search')
   doSearch () {
     console.debug('search query', this.query)
-    if (this.$route.name !== 'publications/all-datasets') {
-      this.$router.push({ name: 'publications/all-datasets' })
+    if (this.$route.name !== 'all-datasets') {
+      this.$router.push({ name: 'all-datasets' })
     }
     this.$query.q = this.query
     this.$query.page = 1

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import Navbar from 'components/navigation/Navbar'
 
 export default @Component({
@@ -26,11 +26,6 @@ export default @Component({
 })
 class MainLayout extends Vue {
   facetsDrawer = true
-
-  @Watch('$route', { immediate: false, deep: true })
-  routeChanged (to) {
-    console.log(this.$route)
-  }
 }
 </script>
 <style lang="sass">

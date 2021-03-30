@@ -9,23 +9,26 @@ import { REDIRECT_LOGIN, usePopupLogin } from '@oarepo/vue-popup-login'
 
 export default {
   name: 'App',
-  meta: {
-    title: i18n.t('app.productName')
-  },
-  computed: {
-    pageTitle () {
-      return i18n.t('app.productName')
-    }
-  },
-  watch: {
-    '$route' (to, from) {
-      document.title = to.meta.title ? `${to.meta.title} | ${this.pageTitle}` : this.pageTitle
+  meta () {
+    return {
+      title: this.appTitle,
+      titleTemplate: title => this.fullAppTitle,
+      meta: {
+        twitterTitle: {
+          name: 'twitter:title',
+          content: this.fullAppTitle
+        },
+        ogTitle: {
+          name: 'og:title',
+          content: this.fullAppTitle
+        }
+      }
     }
   },
   setup () {
-    const api = usePopupLogin({})
-    api.check(false)
-    api.registerPopupFailedHandler(() => {
+    const login = usePopupLogin({})
+    login.check(false)
+    login.registerPopupFailedHandler(() => {
       return new Promise((resolve) => {
         BottomSheet.create({
           dark: true,
@@ -44,7 +47,7 @@ export default {
             }]
         }).onOk(action => {
           if (action.id === 'retry') {
-            resolve(api.login())
+            resolve(login.login())
           } else {
             resolve(REDIRECT_LOGIN)
           }
@@ -52,9 +55,10 @@ export default {
       })
     })
 
-    api.registerLoginRequiredHandler(() => {
+    login.registerLoginRequiredHandler(() => {
       return new Promise((resolve) => {
         BottomSheet.create({
+          class: 'z-top',
           dark: true,
           title: i18n.t('section.loginRequired'),
           message: i18n.t('message.authRequired'),
@@ -64,10 +68,18 @@ export default {
             id: 'log-in'
           }]
         }).onOk(() => {
-          resolve(api.login())
+          resolve(login.login())
         })
       })
     })
+  },
+  computed: {
+    appTitle () {
+      return this.$i18n.t('app.productName')
+    },
+    fullAppTitle () {
+      return `${this.appTitle}${this.$route.meta.title ? ' - ' : ''}${this.$t(this.$route.meta.title) || ''}`
+    }
   }
 }
 </script>
