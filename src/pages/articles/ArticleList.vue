@@ -23,13 +23,10 @@
 </template>
 <script>
 import { Component, Mixins } from 'vue-property-decorator'
-import SearchInput from 'components/search/SearchInput'
 import ItemListEntry from 'components/articles/list/ArticleListEntry'
 import { SearchMixin } from 'src/mixins/SearchMixin'
 import NoDataPlaceholder from 'src/components/common/NoDataPlaceholder'
 import FacetList from 'components/search/FacetList'
-// import { NewItemMixin } from 'src/mixins/NewItem'
-// import Logo from 'src/components/Logo'
 
 export default @Component({
   name: 'ArticleList',
@@ -43,7 +40,6 @@ export default @Component({
   },
   components: {
     // Logo,
-    SearchInput,
     ItemListEntry,
     NoDataPlaceholder,
     FacetList

@@ -39,6 +39,4 @@ const routes = [
   }
 ]
 
-console.log(routes)
-
 export default routes
