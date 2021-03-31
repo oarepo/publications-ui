@@ -34,10 +34,13 @@
         stretch
         flat
         icon="cloud_upload"
-        :to="{ name: 'cesnet/draft-datasets/upload' }"
-        :label="$t('action.uploadDataset')")
-      router-link(to="/articles") Art
-      router-link(to="/datasets") Dat
+        :to="{ name: `cesnet/draft-${collection}/upload`}"
+        :label="$t('action.upload')")
+        q-tooltip {{ $t(collection === 'datasets' ? 'action.uploadDataset': 'action.uploadArticle') }}
+      q-btn(stretch flat v-if="collection === 'datasets'" :to="{name: `${communityId}/all-articles`}" icon="article")
+        q-tooltip {{ $t('section.articleList') }}
+      q-btn(stretch flat v-if="collection === 'articles'" :to="{name: `${communityId}/all-datasets`}" icon="donut_small")
+        q-tooltip {{ $t('section.datasetList') }}
     q-toolbar.col-auto
       q-space.q-ml-xl
       account-dropdown(:authenticated="authenticated")
@@ -49,6 +52,7 @@ import AccountDropdown from 'components/account/AccountDropdown'
 import SearchInput from 'components/search/SearchInput'
 import { SearchMixin } from 'src/mixins/SearchMixin'
 import { AuthStateMixin } from 'src/mixins/AuthStateMixin'
+import { CommunityMixin } from 'src/mixins/Community'
 
 export const Modes = Object.freeze({ INTRO: 'intro', LIST: 'list', DETAIL: 'detail' })
 
@@ -66,13 +70,22 @@ export default @Component({
     AccountDropdown
   }
 })
-class Navbar extends Mixins(SearchMixin, AuthStateMixin) {
+class Navbar extends Mixins(SearchMixin, AuthStateMixin, CommunityMixin) {
   get modes () {
     return Modes
   }
 
   get productName () {
     return this.$i18n.t('app.productName')
+  }
+
+  get collection () {
+    if (this.$route.name.includes('dataset')) {
+      return 'datasets'
+    } else if (this.$route.name.includes('article')) {
+      return 'articles'
+    }
+    return ''
   }
 
   @Emit('facets')

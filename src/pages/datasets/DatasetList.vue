@@ -16,10 +16,13 @@
         q-pagination.q-mt-lg(v-model="$query.page" :max="pages" :max-pages="9" color="accent"
           direction-links boundary-numbers size="lg" v-if="loaded && items.length")
     no-data-placeholder.full-height(v-else)
-    portal(to="drawer")
-      .column.q-gutter-y-md.q-pa-xl
-        .col-auto.row.q-mb-xl.justify-center
-        facet-list(:facets="facets" v-if="loaded")
+    portal(to="drawer").full-height
+      .column.q-gutter-y-md.q-pa-xl.justify-between.full-height
+        .col-auto.row.q-mb-xl
+          .text-overline.text-grey-7.text-bold.text-uppercase {{ $t('label.filters') }}
+          facet-list(:facets="facets" v-if="loaded")
+        .col-auto.text-overline.text-grey-7.text-bold.text-uppercase {{ $t('label.community') }}
+          .text-h3.text-weight-thin.text-primary {{ communityId }}
 </template>
 <script>
 import { Component, Mixins } from 'vue-property-decorator'
@@ -27,6 +30,7 @@ import ItemListEntry from 'components/datasets/list/DatasetListEntry'
 import { SearchMixin } from 'src/mixins/SearchMixin'
 import NoDataPlaceholder from 'src/components/common/NoDataPlaceholder'
 import FacetList from 'components/search/FacetList'
+import { CommunityMixin } from 'src/mixins/Community'
 
 export default @Component({
   name: 'DatasetList',
@@ -46,7 +50,7 @@ export default @Component({
     FacetList
   }
 })
-class DatasetList extends Mixins(SearchMixin) {
+class DatasetList extends Mixins(SearchMixin, CommunityMixin) {
   navigateDetail (item) {
     this.$router.push(item.links.ui)
   }

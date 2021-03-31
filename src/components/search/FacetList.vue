@@ -1,13 +1,12 @@
 <template lang="pug">
-  .col
-    q-list(padding)
-      facet(
-        :isLoading="isLoading"
-        v-for="facet in facets"
-        :facet="facet"
-        :key="facet.code"
-        @open="openFacet(facet)"
-        @close="closeFacet(facet)")
+  q-list(padding)
+    facet(
+      :isLoading="isLoading"
+      v-for="facet in facets"
+      :facet="facet"
+      :key="facet.code"
+      @open="openFacet(facet)"
+      @close="closeFacet(facet)")
 </template>
 
 <script>

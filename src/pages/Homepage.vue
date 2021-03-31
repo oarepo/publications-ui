@@ -28,7 +28,6 @@
     .col-0.hero-tiles.gt-xs.q-pt-xl
     .col-5.right-graphic.gt-sm
     .col-0.right-tiles.gt-sm
-
 </template>
 <script>
 import { Component, Vue } from 'vue-property-decorator'

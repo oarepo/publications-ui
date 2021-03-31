@@ -52,7 +52,8 @@ function datasets (communityId) {
       {
         meta: {
           title: 'route.title.datasetList',
-          useFacets: true
+          useFacets: true,
+          communityId: communityId
         }
       }),
     { /* Dataset editation routes */
