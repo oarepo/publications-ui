@@ -170,7 +170,7 @@ module.exports = function (ctx) {
         'QStepper',
         'QTooltip',
         'QUploader',
-        'QInput',
+        'QInput'
       ],
       // directives: [],
 
@@ -183,7 +183,7 @@ module.exports = function (ctx) {
         'LoadingBar',
         'Meta',
         'Dialog',
-        'Notify',
+        'Notify'
       ]
     },
 
