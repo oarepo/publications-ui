@@ -22,7 +22,7 @@
           .text-overline.text-grey-7.text-bold.text-uppercase {{ $t('label.filters') }}
           facet-list(:facets="facets" v-if="loaded")
         .col-auto.text-overline.text-grey-7.text-bold.text-uppercase {{ $t('label.community') }}
-          .text-h3.text-weight-thin.text-primary {{ $route.meta.communityId }}
+          .text-h3.text-weight-thin.text-primary {{ communityId }}
 </template>
 <script>
 import { Component, Mixins } from 'vue-property-decorator'
@@ -30,6 +30,7 @@ import ItemListEntry from 'components/articles/list/ArticleListEntry'
 import { SearchMixin } from 'src/mixins/SearchMixin'
 import NoDataPlaceholder from 'src/components/common/NoDataPlaceholder'
 import FacetList from 'components/search/FacetList'
+import { CommunityMixin } from 'src/mixins/Community'
 
 export default @Component({
   name: 'ArticleList',
@@ -48,7 +49,7 @@ export default @Component({
     FacetList
   }
 })
-class ArticleList extends Mixins(SearchMixin) {
+class ArticleList extends Mixins(SearchMixin, CommunityMixin) {
   navigateDetail (item) {
     this.$router.push(item.links.ui)
   }

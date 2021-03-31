@@ -22,7 +22,9 @@ export default {
     openPrivacyPolicy: 'Zpracování osobních údajů',
     accept: 'Souhlasím',
     decline: 'Nesouhlasím',
-    uploadDataset: 'Nahrát dataset'
+    upload: 'Nahrát',
+    uploadDataset: 'Nahrát nový dataset',
+    uploadArticle: 'Nahrát nový článek'
   },
   error: {
     popupLoginFail: 'Nebylo možno se přihlásit, prosím povolte v prohlížeči vyskakovací okna pro tento web',
@@ -86,6 +88,7 @@ export default {
       datasetList: 'Datasety',
       datasetEdit: 'Editace datasetu',
       datasetUpload: 'Nový dataset',
+      articleUpload: 'Nový článek',
       datasetDetail: 'Dataset',
       admin: 'Administrace',
       articleList: 'Články'

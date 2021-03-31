@@ -32,7 +32,10 @@ export default {
     openPrivacyPolicy: 'Privacy policy',
     accept: 'Accept',
     decline: 'Decline',
-    uploadDataset: 'Upload'
+    upload: 'Upload',
+    uploadDataset: 'Upload new dataset',
+    uploadArticle: 'Upload new article'
+
   },
   accessibility: {},
   label: {
@@ -86,6 +89,7 @@ export default {
       datasetList: 'Datasets',
       datasetEdit: 'Edit Dataset',
       datasetUpload: 'Upload dataset',
+      articleUpload: 'Upload article',
       datasetDetail: 'Dataset',
       admin: 'Administration',
       articleList: 'Articles'

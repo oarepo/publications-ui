@@ -1,7 +1,7 @@
 // Datasets interface routes
 
-import { collection, record } from '@oarepo/invenio-api-vue-composition'
-import { ARTICLES_COLLECTION_CODE, ARTICLES_DRAFT_COLLECTION_CODE } from 'src/constants'
+import { collection, collectionApi, record } from '@oarepo/invenio-api-vue-composition'
+import { ARTICLES_COLLECTION_CODE, ARTICLES_DRAFT_COLLECTION_CODE, DATASETS_DRAFT_COLLECTION_CODE } from 'src/constants'
 
 function articles (communityId) {
   return [
@@ -83,7 +83,18 @@ function articles (communityId) {
           }
         })
       ]
-    }
+    },
+    collectionApi({
+      collectionCode: DATASETS_DRAFT_COLLECTION_CODE,
+      name: `${communityId}/draft-articles/upload`,
+      path: `${communityId}/articles/draft/upload`,
+      component: () => import('pages/datasets/DatasetUpload')
+    }, {
+      meta: {
+        authorization: {},
+        title: 'route.title.articleUpload'
+      }
+    })
   ]
 }
 
