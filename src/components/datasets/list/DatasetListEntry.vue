@@ -1,5 +1,13 @@
 <template lang="pug">
   q-card(flat clickable)
+    q-toolbar.q-pb-lg.justify-end
+      q-ribbon.absolute(
+        background-color="accent"
+        leaf-color="secondary"
+        position="top right"
+        v-if="d['oarepo:draft']"
+        decoration="rounded-in")
+      .text-bold.text-overline DRAFT
     q-card-section(horizontal)
       q-card-section
         q-skeleton(v-if="loading" :width="`${imageSize}px`" :height="`${imageSize}px`")

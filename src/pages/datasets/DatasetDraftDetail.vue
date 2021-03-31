@@ -1,7 +1,13 @@
 <template lang="pug">
 q-page(padding).q-pa-xl.full-height.flex.flex-center
     q-card.q-mb-xl.col-10.bg-grey-3(clickable)
-      q-toolbar.q-pt-lg.justify-end
+      q-card-section(horizontal).q-pt-lg.q-px-lg
+        .row.full-width.items-baseline.justify-between
+          .text-h5.wrap.row.q-gutter-md
+            span.text-accent {{ dataset.id }}
+            q-separator(color="primary" vertical)
+            span {{ dataset.titles[0].en }}
+      q-toolbar.q-pb-lg.justify-end
         q-space
         q-btn-group.col-auto.q-pr-lg.no-shadow(rounded)
           q-btn.text-black(
@@ -33,12 +39,6 @@ q-page(padding).q-pa-xl.full-height.flex.flex-center
           v-if="dataset['oarepo:draft']"
           decoration="rounded-in")
           .text-bold.text-overline DRAFT
-      q-card-section(horizontal).q-pb-lg.q-px-lg
-        .row.full-width.items-baseline.justify-between
-          .text-h5.wrap.row.q-gutter-md
-            span.text-accent {{ dataset.id }}
-            q-separator(color="primary" vertical)
-            span {{ dataset.titles[0].en }}
       q-separator
       q-card-section.q-pa-lg.bg-grey-4
         .row
@@ -127,7 +127,7 @@ class DatasetDraftDetail extends mixins(CommunityMixin, TransitionMixin) {
   }
 
   download(file) {
-    window.open(file.url, '_blank')
+    window.open(`${file.url}?download`, '_blank')
   }
 
   prompt() {

@@ -8,6 +8,8 @@ export default {
     copyright: '©  2020 CESNET a. l. e., Zikova 4, 160 00 Praha 6, Czech Republic'
   },
   icon: {
+    revert_approval: 'assignment_return',
+    publish: 'public',
     request_approval: 'rule',
     approve: 'verified',
     request_changes: 'healing'
@@ -30,6 +32,7 @@ export default {
   action: {
     approve: 'approve record',
     request_approval: 'request record approval',
+    revert_approval: 'revert record approval',
     request_changes: 'request changes',
     makeTransition: 'Change state',
     attachArticle: 'Attach Article',
