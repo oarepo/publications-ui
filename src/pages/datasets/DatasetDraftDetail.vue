@@ -1,27 +1,46 @@
 <template lang="pug">
-q-page.full-height.flex.flex-center
-  .row.justify-center.q-pt-lg
-    .col-10
-      .block.bg-grey-3.full-height.float-right.q-pa-md.no-margin.q-mt-md
-        q-btn(
-          v-if="needOwner"
-          size="md"
-          outline
-          dark
-          icon="las la-paperclip"
-          rounded
-          color="dark"
-          @click="prompt"
-          :label="$t('action.attachArticle')")
-    q-card.q-mb-xl.col-10.q-pa-lg.bg-grey-3(flat clickable)
-      q-card-section(horizontal)
+q-page(padding).q-pa-xl.full-height.flex.flex-center
+    q-card.q-mb-xl.col-10.bg-grey-3(clickable)
+      q-toolbar.q-pt-lg.justify-end
+        q-space
+        q-btn-group.col-auto.q-pr-lg.no-shadow(rounded)
+          q-btn.text-black(
+            v-if="needOwner"
+            size="md"
+            icon="las la-paperclip"
+            rounded
+            color="grey-4"
+            @click="prompt"
+            :label="$t('action.attachArticle')")
+          q-btn-dropdown.q-mr-md.text-black(
+            :label="$t('action.makeTransition')"
+            color="grey-4"
+            rounded
+            icon="published_with_changes"
+            :disabled="changingState"
+            :loading="changingState")
+            q-list.q-px-lg.bg-secondary(dark padding separator)
+              q-item.q-pa-md(v-for="t in transitions" clickable v-close-popup :key="t.code"
+                @click="makeTransition(t)")
+                q-item-section(avatar)
+                  q-icon(:name="t.icon" color="white")
+                q-item-section
+                  q-item-label.text-uppercase.text-caption {{ t.label }}
+        q-ribbon.absolute(
+          background-color="accent"
+          leaf-color="secondary"
+          position="right"
+          v-if="dataset['oarepo:draft']"
+          decoration="rounded-in")
+          .text-bold.text-overline DRAFT
+      q-card-section(horizontal).q-pb-lg.q-px-lg
         .row.full-width.items-baseline.justify-between
           .text-h5.wrap.row.q-gutter-md
             span.text-accent {{ dataset.id }}
             q-separator(color="primary" vertical)
             span {{ dataset.titles[0].en }}
-      q-separator(spaced)
-      q-card-section.bg-grey-4
+      q-separator
+      q-card-section.q-pa-lg.bg-grey-4
         .row
           q-chip.col-auto.text-white(color="primary" v-for="c in dataset.creators", :key="c.name")
             q-avatar.no-padding(v-if="c.identifiers" icon="lab la-orcid" size="xl")
@@ -29,7 +48,7 @@ q-page.full-height.flex.flex-center
             span {{ c.name }}
               q-tooltip(v-if="c.affiliations") {{ c.affiliations.map((a => a.name)).join(', ') }}
             span.on-right.text-overline.text-warning(v-if="c.identifiers") {{ c.identifiers.orcid }}
-      q-card-section.bg-white
+      q-card-section.q-pa-lg.bg-white
         .text-overline.text-uppercase.text-accent {{ $t('label.abstract') }}
         p(v-html="$sanitize(dataset.abstract.description.en)")
         .text-overline.text-uppercase.text-accent {{ $t('label.identifiers') }}
@@ -51,12 +70,26 @@ q-page.full-height.flex.flex-center
                 p.col-grow.text-caption {{ Math.round(f.size/1024) }} kb
               q-card-actions(vertical)
                 q-avatar.cursor-pointer(icon="las la-download" @click="download(f)")
-      .text-overline.text-uppercase.text-accent.q-mt-md JSON Metadata
-      pre.q-pa-md.bg-dark.text-code.text-white.wrap.overflow-auto(:style="{ maxWidth: '90vw' }") {{ dataset }}
+      q-card-actions
+        .text-overline.text-uppercase.text-accent.q-my-md.q-px-lg JSON Metadata
+        q-space
+        q-btn(
+          color="grey"
+          round
+          flat
+          dense
+          :icon="metadataExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
+          @click="metadataExpanded = !metadataExpanded")
+      q-slide-transition
+        .q-pa-md.bg-dark(v-show="metadataExpanded")
+          pre.text-code.text-white.wrap.overflow-auto {{ dataset }}
 </template>
 <script>
-import {Component, Vue} from 'vue-property-decorator'
-import NewArticleDialog from "components/dialogs/articles/NewArticleDialog";
+import { Component } from 'vue-property-decorator'
+import NewArticleDialog from 'components/dialogs/articles/NewArticleDialog'
+import { mixins } from 'vue-class-component'
+import TransitionMixin from 'src/mixins/TransitionMixin'
+import { CommunityMixin } from 'src/mixins/Community'
 
 export default @Component({
   name: 'DatasetDraftDetail',
@@ -71,7 +104,9 @@ export default @Component({
   },
   components: {},
 })
-class DatasetDraftDetail extends Vue {
+class DatasetDraftDetail extends mixins(CommunityMixin, TransitionMixin) {
+  metadataExpanded = false
+
   get needOwner() {
     // TODO: check if the logged in user is owner of the dataset
     return true

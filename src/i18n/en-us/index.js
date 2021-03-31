@@ -7,11 +7,19 @@ export default {
     copyrightNotice: 'This service is a part of CESNET e-infrastructure',
     copyright: '©  2020 CESNET a. l. e., Zikova 4, 160 00 Praha 6, Czech Republic'
   },
+  icon: {
+    request_approval: 'rule',
+    approve: 'verified',
+    request_changes: 'healing'
+  },
   nav: {
     admin: 'Administration',
     detail: 'Detail'
   },
   error: {
+    completeSuccess: 'Completed successfully',
+    stateChangeFail: 'State change failed',
+    stateChangeMessage: 'There was a following error when trying to change the record state',
     popupLoginFail: 'We were unable to log you in, please allow pop-ups for this website.',
     validationFail: 'Please correct the errors and try again',
     validation: {
@@ -20,6 +28,10 @@ export default {
     }
   },
   action: {
+    approve: 'approve record',
+    request_approval: 'request record approval',
+    request_changes: 'request changes',
+    makeTransition: 'Change state',
     attachArticle: 'Attach Article',
     submitDataset: 'Submit dataset record',
     addIdentifier: 'Přidat identifikátor',
@@ -39,6 +51,7 @@ export default {
   },
   accessibility: {},
   label: {
+    actionApprove: 'Are you sure?',
     createdAt: 'Created',
     identifierScheme: 'Scheme',
     searchInput: 'Search by title',
@@ -74,7 +87,9 @@ export default {
     roles: 'Roles'
   },
   message: {
+    doYRlyWnt: 'Do you really want to',
     noData: 'No data',
+    recordNotValid: 'Record is not valid',
     gdprPrompt: 'By clicking on "Accept", you give your consent with our Terms of Service and Privacy Policy for this service.',
     authRequired: 'This page requires authentication.'
   },
