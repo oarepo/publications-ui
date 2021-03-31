@@ -17,19 +17,20 @@
           direction-links boundary-numbers size="lg" v-if="loaded && items.length")
     no-data-placeholder.full-height(v-else)
     portal(to="drawer")
-      .column.q-gutter-y-md.q-pa-xl
-        .col-auto.row.q-mb-xl.justify-center
-        facet-list(:facets="facets" v-if="loaded")
+      .column.q-gutter-y-md.q-pa-xl.justify-between.full-height
+        .col-auto.row.q-mb-xl
+          .text-overline.text-grey-7.text-bold.text-uppercase {{ $t('label.filters') }}
+          facet-list(:facets="facets" v-if="loaded")
+        .col-auto.text-overline.text-grey-7.text-bold.text-uppercase {{ $t('label.community') }}
+          .text-h3.text-weight-thin.text-primary {{ communityId }}
 </template>
 <script>
 import { Component, Mixins } from 'vue-property-decorator'
-import SearchInput from 'components/search/SearchInput'
 import ItemListEntry from 'components/articles/list/ArticleListEntry'
 import { SearchMixin } from 'src/mixins/SearchMixin'
 import NoDataPlaceholder from 'src/components/common/NoDataPlaceholder'
 import FacetList from 'components/search/FacetList'
-// import { NewItemMixin } from 'src/mixins/NewItem'
-// import Logo from 'src/components/Logo'
+import { CommunityMixin } from 'src/mixins/Community'
 
 export default @Component({
   name: 'ArticleList',
@@ -43,13 +44,12 @@ export default @Component({
   },
   components: {
     // Logo,
-    SearchInput,
     ItemListEntry,
     NoDataPlaceholder,
     FacetList
   }
 })
-class ArticleList extends Mixins(SearchMixin) {
+class ArticleList extends Mixins(SearchMixin, CommunityMixin) {
   navigateDetail (item) {
     this.$router.push(item.links.ui)
   }
