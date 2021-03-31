@@ -52,7 +52,8 @@ function articles (communityId) {
       {
         meta: {
           title: 'route.title.articleList',
-          useFacets: true
+          useFacets: true,
+          communityId: communityId
         }
       }),
     { /* Article detail routes */

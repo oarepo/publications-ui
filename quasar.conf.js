@@ -12,7 +12,12 @@ const
   API_STAGING = 'https://repozitar-test.cesnet.cz/',
   API_PROD = 'https://repozitar.cesnet.cz/'
 
+const fs = require('fs')
+const packageJson = fs.readFileSync('./package.json')
+const version = JSON.parse(packageJson).version || '0'
+
 module.exports = function (ctx) {
+  const deploy = Boolean(process.env.DEPLOY)
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
     supportTS: false,
@@ -24,6 +29,7 @@ module.exports = function (ctx) {
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
+      'sentry',
       'polyfill-broadcast-channel',
       'axios',
       'composition',
@@ -62,6 +68,9 @@ module.exports = function (ctx) {
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       env: {
+        VUE_SENTRY_DSN: process.env.VUE_SENTRY_DSN,
+        PACKAGE_VERSION: version,
+        PRODUCT_VERSION: process.env.PRODUCT_VERSION || version || '0',
         API: ctx.dev
           ? API_DEV
           : process.env.PUBLISH
@@ -85,9 +94,10 @@ module.exports = function (ctx) {
 
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
-
+      sourceMap: deploy,
       // https://quasar.dev/quasar-cli/handling-webpack
       extendWebpack (cfg) {
+        cfg.devtool = 'source-map'
         cfg.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
@@ -98,6 +108,14 @@ module.exports = function (ctx) {
           test: /\.pug$/,
           loader: 'pug-plain-loader'
         })
+        if (deploy) {
+          const SentryWebpackPlugin = require('@sentry/webpack-plugin')
+          const path = require('path')
+          cfg.plugins.push(new SentryWebpackPlugin({
+            release: 'publications-ui@' + version,
+            include: path.resolve(__dirname, 'dist')
+          }))
+        }
       }
     },
 

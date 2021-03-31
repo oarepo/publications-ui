@@ -13,6 +13,7 @@
       .copyright-container.q-mt-xl.q-mb-lg.text-caption.text-grey-4.text-center
         p.no-padding.no-margin {{ $t('app.copyrightNotice') }}
         p.no-padding.no-margin.text-warning {{ $t('app.copyright') }}
+        p.absolute-bottom-right.q-mb-xl.q-mr-md.text-weight-thinner.text-secondary v{{ productVersion }}
 </template>
 <script>
 import { Component, Vue } from 'vue-property-decorator'
@@ -43,6 +44,10 @@ class LandingFooter extends Vue {
       link: 'https://www.cesnet.cz/sdruzeni/ochrana-osobnich-udaju/'
     }
   ]
+
+  get productVersion () {
+    return process.env.PRODUCT_VERSION
+  }
 }
 </script>
 

@@ -46,6 +46,8 @@ export default {
     documentType: 'Document type',
     datasets: 'Datasets',
     contact: 'Contact Us',
+    filters: 'Filters',
+    community: 'Community',
     privacy: 'Privacy Policy',
     docs: 'User Documentation',
     role: {

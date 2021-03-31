@@ -44,6 +44,8 @@ export default {
     language: 'Jazyk',
     identifierScheme: 'Schema',
     files: 'Soubory',
+    filters: 'Filtry',
+    community: 'Komunita',
     size: 'Velikost',
     license: 'Licence',
     searchInput: 'Hledat podle názvu',

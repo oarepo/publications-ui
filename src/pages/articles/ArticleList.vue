@@ -17,9 +17,12 @@
           direction-links boundary-numbers size="lg" v-if="loaded && items.length")
     no-data-placeholder.full-height(v-else)
     portal(to="drawer")
-      .column.q-gutter-y-md.q-pa-xl
-        .col-auto.row.q-mb-xl.justify-center
-        facet-list(:facets="facets" v-if="loaded")
+      .column.q-gutter-y-md.q-pa-xl.justify-between.full-height
+        .col-auto.row.q-mb-xl
+          .text-overline.text-grey-7.text-bold.text-uppercase {{ $t('label.filters') }}
+          facet-list(:facets="facets" v-if="loaded")
+        .col-auto.text-overline.text-grey-7.text-bold.text-uppercase {{ $t('label.community') }}
+          .text-h3.text-weight-thin.text-primary {{ $route.meta.communityId }}
 </template>
 <script>
 import { Component, Mixins } from 'vue-property-decorator'
