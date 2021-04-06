@@ -14,7 +14,7 @@ q-page(padding).q-pa-xl.full-height.flex.flex-center
           q-chip.col-auto.text-white(color="primary" v-for="c in dataset.creators", :key="c.name")
             q-avatar.no-padding(v-if="c.identifiers" icon="lab la-orcid" size="xl")
               q-tooltip() {{ Object.keys(c.identifiers)[0] }}
-            span {{ c.name }}s
+            span {{ c.name }}
               q-tooltip(v-if="c.affiliations") {{ c.affiliations.map((a => a.name)).join(', ') }}
             span.on-right.text-overline.text-warning(v-if="c.identifiers") {{ c.identifiers.orcid }}
       q-card-section.q-pa-lg.bg-white
