@@ -135,8 +135,7 @@ module.exports = function (ctx) {
           bypass: function (req, res, proxyOptions) {
             if (req.headers.accept.indexOf('html') !== -1 &&
               !req.path.startsWith('/oauth') &&
-              !req.path.startsWith('/api/oauth') &&
-              !req.query === 'download') { // TODO: check query here
+              !req.path.startsWith('/api/oauth')) { // TODO: check query here
               console.log('Skipping proxy for browser request.')
               return '/index.html'
             }

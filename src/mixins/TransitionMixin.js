@@ -1,14 +1,10 @@
-import { Component, Vue } from 'vue-property-decorator'
 import axios from 'axios'
+import { mixins } from 'vue-class-component'
+import { CommunityMixin } from 'src/mixins/Community'
+import { Component } from 'vue-property-decorator'
 
-@Component({
-  name: 'transition-mixin',
-  props: {
-    record: Object,
-    recordApi: Object
-  }
-})
-class TransitionMixin extends Vue {
+@Component
+class TransitionMixin extends mixins(CommunityMixin) {
   changingState = false
 
   get transitions () {
@@ -29,7 +25,7 @@ class TransitionMixin extends Vue {
       persistent: true
     }).onOk(async () => {
       const validity = this.record?.metadata['oarepo:validity']?.valid
-      if (validity !== false || transition.code === 'request_changes') {
+      if (validity !== false || ['request_changes', 'delete_draft'].includes(transition.code)) {
         this._makeTransition(transition, false)
       } else {
         this.$q.dialog({
@@ -59,9 +55,9 @@ class TransitionMixin extends Vue {
         })
         return
       }
-      if (transition.code === 'unpublish') {
+      if (transition.code === 'revert_approval') {
         this.$router.replace({
-          name: `${this.communityId}/dataset/record`,
+          name: `${this.communityId}/draft-dataset/record`,
           params: {
             recordId: this.record.id
           }
@@ -72,24 +68,31 @@ class TransitionMixin extends Vue {
         this.$router.replace({
           name: `${this.communityId}/all-datasets`
         })
+        this.$q.notify({
+          message: this.$t('message.draftDeleted'),
+          color: 'accent',
+          icon: 'delete_sweep'
+        })
         return
       }
-      console.log(this.recordApi)
-      this.recordApi.reload()
+      this.$nextTick(() => {
+        this.recordApi.reload()
+      })
+      this.$q.notify({
+        message: this.$t('message.completeSuccess'),
+        color: 'positive',
+        icon: 'published_with_changes'
+      })
     } catch (e) {
       console.log(e)
       this.$q.dialog({
         title: this.$t('error.stateChangeFail'),
         message: `${this.$t('error.stateChangeMessage')}: ${e} ${JSON.stringify(e.response.data)}`,
-        cancel: true,
-        persistent: true
+        cancel: false,
+        persistent: true,
+        icon: 'error'
       })
     }
-    this.$q.notify({
-      message: this.$t('message.completeSuccess'),
-      color: 'positive',
-      icon: 'published_with_changes'
-    })
     this.changingState = false
   }
 }

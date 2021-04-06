@@ -6,8 +6,10 @@ export default {
     copyright: '©  2020 CESNET z.s.p.o.  Zikova 4, 160 00 Praha 6'
   },
   icon: {
+    delete_draft: 'delete_forever',
     revert_approval: 'assignment_return',
-    publish: 'public',
+    make_public: 'public',
+    make_private: 'public_off',
     request_approval: 'rule',
     request_changes: 'healing',
     approve: 'verified'
@@ -17,7 +19,9 @@ export default {
     detail: 'Detail'
   },
   action: {
-    publish: 'zveřejnit záznam',
+    delete_draft: 'smazat rozpracovaný záznam',
+    make_private: 'skrýt záznam',
+    make_public: 'zveřejnit záznam',
     approve: 'schválit záznam',
     request_changes: 'vyžádat opravu záznamu',
     revert_approval: 'vrátit ke schválení',
@@ -51,6 +55,9 @@ export default {
   },
   accessibility: {},
   label: {
+    isPublic: 'Záznam je veřejný',
+    isPendingApproval: 'Záznam čeká na schválení kurátorem',
+    isEdited: 'Záznam je rozpracovaný',
     actionApprove: 'Odsouhlasení akce',
     addFiles: 'Nahrát přílohy',
     addIdentifier: 'Přidat identifikátor',
@@ -74,6 +81,7 @@ export default {
     privacy: 'Ochrana osobních údajů',
     docs: 'Uživatelská dokumentace',
     role: {
+      'system administrator': 'Administrátor',
       admin: 'admin',
       curator: 'kurátor'
     }
@@ -89,6 +97,7 @@ export default {
     roles: 'Role'
   },
   message: {
+    draftDeleted: 'Záznam byl smazán',
     completeSuccess: 'Úspěšně dokončeno',
     doYRlyWnt: 'Opravdu chcete',
     noData: 'Žádná data',
