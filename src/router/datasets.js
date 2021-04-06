@@ -17,8 +17,11 @@ function datasets (communityId) {
         dedupingInterval: 100,
         revalidateDebounce: 0,
         shouldRetryOnError: false
-      },
+      }
+    },
+    {
       meta: {
+        communityId: communityId,
         title: 'route.title.datasetDetail'
       }
     }),

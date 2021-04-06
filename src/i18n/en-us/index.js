@@ -8,8 +8,10 @@ export default {
     copyright: '©  2020 CESNET a. l. e., Zikova 4, 160 00 Praha 6, Czech Republic'
   },
   icon: {
+    delete_draft: 'delete_forever',
     revert_approval: 'assignment_return',
-    publish: 'public',
+    make_public: 'public',
+    make_private: 'public_off',
     request_approval: 'rule',
     approve: 'verified',
     request_changes: 'healing'
@@ -30,6 +32,9 @@ export default {
     }
   },
   action: {
+    delete_draft: 'delete draft record',
+    make_private: 'unpublish record',
+    make_public: 'publish record',
     approve: 'approve record',
     request_approval: 'request record approval',
     revert_approval: 'revert record approval',
@@ -54,6 +59,9 @@ export default {
   },
   accessibility: {},
   label: {
+    isPublic: 'Record is public',
+    isPendingApproval: 'Record is awaiting curator approval',
+    isEdited: 'Record is being edited',
     actionApprove: 'Are you sure?',
     createdAt: 'Created',
     identifierScheme: 'Scheme',
@@ -70,6 +78,7 @@ export default {
     privacy: 'Privacy Policy',
     docs: 'User Documentation',
     role: {
+      'system administrator': 'System administrator',
       admin: 'admin',
       curator: 'curator'
     }
@@ -90,6 +99,7 @@ export default {
     roles: 'Roles'
   },
   message: {
+    draftDeleted: 'Draft record was deleted',
     doYRlyWnt: 'Do you really want to',
     noData: 'No data',
     recordNotValid: 'Record is not valid',
