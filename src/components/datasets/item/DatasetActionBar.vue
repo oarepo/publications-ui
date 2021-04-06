@@ -1,5 +1,5 @@
 <template lang="pug">
-q-toolbar.q-pb-lg.justify-end
+q-toolbar.q-pb-lg.justify-end(v-if="authenticated")
   q-space
   q-btn-group.col-auto.q-pr-lg.no-shadow(rounded)
     q-btn.text-black(
@@ -34,6 +34,7 @@ import NewArticleDialog from 'components/dialogs/articles/NewArticleDialog'
 import DatasetStatusRibbon from 'components/datasets/item/DatasetStatusRibbon'
 import TransitionMixin from 'src/mixins/TransitionMixin'
 import mixins from 'vue-class-component'
+import { AuthStateMixin } from 'src/mixins/AuthStateMixin'
 
 export default @Component({
   name: 'DatasetActionBar',
@@ -46,7 +47,7 @@ export default @Component({
     DatasetStatusRibbon
   }
 })
-class DatasetActionBar extends mixins(TransitionMixin) {
+class DatasetActionBar extends mixins(AuthStateMixin, TransitionMixin) {
   get needOwner () {
     // TODO: check if the logged in user is owner of the dataset
     return true
