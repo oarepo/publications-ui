@@ -15,6 +15,7 @@ q-toolbar.q-pb-lg.justify-end(v-if="authenticated")
       :label="$t('action.makeTransition')"
       color="grey-4"
       rounded
+      v-if="transitions.length"
       icon="published_with_changes"
       :disabled="changingState"
       :loading="changingState")
@@ -33,7 +34,7 @@ import { Component } from 'vue-property-decorator'
 import NewArticleDialog from 'components/dialogs/articles/NewArticleDialog'
 import DatasetStatusRibbon from 'components/datasets/item/DatasetStatusRibbon'
 import TransitionMixin from 'src/mixins/TransitionMixin'
-import mixins from 'vue-class-component'
+import { mixins } from 'vue-class-component'
 import { AuthStateMixin } from 'src/mixins/AuthStateMixin'
 
 export default @Component({
