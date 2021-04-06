@@ -5,11 +5,28 @@ export default {
     copyrightNotice: 'Tato služba je součástí e-infrastruktury CESNET',
     copyright: '©  2020 CESNET z.s.p.o.  Zikova 4, 160 00 Praha 6'
   },
+  icon: {
+    delete_draft: 'delete_forever',
+    revert_approval: 'assignment_return',
+    make_public: 'public',
+    make_private: 'public_off',
+    request_approval: 'rule',
+    request_changes: 'healing',
+    approve: 'verified'
+  },
   nav: {
     admin: 'Administrace',
     detail: 'Detail'
   },
   action: {
+    delete_draft: 'smazat rozpracovaný záznam',
+    make_private: 'skrýt záznam',
+    make_public: 'zveřejnit záznam',
+    approve: 'schválit záznam',
+    request_changes: 'vyžádat opravu záznamu',
+    revert_approval: 'vrátit ke schválení',
+    request_approval: 'odeslat záznam ke schválení',
+    makeTransition: 'Změna stavu',
     attachArticle: 'Připojit článek',
     submitDataset: 'Nahrát dataset',
     retry: 'Zkusit znovu',
@@ -22,9 +39,13 @@ export default {
     openPrivacyPolicy: 'Zpracování osobních údajů',
     accept: 'Souhlasím',
     decline: 'Nesouhlasím',
-    uploadDataset: 'Nahrát dataset'
+    upload: 'Nahrát',
+    uploadDataset: 'Nahrát nový dataset',
+    uploadArticle: 'Nahrát nový článek'
   },
   error: {
+    stateChangeFail: 'Chyba při změně stavu',
+    stateChangeMessage: 'Při změně stavu došlo k následující neočekávané chybě',
     popupLoginFail: 'Nebylo možno se přihlásit, prosím povolte v prohlížeči vyskakovací okna pro tento web',
     validationFail: 'Prosím opravte chyby a zkuste to znovu',
     validation: {
@@ -34,6 +55,10 @@ export default {
   },
   accessibility: {},
   label: {
+    isPublic: 'Záznam je veřejný',
+    isPendingApproval: 'Záznam čeká na schválení kurátorem',
+    isEdited: 'Záznam je rozpracovaný',
+    actionApprove: 'Odsouhlasení akce',
     addFiles: 'Nahrát přílohy',
     addIdentifier: 'Přidat identifikátor',
     abstract: 'Abstrakt',
@@ -44,14 +69,19 @@ export default {
     language: 'Jazyk',
     identifierScheme: 'Schema',
     files: 'Soubory',
+    filters: 'Filtry',
+    community: 'Komunita',
     size: 'Velikost',
     license: 'Licence',
     searchInput: 'Hledat podle názvu',
     localeSwitcher: 'Jazyk',
+    documentType: 'Typ dokumentu',
+    datasets: 'Datasety',
     contact: 'Kontaktujte nás',
     privacy: 'Ochrana osobních údajů',
     docs: 'Uživatelská dokumentace',
     role: {
+      'system administrator': 'Administrátor',
       admin: 'admin',
       curator: 'kurátor'
     }
@@ -67,7 +97,11 @@ export default {
     roles: 'Role'
   },
   message: {
+    draftDeleted: 'Záznam byl smazán',
+    completeSuccess: 'Úspěšně dokončeno',
+    doYRlyWnt: 'Opravdu chcete',
     noData: 'Žádná data',
+    recordNotValid: 'V záznamu jsou chyby',
     gdprPrompt: 'Kliknutím na "Souhlasím", vyjadřujete souhlas s našimi pravidly využití služeb a podmínkami zpracování osobních údajů.',
     authRequired: 'Tato stránka vyžaduje autentizaci. Kliknutím na tlačítko níže se přihlásíte.'
   },
@@ -82,8 +116,10 @@ export default {
       datasetList: 'Datasety',
       datasetEdit: 'Editace datasetu',
       datasetUpload: 'Nový dataset',
+      articleUpload: 'Nový článek',
       datasetDetail: 'Dataset',
-      admin: 'Administrace'
+      admin: 'Administrace',
+      articleList: 'Články'
     }
   }
 }

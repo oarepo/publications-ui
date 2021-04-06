@@ -16,19 +16,18 @@
               rounded
               icon="leaderboard"
               padding="lg"
-              :to="{name: 'publications/all-datasets'}"
+              :to="{name: 'cesnet/all-datasets'}"
               :label="$t('section.datasetList')")
             q-btn.full-width.shadow-5(
               color="dark"
               rounded
               icon-right="article"
               padding="lg"
-              :to="{name: 'all-articles'}"
+              :to="{name: 'cesnet/all-articles'}"
               :label="$t('section.articleList')")
     .col-0.hero-tiles.gt-xs.q-pt-xl
     .col-5.right-graphic.gt-sm
     .col-0.right-tiles.gt-sm
-
 </template>
 <script>
 import { Component, Vue } from 'vue-property-decorator'

@@ -5,10 +5,10 @@ export default ({ Vue, router }) => {
     router,
 
     // urls
-    loginUrl: '/api/oauth/login/eduid/',
-    logoutUrl: '/api/logout',
+    loginUrl: '/oauth/login/eduid/',
+    logoutUrl: '/logout',
     logoutMethod: 'POST',
-    completeUrl: '/api/oauth/complete/',
-    stateUrl: '/api/oauth/state/'
+    completeUrl: '/oauth/complete/',
+    stateUrl: '/oauth/state/'
   })
 }

@@ -2,10 +2,10 @@
   q-page.q-mx-lg-xl(padding v-touch-swipe.mouse.right.left="swipePage")
     .row.justify-between.items-center.q-col-gutter-x-lg.q-mt-md.q-mt-lg-xl.q-mb-md
       .col-12.col-lg-8
-        .text-h3.gt-md {{ $t('section.datasetList') }}
-        .text-h4.lt-lg.gt-sm.q-mt-none.q-mb-lg {{ $t('section.datasetList') }}
-        .text-h6.lt-md.q-mt-none.q-mb-md {{ $t('section.datasetList') }}
-    .column.q-mt-md.q-gutter-y-lg(v-if="items.length || loaded")
+        .text-h3.gt-md {{ $t('section.articleList') }}
+        .text-h4.lt-lg.gt-sm.q-mt-none.q-mb-lg {{ $t('section.articleList') }}
+        .text-h6.lt-md.q-mt-none.q-mb-md {{ $t('section.articleList') }}
+    .column.q-mt-md.q-gutter-y-md(v-if="items.length || loaded")
       div(v-for="item in items" :key="item.id")
         item-list-entry.col.cursor-pointer.non-selectable(
           :loading="!loaded"
@@ -16,7 +16,7 @@
         q-pagination.q-mt-lg(v-model="$query.page" :max="pages" :max-pages="9" color="accent"
           direction-links boundary-numbers size="lg" v-if="loaded && items.length")
     no-data-placeholder.full-height(v-else)
-    portal(to="drawer").full-height
+    portal(to="drawer")
       .column.q-gutter-y-md.q-pa-xl.justify-between.full-height
         .col-auto.row.q-mb-xl
           .text-overline.text-grey-7.text-bold.text-uppercase {{ $t('label.filters') }}
@@ -26,22 +26,21 @@
 </template>
 <script>
 import { Component, Mixins } from 'vue-property-decorator'
-import ItemListEntry from 'components/datasets/list/DatasetListEntry'
+import ItemListEntry from 'components/articles/list/ArticleListEntry'
 import { SearchMixin } from 'src/mixins/SearchMixin'
 import NoDataPlaceholder from 'src/components/common/NoDataPlaceholder'
 import FacetList from 'components/search/FacetList'
 import { CommunityMixin } from 'src/mixins/Community'
 
 export default @Component({
-  name: 'DatasetList',
+  name: 'ArticleList',
   props: {
     records: Array,
     facets: Array,
     filters: Array,
     pages: Number,
     loading: Boolean,
-    loaded: Boolean,
-    collectionApi: Object
+    loaded: Boolean
   },
   components: {
     // Logo,
@@ -50,7 +49,7 @@ export default @Component({
     FacetList
   }
 })
-class DatasetList extends Mixins(SearchMixin, CommunityMixin) {
+class ArticleList extends Mixins(SearchMixin, CommunityMixin) {
   navigateDetail (item) {
     this.$router.push(item.links.ui)
   }
