@@ -6,7 +6,7 @@ q-page(padding).q-pa-xl.full-height.flex.flex-center
           .text-h5.no-wrap.row.q-gutter-md
             span.text-accent {{ dataset.id }}
             q-separator(color="primary" vertical)
-            span {{ dataset.titles[0].en }} {{ communityId }}
+            span {{ dataset.titles[0].en }}
       dataset-action-bar(:dataset="dataset" :record="record" :recordApi="recordApi")
       q-separator
       q-card-section.q-pa-lg.bg-grey-4

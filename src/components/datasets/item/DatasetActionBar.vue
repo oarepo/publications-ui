@@ -3,6 +3,7 @@ q-toolbar.q-pb-lg.justify-end(v-if="authenticated")
   q-space
   q-btn-group.col-auto.q-pr-lg.no-shadow(rounded)
     q-btn.text-black(
+      :class="!transitions.length ? 'q-mr-md' : ''"
       v-if="needOwner"
       size="md"
       icon="las la-paperclip"
