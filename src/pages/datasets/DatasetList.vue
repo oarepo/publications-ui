@@ -5,7 +5,7 @@
         .text-h3.gt-md {{ $t('section.datasetList') }}
         .text-h4.lt-lg.gt-sm.q-mt-none.q-mb-lg {{ $t('section.datasetList') }}
         .text-h6.lt-md.q-mt-none.q-mb-md {{ $t('section.datasetList') }}
-    .column.q-mt-md.q-gutter-y-md(v-if="items.length || loaded")
+    .column.q-mt-md.q-gutter-y-lg(v-if="items.length || loaded")
       div(v-for="item in items" :key="item.id")
         item-list-entry.col.cursor-pointer.non-selectable(
           :loading="!loaded"

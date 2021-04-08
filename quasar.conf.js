@@ -133,7 +133,9 @@ module.exports = function (ctx) {
           secure: false,
           debug: true,
           bypass: function (req, res, proxyOptions) {
-            if (req.headers.accept.indexOf('html') !== -1 && !req.path.startsWith('/oauth') && !req.path.startsWith('/api/oauth')) {
+            if (req.headers.accept.indexOf('html') !== -1 &&
+              !req.path.startsWith('/oauth') &&
+              !req.path.startsWith('/api/oauth')) { // TODO: check query here
               console.log('Skipping proxy for browser request.')
               return '/index.html'
             }
@@ -161,6 +163,7 @@ module.exports = function (ctx) {
       components: [
         'QAvatar',
         'QBtnGroup',
+        'QBtnDropdown',
         'QCard',
         'QCardSection',
         'QChip',

@@ -17,8 +17,11 @@ function datasets (communityId) {
         dedupingInterval: 100,
         revalidateDebounce: 0,
         shouldRetryOnError: false
-      },
+      }
+    },
+    {
       meta: {
+        communityId: communityId,
         title: 'route.title.datasetDetail'
       }
     }),
@@ -84,9 +87,6 @@ function datasets (communityId) {
       name: `${communityId}/dataset-detail`,
       path: `${communityId}/datasets/draft/`,
       component: () => import('layouts/DatasetDetailLayout'),
-      meta: {
-        title: 'route.title.datasetDetail'
-      },
       children: [
         // Draft dataset detail
         record({
@@ -100,9 +100,12 @@ function datasets (communityId) {
             dedupingInterval: 100,
             revalidateDebounce: 0,
             shouldRetryOnError: false
-          },
+          }
+        },
+        {
           meta: {
-            title: 'route.title.datasetDetail'
+            title: 'route.title.datasetDetail',
+            communityId: communityId
           }
         })
       ]

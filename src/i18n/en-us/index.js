@@ -7,11 +7,23 @@ export default {
     copyrightNotice: 'This service is a part of CESNET e-infrastructure',
     copyright: '©  2020 CESNET a. l. e., Zikova 4, 160 00 Praha 6, Czech Republic'
   },
+  icon: {
+    delete_draft: 'delete_forever',
+    revert_approval: 'assignment_return',
+    make_public: 'public',
+    make_private: 'public_off',
+    request_approval: 'rule',
+    approve: 'verified',
+    request_changes: 'healing'
+  },
   nav: {
     admin: 'Administration',
     detail: 'Detail'
   },
   error: {
+    completeSuccess: 'Completed successfully',
+    stateChangeFail: 'State change failed',
+    stateChangeMessage: 'There was a following error when trying to change the record state',
     popupLoginFail: 'We were unable to log you in, please allow pop-ups for this website.',
     validationFail: 'Please correct the errors and try again',
     validation: {
@@ -20,6 +32,14 @@ export default {
     }
   },
   action: {
+    delete_draft: 'delete draft record',
+    make_private: 'unpublish record',
+    make_public: 'publish record',
+    approve: 'approve record',
+    request_approval: 'request record approval',
+    revert_approval: 'revert record approval',
+    request_changes: 'request changes',
+    makeTransition: 'Change state',
     attachArticle: 'Attach Article',
     submitDataset: 'Submit dataset record',
     addIdentifier: 'Přidat identifikátor',
@@ -39,6 +59,10 @@ export default {
   },
   accessibility: {},
   label: {
+    isPublic: 'Record is public',
+    isPendingApproval: 'Record is awaiting curator approval',
+    isEdited: 'Record is being edited',
+    actionApprove: 'Are you sure?',
     createdAt: 'Created',
     identifierScheme: 'Scheme',
     searchInput: 'Search by title',
@@ -54,6 +78,7 @@ export default {
     privacy: 'Privacy Policy',
     docs: 'User Documentation',
     role: {
+      'system administrator': 'System administrator',
       admin: 'admin',
       curator: 'curator'
     }
@@ -74,7 +99,10 @@ export default {
     roles: 'Roles'
   },
   message: {
+    draftDeleted: 'Draft record was deleted',
+    doYRlyWnt: 'Do you really want to',
     noData: 'No data',
+    recordNotValid: 'Record is not valid',
     gdprPrompt: 'By clicking on "Accept", you give your consent with our Terms of Service and Privacy Policy for this service.',
     authRequired: 'This page requires authentication.'
   },
