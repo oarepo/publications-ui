@@ -30,7 +30,7 @@ export default {
 
   methods: {
     async validate () {
-      const response = (await axios.post('/articles/draft/from-doi/', { doi: this.doi })).data
+      const response = (await axios.post(`/${NewArticleDialog.methods.getCommunityId}/articles/draft/from-doi/`, { doi: this.doi })).data
       var articleUrl = ''
       try {
         articleUrl = response.links.self
@@ -42,7 +42,7 @@ export default {
         const currentUrl = window.location.pathname
         const host = window.location.host
         const dataSetUrl = host + currentUrl
-        const datasetResponse = (await axios.post(`/articles/draft/document/${this.doi}`)).data
+        const datasetResponse = (await axios.post(`/${NewArticleDialog.methods.getCommunityId}/articles/draft/document/${this.doi}`)).data
         NewArticleDialog.methods.updateDatasetArray(datasetResponse, dataSetUrl, response.links.self)
 
         window.location.href = response.links.self

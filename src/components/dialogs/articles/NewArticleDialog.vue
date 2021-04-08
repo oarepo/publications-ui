@@ -61,10 +61,19 @@ export default {
       titleLangError: false,
       abstractLangError: false,
       doctypeError: false
+
+      // _primary_community: cesnet,
+      // access_right_category: success
     }
   },
 
   methods: {
+    getCommunityID () {
+      const path = window.location.pathname
+      const pathArray = path.split('/')
+      const communityId = pathArray[1]
+      return communityId
+    },
     validate () {
       for (var k = 0; k < this.authors_inputs.length; k++) {
         if (this.authors_inputs[k].full_name === '') {
@@ -174,16 +183,22 @@ export default {
         const host = window.location.host
         const dataSetUrl = host + currentUrl
         if (this.article.doi !== '') {
-          await axios.post(`/articles/draft/${urlEnd}/`, { changes: this.article, authors: this.authors_inputs, generated_article: this.generated_article })
-          const url = (await axios.post(`/articles/draft/document/${this.article.doi}`)).request.responseURL
-          const response = (await axios.post(`/articles/draft/document/${this.article.doi}`)).data
+          await axios.post(`${this.getCommunityID()}/articles/draft/${urlEnd}/`, { changes: this.article, authors: this.authors_inputs, generated_article: this.generated_article })
+          // const url = (await axios.post(`/articles/draft/document/${this.article.doi}`)).request.responseURL
+          const props = this.$router.resolve({
+            name: `${this.getCommunityID()}/draft-article/record`, params: { recordId: this.article.doi }
+          })
+          const url = window.location.protocol + '//' + window.location.host + props.href
+          console.log(url)
+          const response = (await axios.post(`${this.getCommunityID()}/articles/draft/document/${this.article.doi}`)).data
           this.updateDatasetArray(response, dataSetUrl, url)
+
           window.location.href = url
 
           this.hide()
         } else {
           urlEnd = 'without_doi'
-          const resp = (await axios.post(`/articles/draft/${urlEnd}/`, { changes: this.article, authors: this.authors_inputs, generated_article: this.generated_article })).data
+          const resp = (await axios.post(`${this.getCommunityID()}/articles/draft/${urlEnd}/`, { changes: this.article, authors: this.authors_inputs, generated_article: this.generated_article })).data
           window.location.href = resp.links.self
           this.hide()
         }
