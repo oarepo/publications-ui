@@ -31,11 +31,10 @@ q-toolbar.q-pb-lg.justify-end(v-if="authenticated")
 </template>
 
 <script>
-import { Component } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
 import NewArticleDialog from 'components/dialogs/articles/NewArticleDialog'
 import DatasetStatusRibbon from 'components/datasets/item/DatasetStatusRibbon'
 import TransitionMixin from 'src/mixins/TransitionMixin'
-import { mixins } from 'vue-class-component'
 import { AuthStateMixin } from 'src/mixins/AuthStateMixin'
 
 export default @Component({
@@ -49,7 +48,7 @@ export default @Component({
     DatasetStatusRibbon
   }
 })
-class DatasetActionBar extends mixins(AuthStateMixin, TransitionMixin) {
+class DatasetActionBar extends Mixins(AuthStateMixin, TransitionMixin) {
   get needOwner () {
     // TODO: check if the logged in user is owner of the dataset
     return true
