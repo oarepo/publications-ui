@@ -3,7 +3,7 @@ export default {
     productName: 'Digitální Repozitář',
     description: 'Digitální Repozitář vědeckých publikací a datasetů',
     copyrightNotice: 'Tato služba je součástí e-infrastruktury CESNET',
-    copyright: '©  2020 CESNET z.s.p.o.  Zikova 4, 160 00 Praha 6'
+    copyright: '©  2021 CESNET z.s.p.o.  Zikova 4, 160 00 Praha 6'
   },
   icon: {
     delete_draft: 'delete_forever',
@@ -97,10 +97,13 @@ export default {
     roles: 'Role'
   },
   message: {
+    noArticles: 'Žádné články nenalezeny',
+    noDatasets: 'Žádné datasety nenalezeny',
     draftDeleted: 'Záznam byl smazán',
     completeSuccess: 'Úspěšně dokončeno',
     doYRlyWnt: 'Opravdu chcete',
     noData: 'Žádná data',
+    loading: 'Načítám',
     recordNotValid: 'V záznamu jsou chyby',
     gdprPrompt: 'Kliknutím na "Souhlasím", vyjadřujete souhlas s našimi pravidly využití služeb a podmínkami zpracování osobních údajů.',
     authRequired: 'Tato stránka vyžaduje autentizaci. Kliknutím na tlačítko níže se přihlásíte.'

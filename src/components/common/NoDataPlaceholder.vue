@@ -1,5 +1,5 @@
 <template lang="pug">
-  .fit.no-padding.text-center.non-selectable.q-pa-xl.bg-secondary.text-grey-7.inset-shadow-all.rounded-borders
+  .fit.no-padding.text-center.non-selectable.q-pa-xl.text-grey-7.inset-shadow-all.rounded-borders
     .column.no-padding.justify-center(:style="{ height: `${height}px`}")
       .col-auto.row.justify-center
         slot.col-auto(name="icon")
