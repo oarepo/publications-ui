@@ -8,12 +8,13 @@ q-dialog(ref='dialog' @hide='onDialogHide')
         q-step(name="1" title="Import from DOI" :done="step > 1")
           doi-input(v-model="article.doi" ref="doi")
         q-step(name="2" title="Details" :done="step > 2")
-          q-input(v-model="article.title_lang" label="Title language" :error="titleLangError" error-message="Wrong language format" @input="titleLangError=false")
-          q-input(v-model="article.title_val" label="Title value" :error="titleError" error-message="Title can't be empty" @input="titleError=false")
+          q-input(v-model="article.title_lang" label="Title language *" :error="titleLangError" error-message="Wrong language format" @input="titleLangError=false")
+          q-input(v-model="article.title_val" label="Title value *" :error="titleError" error-message="Title can't be empty" @input="titleError=false")
           q-input(v-model="article.abstract_lang" label="Abstract language" :error="abstractLangError" error-message="Wrong language format" @input="abstractLangError=false")
-          q-input(v-model="article.abstract_val" label="Abstract value" type="textarea")
-          q-input(v-model="article.document_type" label="Document type" :error="doctypeError" error-message="Document type can't be empty" @input="doctypeError=false")
-          .text Authors
+          q-input(v-model="article.abstract_val" label="Abstract value" :error="abstractError" error-message="Abstract can't be empty, if abstract language is filled" @input="abstractErro=false" type="textarea")
+          q-input(v-model="article.document_type" label="Document type *" :error="doctypeError" error-message="Document type can't be empty" @input="doctypeError=false")
+          q-input(v-model="article.publication_year" type="number" label="Publication year *" :error="yearError" error-message="Publication year is required and must be valid year" @input="yearError=false")
+          .text Authors *
           q-card-section(v-for='(input,k) in authors_inputs' :key='k' )
             q-input(type='text' label="Author" :label='String(k + 1)' v-model='input.full_name' :error="authorError[k]" error-message="Authors name can't be empty" @input="authorError[k]=false")
           q-btn( label='Add author' rounded @click='add(k)')
@@ -33,13 +34,15 @@ q-dialog(ref='dialog' @hide='onDialogHide')
 <script>
 import DOIInput from 'components/inputs/DOIInput'
 import axios from 'axios'
+import DatasetDraftDetail from 'pages/datasets/DatasetDraftDetail'
 
 export default {
   props: {
     // ...your custom props
   },
   components: {
-    'doi-input': DOIInput
+    'doi-input': DOIInput,
+    DatasetDraftDetail
   },
   data () {
     return {
@@ -54,26 +57,22 @@ export default {
         abstract_lang: '',
         abstract_val: '',
         title_val: '',
-        document_type: ''
+        document_type: '',
+        publication_year: ''
       },
       authors_inputs: [{ full_name: '' }],
       titleError: false,
       titleLangError: false,
+      abstractError: false,
       abstractLangError: false,
-      doctypeError: false
+      doctypeError: false,
+      yearError: false,
+      communityId: this.$route.meta.communityId
 
-      // _primary_community: cesnet,
-      // access_right_category: success
     }
   },
 
   methods: {
-    getCommunityID () {
-      const path = window.location.pathname
-      const pathArray = path.split('/')
-      const communityId = pathArray[1]
-      return communityId
-    },
     validate () {
       for (var k = 0; k < this.authors_inputs.length; k++) {
         if (this.authors_inputs[k].full_name === '') {
@@ -91,8 +90,17 @@ export default {
       if (this.article.title_lang === '' || !(this.article.title_lang.match(langRegex))) {
         this.titleLangError = true
       }
-      if (!(this.article.abstract_lang.match(langRegex))) {
+      if ((this.article.abstract_lang === '' && this.article.abstract_val !== '') ||
+        (!(this.article.abstract_lang.match(langRegex)) && this.article.abstract_lang !== '')) {
         this.abstractLangError = true
+      }
+      if (this.article.abstract_lang !== '' && this.article.abstract_val === '') {
+        this.abstractError = true
+      }
+      const year = Number(this.article.publication_year)
+      const currentYear = new Date().getFullYear()
+      if (this.article.publication_year === '' || (year > currentYear || year < 1900)) {
+        this.yearError = true
       }
     },
     show () {
@@ -127,12 +135,15 @@ export default {
       this.abstractLangError = false
       this.titleLangError = false
       this.doctypeError = false
+      this.abstractError = false
+      this.yearError = false
       this.validatingDOI = true
       try {
         const article = await this.$refs.doi.validate()
         if (article) {
           this.generated_article = article
           this.article.document_type = article.document_type
+          this.article.publication_year = article.publication_year
           try {
             this.article.abstract_val = article.abstract[Object.keys(article.abstract)[0]]
             this.article.abstract_lang = Object.keys(article.abstract)[0]
@@ -160,56 +171,62 @@ export default {
         this.validatingDOI = false
       }
     },
-    skipDOI () {
+    async skipDOI () {
       this.step = '2'
     },
     back () {
       this.step = '1'
     },
     async createArticle () {
+      this.titleError = false
+      this.abstractLangError = false
+      this.titleLangError = false
+      this.doctypeError = false
+      this.abstractError = false
+      this.yearError = false
+      for (var k = 0; k < this.abstractError.length; k++) {
+        this.authorError[k] = false
+      }
       this.validate()
       var authorErr = false
-      for (var k = 0; k < this.authorError.length; k++) {
+      for (k = 0; k < this.authorError.length; k++) {
         if (this.authorError[k] === true) {
           authorErr = true
           break
         }
       }
-      if (this.titleError || authorErr || this.titleLangError || this.abstractLangError || this.doctypeError) {
+      if (this.titleError || authorErr || this.titleLangError || this.abstractLangError || this.doctypeError || this.yearError) { // if error in validation
 
       } else {
-        var urlEnd = 'create_article'
-        const currentUrl = window.location.pathname
-        const host = window.location.host
-        const dataSetUrl = host + currentUrl
+        const datasetUrl = window.location.href
         if (this.article.doi !== '') {
-          await axios.post(`${this.getCommunityID()}/articles/draft/${urlEnd}/`, { changes: this.article, authors: this.authors_inputs, generated_article: this.generated_article })
-          // const url = (await axios.post(`/articles/draft/document/${this.article.doi}`)).request.responseURL
-          const props = this.$router.resolve({
-            name: `${this.getCommunityID()}/draft-article/record`, params: { recordId: this.article.doi }
-          })
-          const url = window.location.protocol + '//' + window.location.host + props.href
-          console.log(url)
-          const response = (await axios.post(`${this.getCommunityID()}/articles/draft/document/${this.article.doi}`)).data
-          this.updateDatasetArray(response, dataSetUrl, url)
-
-          window.location.href = url
-
-          this.hide()
+          this.updateArticle() // set changes
+          this.updateDatasetArray(this.generated_article, datasetUrl) // set datasets
+          const data = (await axios.post(`${this.communityId}/articles/draft/`, this.generated_article)).data
+          const articleId = data.metadata.id
+          this.$router.replace({ name: `${this.communityId}/draft-article/record`, params: { recordId: articleId } })
         } else {
-          urlEnd = 'without_doi'
-          const resp = (await axios.post(`${this.getCommunityID()}/articles/draft/${urlEnd}/`, { changes: this.article, authors: this.authors_inputs, generated_article: this.generated_article })).data
-          window.location.href = resp.links.self
-          this.hide()
+          const data = (await axios.post(`${this.communityId}/articles/draft/without_doi/`,
+            { changes: this.article, authors: this.authors_inputs, datasetUrl: datasetUrl })).data
+          const articleId = data.metadata.id
+          this.$router.replace({ name: `${this.communityId}/draft-article/record`, params: { recordId: articleId } })
         }
+        this.hide()
       }
     },
-    updateDatasetArray (response, dataSetUrl, url) {
-      const datasetsArray = response.metadata.datasets
-      console.log(dataSetUrl)
+    updateDatasetArray (article, datasetUrl) {
+      const datasetsArray = article.datasets
       if (datasetsArray === undefined) {
-        axios.patch(url, [{ op: 'add', path: '/datasets', value: [dataSetUrl] }], { headers: { 'Content-Type': 'application/json-patch+json' } })
-      } else if (!datasetsArray.includes(dataSetUrl)) { axios.patch(url, [{ op: 'add', path: '/datasets/-', value: dataSetUrl }], { headers: { 'Content-Type': 'application/json-patch+json' } }) }
+        article.datasets = [datasetUrl]
+      }
+    },
+    updateArticle () {
+      this.generated_article['title'[this.article.title_lang]] = this.article.title_val
+      this.generated_article['abstract'[this.article.abstract_lang]] = this.article.abstract_val
+      this.generated_article.authors = this.authors_inputs
+      this.generated_article.document_type = this.article.document_type
+      this.generated_article._primary_community = this.communityId
+      this.generated_article.access_right_category = 'success'
     },
     onOKClick () {
       // on OK, it is REQUIRED to
