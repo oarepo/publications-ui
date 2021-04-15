@@ -12,14 +12,16 @@ function articles (communityId) {
       path: `${communityId}/articles/:recordId`,
       apiUrl: `/${communityId}`,
       component: () => import('pages/articles/ArticleDraftDetail'),
-      loadingComponent: 'viewer',
+      loadingComponent: () => import('components/common/LoadingPlaceholder'),
       httpGetProps: {
         dedupingInterval: 100,
         revalidateDebounce: 0,
         shouldRetryOnError: false
-      },
+      }
+    }, {
       meta: {
-        title: 'route.title.articleDetail'
+        title: 'route.title.articleDetail',
+        communityId: communityId
       }
     }),
     collection(
@@ -63,7 +65,8 @@ function articles (communityId) {
       // or a common detail layout for both datasets and articles
       component: () => import('layouts/DatasetDetailLayout'),
       meta: {
-        title: 'route.title.articleDetail'
+        title: 'route.title.articleDetail',
+        communityId: communityId
       },
       children: [
         record({
@@ -72,14 +75,16 @@ function articles (communityId) {
           path: ':recordId',
           apiUrl: `/${communityId}`,
           component: () => import('pages/articles/ArticleDraftDetail'),
-          loadingComponent: 'viewer',
+          loadingComponent: () => import('components/common/LoadingPlaceholder'),
           httpGetProps: {
             dedupingInterval: 100,
             revalidateDebounce: 0,
             shouldRetryOnError: false
-          },
+          }
+        }, {
           meta: {
-            title: 'route.title.articleDetail'
+            title: 'route.title.articleDetail',
+            communityId: communityId
           }
         })
       ]
@@ -88,11 +93,13 @@ function articles (communityId) {
       collectionCode: DATASETS_DRAFT_COLLECTION_CODE,
       name: `${communityId}/draft-articles/upload`,
       path: `${communityId}/articles/draft/upload`,
-      component: () => import('pages/datasets/DatasetUpload')
+      component: () => import('pages/datasets/DatasetUpload'),
+      loadingComponent: () => import('components/common/LoadingPlaceholder')
     }, {
       meta: {
         authorization: {},
-        title: 'route.title.articleUpload'
+        title: 'route.title.articleUpload',
+        communityId: communityId
       }
     })
   ]

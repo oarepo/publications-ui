@@ -1,11 +1,20 @@
 <template lang="pug">
   q-page.q-mx-lg-xl(padding v-touch-swipe.mouse.right.left="swipePage")
     .row.justify-between.items-center.q-col-gutter-x-lg.q-mt-md.q-mt-lg-xl.q-mb-md
-      .col-12.col-lg-8
+      .col-auto
         .text-h3.gt-md {{ $t('section.datasetList') }}
         .text-h4.lt-lg.gt-sm.q-mt-none.q-mb-lg {{ $t('section.datasetList') }}
         .text-h6.lt-md.q-mt-none.q-mb-md {{ $t('section.datasetList') }}
-    .column.q-mt-md.q-gutter-y-lg(v-if="items.length || loaded")
+      .col-auto.items-center
+        q-btn(
+          stretch
+          flat
+          color="dark"
+          icon="cloud_upload"
+          :to="{ name: `cesnet/draft-datasets/upload`}"
+          :label="$t('action.upload')")
+          q-tooltip {{ $t('action.uploadDataset') }}
+    .column.q-mt-md.q-gutter-y-lg(v-if="items.length")
       div(v-for="item in items" :key="item.id")
         item-list-entry.col.cursor-pointer.non-selectable(
           :loading="!loaded"
@@ -13,9 +22,10 @@
           @detail="navigateDetail"
           @click.native="navigateDetail(item)")
       .row.justify-around
-        q-pagination.q-mt-lg(v-model="$query.page" :max="pages" :max-pages="9" color="accent"
+        q-pagination.q-mt-lg(:input="true" v-model="$query.page" :max="pages" :max-pages="9" color="grey-5"
           direction-links boundary-numbers size="lg" v-if="loaded && items.length")
     no-data-placeholder.full-height(v-else)
+      .text-h6.text-weight-lighter {{ $t('message.noDatasets') }}…
     portal(to="drawer").full-height
       .column.q-gutter-y-md.q-pa-xl.justify-between.full-height
         .col-auto.row.q-mb-xl

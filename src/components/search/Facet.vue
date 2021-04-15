@@ -8,7 +8,7 @@
     v-model="opened"
     @show="$emit('open')"
     @hide="$emit('close')")
-    q-card.bg-accent.text-white(v-if="!isLoading && opened")
+    q-card.bg-grey-4.text-dark(v-if="!isLoading && opened")
       q-card-section(v-if="facetBuckets.length === 0")
         span {{ $t('message.noData') }}
       q-card-section(v-for="fb in facetBuckets" :key="fb.code" v-else)
@@ -20,7 +20,7 @@
             color="primary"
             :val="fb.key.toString()"
             :label="fb.label")
-          q-badge.text-black.col-auto(color="secondary") {{ fb.doc_count }}
+          q-badge.text-white.col-auto(color="secondary") {{ fb.doc_count }}
 </template>
 
 <script>
