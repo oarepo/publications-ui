@@ -97,9 +97,7 @@ export default {
       if (this.article.abstract_lang !== '' && this.article.abstract_val === '') {
         this.abstractError = true
       }
-      const year = Number(this.article.publication_year)
-      const currentYear = new Date().getFullYear()
-      if (this.article.publication_year === '' || (year > currentYear || year < 1900)) {
+      if (this.article.publication_year === '' || isNaN(this.article.publication_year)) {
         this.yearError = true
       }
     },
