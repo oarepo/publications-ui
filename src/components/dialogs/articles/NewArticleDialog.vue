@@ -17,9 +17,9 @@ q-dialog(ref='dialog' @hide='onDialogHide')
           .text Authors *
           q-card-section(v-for='(input,k) in authors_inputs' :key='k' )
             q-input(type='text' label="Author" :label='String(k + 1)' v-model='input.full_name' :error="authorError[k]" error-message="Authors name can't be empty" @input="authorError[k]=false")
-          q-btn( label='Add author' rounded @click='add(k)')
+          q-btn( label='Add author' rounded @click="addAuthor(k)")
             q-space
-          q-btn( label='Remove author' rounded  @click='remove(k)' v-show='authors_inputs.length > 1')
+          q-btn( label='Remove author' rounded  @click="removeAuthor(k)" v-show='authors_inputs.length > 1')
     q-card-actions(align='right' v-if="step==='1'")
       q-btn(color='grey' flat label='Skip DOI' @click='skipDOI')
       q-space
@@ -38,7 +38,8 @@ import DatasetDraftDetail from 'pages/datasets/DatasetDraftDetail'
 
 export default {
   props: {
-    // ...your custom props
+    dataset: Object,
+    datasetLinks: Object
   },
   components: {
     'doi-input': DOIInput,
@@ -115,12 +116,12 @@ export default {
       this.$emit('hide')
     },
 
-    add (index) {
+    addAuthor (index) {
       this.authors_inputs.push({ full_name: '' })
       this.authorError.push(false)
     },
 
-    remove (index) {
+    removeAuthor (index) {
       var lastValue = this.authors_inputs.length - (index + 1)
       this.authors_inputs.splice(lastValue, 1)
 
@@ -195,10 +196,12 @@ export default {
       if (this.titleError || authorErr || this.titleLangError || this.abstractLangError || this.doctypeError || this.yearError) { // if errors in validation
 
       } else {
-        const datasetUrl = window.location.href
+        console.log(this.dataset, this.datasetLinks)
+        const datasetUrl = this.datasetLinks.self
         if (this.article.doi !== '') {
           this.updateArticle() // set changes
-          this.updateDatasetArray(this.generated_article, datasetUrl) // set datasets
+          this.updateDatasetArray(this.generated_article, this.dataset.id) // set datasets
+          console.log(this.generated_article)
           const data = (await axios.post(`${this.communityId}/articles/draft/`, this.generated_article)).data
           const articleId = data.metadata.id
           this.$router.replace({ name: `${this.communityId}/draft-article/record`, params: { recordId: articleId } })

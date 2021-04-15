@@ -5,7 +5,6 @@ q-input(v-model="doi" label="Enter DOI" :error="doiError" error-message="DOI was
 
 <script>
 import axios from 'axios'
-import NewArticleDialog from 'components/dialogs/articles/NewArticleDialog'
 
 export default {
   props: {
@@ -15,9 +14,6 @@ export default {
     value: function (val) {
       this.doi = val
     }
-  },
-  components: {
-    'article-dialog': NewArticleDialog
   },
   mounted () {
     this.doi = this.value
