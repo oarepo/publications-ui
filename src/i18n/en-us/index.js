@@ -5,7 +5,7 @@ export default {
     productName: productName,
     description: productName,
     copyrightNotice: 'This service is a part of CESNET e-infrastructure',
-    copyright: '©  2020 CESNET a. l. e., Zikova 4, 160 00 Praha 6, Czech Republic'
+    copyright: '©  2021 CESNET a. l. e., Zikova 4, 160 00 Praha 6, Czech Republic'
   },
   icon: {
     delete_draft: 'delete_forever',
@@ -101,7 +101,10 @@ export default {
   message: {
     draftDeleted: 'Draft record was deleted',
     doYRlyWnt: 'Do you really want to',
+    noArticles: 'No articles found',
+    noDatasets: 'No datasets found',
     noData: 'No data',
+    loading: 'Loading',
     recordNotValid: 'Record is not valid',
     gdprPrompt: 'By clicking on "Accept", you give your consent with our Terms of Service and Privacy Policy for this service.',
     authRequired: 'This page requires authentication.'
