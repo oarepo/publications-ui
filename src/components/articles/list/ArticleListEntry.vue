@@ -1,7 +1,6 @@
 <template lang="pug">
   q-card(flat clickable)
     q-toolbar.absolute.q-pt-md.q-pb-sm.justify-end
-      dataset-status-ribbon(:article="d" dense)
     q-card-section(horizontal)
       q-card-section
         q-skeleton(v-if="loading" :width="`${imageSize}px`" :height="`${imageSize}px`")
@@ -31,7 +30,6 @@
 
 <script>
 import { Component, Emit, Vue } from 'vue-property-decorator'
-import DatasetStatusRibbon from 'components/datasets/item/DatasetStatusRibbon'
 
 export default @Component({
   name: 'ArticleListEntry',
@@ -40,7 +38,6 @@ export default @Component({
     item: Object
   },
   components: {
-    DatasetStatusRibbon
   }
 })
 class ItemListEntry extends Vue {

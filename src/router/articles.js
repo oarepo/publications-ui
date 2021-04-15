@@ -17,9 +17,11 @@ function articles (communityId) {
         dedupingInterval: 100,
         revalidateDebounce: 0,
         shouldRetryOnError: false
-      },
+      }
+    }, {
       meta: {
-        title: 'route.title.articleDetail'
+        title: 'route.title.articleDetail',
+        communityId: communityId
       }
     }),
     collection(
@@ -63,7 +65,8 @@ function articles (communityId) {
       // or a common detail layout for both datasets and articles
       component: () => import('layouts/DatasetDetailLayout'),
       meta: {
-        title: 'route.title.articleDetail'
+        title: 'route.title.articleDetail',
+        communityId: communityId
       },
       children: [
         record({
@@ -77,9 +80,11 @@ function articles (communityId) {
             dedupingInterval: 100,
             revalidateDebounce: 0,
             shouldRetryOnError: false
-          },
+          }
+        }, {
           meta: {
-            title: 'route.title.articleDetail'
+            title: 'route.title.articleDetail',
+            communityId: communityId
           }
         })
       ]
@@ -93,7 +98,8 @@ function articles (communityId) {
     }, {
       meta: {
         authorization: {},
-        title: 'route.title.articleUpload'
+        title: 'route.title.articleUpload',
+        communityId: communityId
       }
     })
   ]

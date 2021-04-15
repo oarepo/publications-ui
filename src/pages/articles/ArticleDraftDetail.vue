@@ -37,7 +37,8 @@
         pre.q-pa-md.bg-dark.text-code.text-white.wrap.overflow-auto(:style="{ maxWidth: '90vw' }") {{ article }}
 </template>
 <script>
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
+import { CommunityMixin } from 'src/mixins/Community'
 
 export default @Component({
   name: 'ArticleDraftDetail',
@@ -58,7 +59,7 @@ export default @Component({
     }
   }
 })
-class ArticleDraftDetail extends Vue {
+class ArticleDraftDetail extends Mixins(CommunityMixin) {
   meta () {
     return {
       title: this.draftId
