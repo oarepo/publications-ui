@@ -1,7 +1,7 @@
 // Datasets interface routes
 
-import { collection, record } from '@oarepo/invenio-api-vue-composition'
-import { ARTICLES_COLLECTION_CODE, ARTICLES_DRAFT_COLLECTION_CODE } from 'src/constants'
+import { collection, collectionApi, record } from '@oarepo/invenio-api-vue-composition'
+import { ARTICLES_COLLECTION_CODE, ARTICLES_DRAFT_COLLECTION_CODE, DATASETS_DRAFT_COLLECTION_CODE } from 'src/constants'
 
 function articles (communityId) {
   return [
@@ -12,7 +12,7 @@ function articles (communityId) {
       path: `${communityId}/articles/:recordId`,
       apiUrl: `/${communityId}`,
       component: () => import('pages/articles/ArticleDraftDetail'),
-      loadingComponent: 'viewer',
+      loadingComponent: () => import('components/common/LoadingPlaceholder'),
       httpGetProps: {
         dedupingInterval: 100,
         revalidateDebounce: 0,
@@ -52,7 +52,8 @@ function articles (communityId) {
       {
         meta: {
           title: 'route.title.articleList',
-          useFacets: true
+          useFacets: true,
+          communityId: communityId
         }
       }),
     { /* Article detail routes */
@@ -71,7 +72,7 @@ function articles (communityId) {
           path: ':recordId',
           apiUrl: `/${communityId}`,
           component: () => import('pages/articles/ArticleDraftDetail'),
-          loadingComponent: 'viewer',
+          loadingComponent: () => import('components/common/LoadingPlaceholder'),
           httpGetProps: {
             dedupingInterval: 100,
             revalidateDebounce: 0,
@@ -82,7 +83,19 @@ function articles (communityId) {
           }
         })
       ]
-    }
+    },
+    collectionApi({
+      collectionCode: DATASETS_DRAFT_COLLECTION_CODE,
+      name: `${communityId}/draft-articles/upload`,
+      path: `${communityId}/articles/draft/upload`,
+      component: () => import('pages/datasets/DatasetUpload'),
+      loadingComponent: () => import('components/common/LoadingPlaceholder')
+    }, {
+      meta: {
+        authorization: {},
+        title: 'route.title.articleUpload'
+      }
+    })
   ]
 }
 

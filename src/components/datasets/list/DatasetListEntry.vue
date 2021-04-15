@@ -1,5 +1,7 @@
 <template lang="pug">
   q-card(flat clickable)
+    q-toolbar.absolute.q-pt-md.q-pb-sm.justify-end
+      dataset-status-ribbon(v-if="!loading" :dataset="d" dense)
     q-card-section(horizontal)
       q-card-section
         q-skeleton(v-if="loading" :width="`${imageSize}px`" :height="`${imageSize}px`")
@@ -8,7 +10,7 @@
         q-skeleton.q-mt-sm(type="text" width="300px")
         q-skeleton.q-mx-md.q-mb-sm.absolute-bottom.q-card__section--vert(type="text" :width="`${imageSize}px`")
       q-card-section(v-else)
-        .text-h5.q-mt-sm.q-mb-xs.gt-xs {{ d.titles[0].en }}
+        .q-mr-xl.block.text-h5.q-mt-sm.q-mb-xs.gt-xs {{ d.titles[0].en }}
         q-separator
         q-card-section
           .text-subtitle1.ellipsis-3-lines
@@ -39,7 +41,7 @@ export default @Component({
   components: {
   }
 })
-class ItemListEntry extends Vue {
+class DatasetListEntry extends Vue {
   @Emit('detail')
   detail () {
     return this.item

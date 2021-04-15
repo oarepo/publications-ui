@@ -12,13 +12,16 @@ function datasets (communityId) {
       path: `${communityId}/datasets/:recordId`,
       apiUrl: `/${communityId}`,
       component: () => import('pages/datasets/DatasetDraftDetail'),
-      loadingComponent: 'viewer',
+      loadingComponent: () => import('components/common/LoadingPlaceholder'),
       httpGetProps: {
         dedupingInterval: 100,
         revalidateDebounce: 0,
         shouldRetryOnError: false
-      },
+      }
+    },
+    {
       meta: {
+        communityId: communityId,
         title: 'route.title.datasetDetail'
       }
     }),
@@ -52,7 +55,8 @@ function datasets (communityId) {
       {
         meta: {
           title: 'route.title.datasetList',
-          useFacets: true
+          useFacets: true,
+          communityId: communityId
         }
       }),
     { /* Dataset editation routes */
@@ -70,7 +74,7 @@ function datasets (communityId) {
           path: `${communityId}/:recordId/edit`,
           apiUrl: `/${communityId}`,
           component: () => import('pages/datasets/DatasetDraftDetail'),
-          loadingComponent: 'viewer',
+          loadingComponent: () => import('components/common/LoadingPlaceholder'),
           httpGetProps: {
             dedupingInterval: 100,
             revalidateDebounce: 0,
@@ -83,9 +87,6 @@ function datasets (communityId) {
       name: `${communityId}/dataset-detail`,
       path: `${communityId}/datasets/draft/`,
       component: () => import('layouts/DatasetDetailLayout'),
-      meta: {
-        title: 'route.title.datasetDetail'
-      },
       children: [
         // Draft dataset detail
         record({
@@ -94,14 +95,17 @@ function datasets (communityId) {
           path: ':recordId',
           apiUrl: `/${communityId}`,
           component: () => import('pages/datasets/DatasetDraftDetail'),
-          loadingComponent: 'viewer',
+          loadingComponent: () => import('components/common/LoadingPlaceholder'),
           httpGetProps: {
             dedupingInterval: 100,
             revalidateDebounce: 0,
             shouldRetryOnError: false
-          },
+          }
+        },
+        {
           meta: {
-            title: 'route.title.datasetDetail'
+            title: 'route.title.datasetDetail',
+            communityId: communityId
           }
         })
       ]
@@ -110,7 +114,8 @@ function datasets (communityId) {
       collectionCode: DATASETS_DRAFT_COLLECTION_CODE,
       name: `${communityId}/draft-datasets/upload`,
       path: `${communityId}/datasets/draft/upload`,
-      component: () => import('pages/datasets/DatasetUpload')
+      component: () => import('pages/datasets/DatasetUpload'),
+      loadingComponent: () => import('components/common/LoadingPlaceholder')
     }, {
       meta: {
         authorization: {},
