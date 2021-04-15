@@ -11,7 +11,7 @@ q-dialog(ref='dialog' @hide='onDialogHide')
           q-input(v-model="article.title_lang" label="Title language *" :error="titleLangError" error-message="Wrong language format" @input="titleLangError=false")
           q-input(v-model="article.title_val" label="Title value *" :error="titleError" error-message="Title can't be empty" @input="titleError=false")
           q-input(v-model="article.abstract_lang" label="Abstract language" :error="abstractLangError" error-message="Wrong language format" @input="abstractLangError=false")
-          q-input(v-model="article.abstract_val" label="Abstract value" :error="abstractError" error-message="Abstract can't be empty, if abstract language is filled" @input="abstractErro=false" type="textarea")
+          q-input(v-model="article.abstract_val" label="Abstract value" :error="abstractError" error-message="Abstract can't be empty, if abstract language is filled" @input="abstractError=false" type="textarea")
           q-input(v-model="article.document_type" label="Document type *" :error="doctypeError" error-message="Document type can't be empty" @input="doctypeError=false")
           q-input(v-model="article.publication_year" type="number" label="Publication year *" :error="yearError" error-message="Publication year is required and must be valid year" @input="yearError=false")
           .text Authors *
@@ -164,7 +164,6 @@ export default {
               this.authorError.push([false])
             }
           }
-
           this.step = '2'
         }
       } finally {
@@ -184,7 +183,7 @@ export default {
       this.doctypeError = false
       this.abstractError = false
       this.yearError = false
-      for (var k = 0; k < this.abstractError.length; k++) {
+      for (var k = 0; k < this.authorError.length; k++) {
         this.authorError[k] = false
       }
       this.validate()
@@ -195,7 +194,7 @@ export default {
           break
         }
       }
-      if (this.titleError || authorErr || this.titleLangError || this.abstractLangError || this.doctypeError || this.yearError) { // if error in validation
+      if (this.titleError || authorErr || this.titleLangError || this.abstractLangError || this.doctypeError || this.yearError) { // if errors in validation
 
       } else {
         const datasetUrl = window.location.href
@@ -221,8 +220,12 @@ export default {
       }
     },
     updateArticle () {
-      this.generated_article['title'[this.article.title_lang]] = this.article.title_val
-      this.generated_article['abstract'[this.article.abstract_lang]] = this.article.abstract_val
+      var newAbstract = JSON.parse('{}')
+      newAbstract[this.article.abstract_lang] = this.article.abstract_val
+      var newTitle = JSON.parse('{}')
+      newTitle[this.article.title_lang] = this.article.title_val
+      this.generated_article.title = newTitle
+      this.generated_article.abstract = newAbstract
       this.generated_article.authors = this.authors_inputs
       this.generated_article.document_type = this.article.document_type
       this.generated_article._primary_community = this.communityId
