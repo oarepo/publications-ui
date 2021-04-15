@@ -22,7 +22,7 @@
           @detail="navigateDetail"
           @click.native="navigateDetail(item)")
       .row.justify-around
-        q-pagination.q-mt-lg(v-model="$query.page" :max="pages" :max-pages="9" color="accent"
+        q-pagination.q-mt-lg(:input="true" v-model="$query.page" :max="pages" :max-pages="9" color="grey-5"
           direction-links boundary-numbers size="lg" v-if="loaded && items.length")
     no-data-placeholder.full-height(v-else)
       .text-h6.text-weight-lighter {{ $t('message.noDatasets') }}…

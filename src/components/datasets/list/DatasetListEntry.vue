@@ -1,7 +1,7 @@
 <template lang="pug">
   q-card(flat clickable)
     q-toolbar.absolute.q-pt-md.q-pb-sm.justify-end
-      dataset-status-ribbon(:dataset="d" dense)
+      dataset-status-ribbon(v-if="!loading" :dataset="d" dense)
     q-card-section(horizontal)
       q-card-section
         q-skeleton(v-if="loading" :width="`${imageSize}px`" :height="`${imageSize}px`")
