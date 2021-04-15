@@ -31,6 +31,7 @@
 
 <script>
 import { Component, Emit, Vue } from 'vue-property-decorator'
+import DatasetStatusRibbon from 'components/datasets/item/DatasetStatusRibbon'
 
 export default @Component({
   name: 'DatasetListEntry',
@@ -39,6 +40,7 @@ export default @Component({
     item: Object
   },
   components: {
+    DatasetStatusRibbon
   }
 })
 class DatasetListEntry extends Vue {
