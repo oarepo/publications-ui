@@ -46,17 +46,6 @@ export default {
         this.$emit('exists', { links: articleLinks, metadata: article })
         // TODO: move this logic to NewArticleDialog
         this.doiError = false
-        // const datasetUrl = window.location.href
-        // if (!article?.datasets?.includes(datasetUrl)) {
-        //   await axios.patch(article.links.self,
-        //     [{ op: 'add', path: '/datasets/-', value: { datasetUrl } }],
-        //     { headers: { 'Content-Type': 'application/json-patch+json' } })
-        // }
-        //
-        // await this.$router.push({
-        //   name: `${article._primary_community}/draft-article/record`,
-        //   params: { recordId: article.id }
-        // })
       }).onCancel(() => {
         this.doiError = false
       }).onDismiss(() => {
