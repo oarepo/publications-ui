@@ -1,5 +1,6 @@
 <template lang="pug">
   q-card(flat clickable)
+    q-toolbar.absolute.q-pt-md.q-pb-sm.justify-end
     q-card-section(horizontal)
       q-card-section
         q-skeleton(v-if="loading" :width="`${imageSize}px`" :height="`${imageSize}px`")
@@ -8,11 +9,11 @@
         q-skeleton.q-mt-sm(type="text" width="300px")
         q-skeleton.q-mx-md.q-mb-sm.absolute-bottom.q-card__section--vert(type="text" :width="`${imageSize}px`")
       q-card-section(v-else)
-        .text-h5.q-mt-sm.q-mb-xs.gt-xs {{ d.title.en }}
+        .text-h5.q-mt-sm.q-mb-xs.gt-xs {{ title }}
         q-separator
         q-card-section
           .text-subtitle1.ellipsis-3-lines
-            span(v-html="$sanitize(d.abstract.en)")
+            span(v-html="$sanitize( abstract )")
         q-card-section
           .text-subtitle2.text-grey-8 {{ $t('label.createdAt') }} {{ $d(new Date(d.created)) }}
       q-skeleton.absolute-bottom-right.q-px-sm.q-ma-md(
@@ -43,6 +44,35 @@ class ItemListEntry extends Vue {
   @Emit('detail')
   detail () {
     return this.item
+  }
+
+  keys (data) {
+    var keys = []
+    for (var k in data) {
+      keys.push(k)
+    }
+    return keys
+  }
+
+  get title () {
+    var title = this.item.metadata.title
+    var langs = this.keys(title)
+
+    if ('en' in langs) {
+      return title.en
+    } else return title[langs[0]]
+  }
+
+  get abstract () {
+    var abstract = this.item.metadata.abstract
+    if (abstract === '') { // abstract is not required
+      return ''
+    }
+    var langs = this.keys(abstract)
+
+    if ('en' in langs) {
+      return abstract.en
+    } else return abstract[langs[0]]
   }
 
   get d () {

@@ -43,7 +43,7 @@ export default @Component({
     DatasetStatusRibbon
   }
 })
-class ItemListEntry extends Vue {
+class DatasetListEntry extends Vue {
   @Emit('detail')
   detail () {
     return this.item

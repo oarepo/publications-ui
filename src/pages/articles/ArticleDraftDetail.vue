@@ -7,7 +7,7 @@
             .text-h5.wrap.row.q-gutter-md
               span.text-accent {{ article.id }}
               q-separator(color="primary" vertical)
-              span {{ article.title.en }}
+              span {{ title }}
         q-separator(spaced)
         q-card-section.bg-grey-4
           .row
@@ -19,7 +19,7 @@
               span.on-right.text-overline.text-warning(v-if="c.identifiers") {{ c.identifiers.orcid }}
         q-card-section.bg-white
           .text-overline.text-uppercase.text-accent {{ $t('label.abstract') }}
-          p(v-html="$sanitize(article.abstract.en)")
+          p(v-html="$sanitize( abstract )")
           .text-overline.text-uppercase.text-accent {{ $t('label.identifiers') }}
           .row
             q-chip(v-for="i in article.alternative_identifiers" :key="i.identifier")
@@ -31,16 +31,17 @@
             q-chip() {{ article.document_type}}
           .text-overline.text-uppercase.text-accent.q-mt-md {{ $t('label.datasets') }}
             .row
-            q-chip(v-for="d in article.datasets" :key="d")
-              router-link(:to="d") {{ d }}
+            q-chip(v-for="d in article.datasets" :key="d.pid_value")
+              router-link(:to="datasetLink(d)") {{ d.pid_value }}
         .text-overline.text-uppercase.text-accent.q-mt-md JSON Metadata
         pre.q-pa-md.bg-dark.text-code.text-white.wrap.overflow-auto(:style="{ maxWidth: '90vw' }") {{ article }}
 </template>
 <script>
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
+import { CommunityMixin } from 'src/mixins/Community'
 
 export default @Component({
-  name: 'DatasetDraftDetail',
+  name: 'ArticleDraftDetail',
   props: {
     record: Object,
     loading: Boolean,
@@ -49,15 +50,19 @@ export default @Component({
       type: String,
       required: true
     }
-  },
-  components: {},
-  methods: {
   }
 })
-class ArticleDraftDetail extends Vue {
+class ArticleDraftDetail extends Mixins(CommunityMixin) {
   meta () {
     return {
       title: this.draftId
+    }
+  }
+
+  datasetLink (d) {
+    return {
+      name: `${this.article._primary_community}/draft-dataset/record`,
+      params: { recordId: d.pid_value }
     }
   }
 
@@ -68,6 +73,34 @@ class ArticleDraftDetail extends Vue {
 
   download (file) {
     window.open(file.url, '_blank')
+  }
+
+  keys (data) {
+    var keys = []
+    for (var k in data) {
+      keys.push(k)
+    }
+    return keys
+  }
+
+  get title () {
+    var title = this.article.title
+    var langs = this.keys(title)
+
+    if ('en' in langs) {
+      return title.en
+    } else return title[langs[0]]
+  }
+
+  get abstract () {
+    var abstract = this.article.abstract
+    if (abstract === '') { // abstract is not required
+      return ''
+    }
+    var langs = this.keys(abstract)
+    if ('en' in langs) {
+      return abstract.en
+    } else return abstract[langs[0]]
   }
 
   get article () {
