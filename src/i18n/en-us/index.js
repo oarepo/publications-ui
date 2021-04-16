@@ -69,6 +69,8 @@ export default {
     localeSwitcher: 'Language',
     language: 'Language',
     datasetBasicInfo: 'Basic Info',
+    importFromDOI: 'Import from DOI',
+    enterArticleDOI: 'Enter article DOI',
     titles: 'Titles',
     documentType: 'Document type',
     datasets: 'Datasets',
@@ -99,6 +101,7 @@ export default {
     roles: 'Roles'
   },
   message: {
+    resolveDOIError: 'DOI could not be resolved',
     draftDeleted: 'Draft record was deleted',
     doYRlyWnt: 'Do you really want to',
     noArticles: 'No articles found',

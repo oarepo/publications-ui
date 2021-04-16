@@ -67,6 +67,8 @@ export default {
     titles: 'Název záznamu',
     identifiers: 'Identifikátory',
     language: 'Jazyk',
+    importFromDOI: 'Importovat z DOI',
+    enterArticleDOI: 'Zadejte DOI článku',
     identifierScheme: 'Schema',
     files: 'Soubory',
     filters: 'Filtry',
@@ -97,6 +99,7 @@ export default {
     roles: 'Role'
   },
   message: {
+    resolveDOIError: 'K zadánému DOI se nepodařilo získat metadata článku',
     noArticles: 'Žádné články nenalezeny',
     noDatasets: 'Žádné datasety nenalezeny',
     draftDeleted: 'Záznam byl smazán',

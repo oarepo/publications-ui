@@ -1,6 +1,10 @@
 <template lang="pug">
-q-input(v-model="doi" label="Enter DOI" :error="doiError" error-message="DOI was not found" @input="doiError=false")
-
+q-input(v-model="doi"
+        autofocus
+        :label="$t('label.enterArticleDOI')"
+        :error="doiError"
+        :error-message="$t('message.resolveDOIError')"
+        @input="doiError=false")
 </template>
 
 <script>
@@ -25,26 +29,34 @@ export default {
       communityId: this.$route.meta.communityId
     }
   },
-
   methods: {
-    confirm () {
+    articlesActionUrl (action) {
+      const articlesApi = this.$router.resolve({
+        name: `${this.communityId}/article-detail`
+      }).href
+      return `${articlesApi}/${action}/`
+    },
+    confirm (articleLinks, article) {
       this.$q.dialog({
         title: 'DOI already in repository',
         message: 'DOI ' + this.doi + ' already exists in repository, would you like to attach this dataset to existing article?',
         cancel: true,
         persistent: true
       }).onOk(async () => {
+        this.$emit('exists', { links: articleLinks, metadata: article })
+        // TODO: move this logic to NewArticleDialog
         this.doiError = false
-        const datasetUrl = window.location.href
-        const existingArticle = (await axios.post(`/${this.communityId}/articles/draft/document/${this.doi}`)).data
-        if (!existingArticle.metadata.datasets.includes(datasetUrl)) {
-          axios.patch(existingArticle.links.self,
-            [{ op: 'add', path: '/datasets/-', value: datasetUrl }],
-            { headers: { 'Content-Type': 'application/json-patch+json' } })
-        }
-
-        this.$router.replace({ name: `${this.communityId}/draft-article/record`, params: { recordId: existingArticle.metadata.id } })
-      }).onOk(() => {
+        // const datasetUrl = window.location.href
+        // if (!article?.datasets?.includes(datasetUrl)) {
+        //   await axios.patch(article.links.self,
+        //     [{ op: 'add', path: '/datasets/-', value: { datasetUrl } }],
+        //     { headers: { 'Content-Type': 'application/json-patch+json' } })
+        // }
+        //
+        // await this.$router.push({
+        //   name: `${article._primary_community}/draft-article/record`,
+        //   params: { recordId: article.id }
+        // })
       }).onCancel(() => {
         this.doiError = false
       }).onDismiss(() => {
@@ -52,20 +64,21 @@ export default {
       })
     },
     async validate () {
-      const response = (await axios.post(`/${this.communityId}/articles/draft/from-doi/`, { doi: this.doi })).data
-      var articleUrl = ''
+      const response = (await axios.post(
+        `${this.articlesActionUrl('from-doi')}`,
+        { doi: this.doi })).data
+      let articleLinks = ''
       try {
-        articleUrl = response.links.self
+        articleLinks = response.links
       } catch {
-
       }
-      if (articleUrl !== '' && this.doi !== '') {
-        this.confirm()
+      if (articleLinks && this.doi !== '') {
+        this.confirm(articleLinks, response.article)
+        return
       }
       if (response.article && this.doi !== '') {
         this.doiError = false
-        this.$emit('input', this.doi)
-        return response.article
+        this.$emit('resolve', response.article)
       } else {
         this.doiError = true
       }

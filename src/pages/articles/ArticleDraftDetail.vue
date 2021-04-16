@@ -31,8 +31,8 @@
             q-chip() {{ article.document_type}}
           .text-overline.text-uppercase.text-accent.q-mt-md {{ $t('label.datasets') }}
             .row
-            q-chip(v-for="d in article.datasets" :key="d")
-              a(v-bind:href="d") {{ getDatasetId(d) }}
+            q-chip(v-for="d in article.datasets" :key="d.pid_value")
+              router-link(:to="datasetLink(d)") {{ d.pid_value }}
         .text-overline.text-uppercase.text-accent.q-mt-md JSON Metadata
         pre.q-pa-md.bg-dark.text-code.text-white.wrap.overflow-auto(:style="{ maxWidth: '90vw' }") {{ article }}
 </template>
@@ -50,19 +50,19 @@ export default @Component({
       type: String,
       required: true
     }
-  },
-  components: {},
-  methods: {
-    getDatasetId (url) {
-      var urlArray = url.split('/')
-      return urlArray.slice(-1).pop()
-    }
   }
 })
 class ArticleDraftDetail extends Mixins(CommunityMixin) {
   meta () {
     return {
       title: this.draftId
+    }
+  }
+
+  datasetLink (d) {
+    return {
+      name: `${this.article._primary_community}/draft-dataset/record`,
+      params: { recordId: d.pid_value }
     }
   }
 
