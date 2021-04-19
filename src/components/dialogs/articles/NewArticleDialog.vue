@@ -1,33 +1,52 @@
 <template lang="pug">
-q-dialog(ref='dialog' @hide='onDialogHide')
-  q-card.q-dialog-plugin
+q-dialog.q-pa-lg.dialog-window(
+  ref='dialog' @hide='onDialogHide'
+  :maximized="maximized"
+  persistent
+  transition-show="slide-up"
+  transition-hide="slide-down")
+  q-card.q-mt-xl
+    q-bar.bg-dark-primary
+      q-space
+      q-btn(dense color="white" flat icon="minimize" @click="maximized = false" :disable="!maximized")
+      q-btn(dense color="white" flat icon="crop_square" @click="maximized = true" :disable="maximized")
+      q-btn(dense color="white" flat icon="close" v-close-popup)
     q-card-section.bg-primary.text-white
-      .text-h3 Attach Article
+      .text-h4 {{ $t('action.attachArticle') }}
     q-card-section
       q-stepper(v-model="step" flat)
         q-step(name="1" :title="$t('label.importFromDOI')" :done="step > 1")
           doi-input(v-model="article.doi" ref="doi" @exists="articleExists" @resolve="articleResolved")
-        q-step(name="2" title="Details" :done="step > 2")
+        q-step.full-width(name="2" :title="$t('label.articleMetadata')" :done="step > 2")
           q-input(v-model="article.title_lang" label="Title language *" :error="titleLangError" error-message="Wrong language format" @input="titleLangError=false")
           q-input(v-model="article.title_val" label="Title value *" :error="titleError" error-message="Title can't be empty" @input="titleError=false")
           q-input(v-model="article.abstract_lang" label="Abstract language" :error="abstractLangError" error-message="Wrong language format" @input="abstractLangError=false")
           q-input(v-model="article.abstract_val" label="Abstract value" :error="abstractError" error-message="Abstract can't be empty, if abstract language is filled" @input="abstractError=false" type="textarea")
           q-input(v-model="article.document_type" label="Document type *" :error="doctypeError" error-message="Document type can't be empty" @input="doctypeError=false")
           q-input(v-model="article.publication_year" type="number" label="Publication year *" :error="yearError" error-message="Publication year is required and must be valid year" @input="yearError=false")
-          .text Authors *
+          .text {{ $t('label.authors') }} *
           q-card-section(v-for='(input,k) in authors_inputs' :key='k' )
             q-input(type='text' label="Author" :label='String(k + 1)' v-model='input.full_name' :error="authorError[k]" error-message="Authors name can't be empty" @input="authorError[k]=false")
-          q-btn( label='Add author' rounded @click="addAuthor(k)")
+          q-btn(:label="$t('action.addAuthor')" flat color="positive" icon="add" @click="addAuthor(k)")
             q-space
-          q-btn( label='Remove author' rounded  @click="removeAuthor(k)" v-show='authors_inputs.length > 1')
-    q-card-actions(align='right' v-if="step==='1'")
-      q-btn(color='grey' flat label='Skip DOI' @click='skipDOI')
+          q-btn(
+            :label="$t('action.removeAuthor')"
+            flat color="negative"
+            @click="removeAuthor(k)"
+            icon="remove"
+            v-show='authors_inputs.length > 1')
+    q-card-actions(align='right' v-if="step==='1'").q-pa-md
+      q-btn.q-mb-sm(color='grey' flat :label="$t('label.skipDOI')" @click='skipDOI')
       q-space
-      q-btn(color='primary' label='Next' @click='next' :loading="validatingDOI" )
+      q-btn.full-width(color='primary' :label="$t('label.importFromDOI')" @click='next' :loading="validatingDOI" )
+        template(v-slot:loading)
+          .row.full-width.no-wrap.q-gutter-md.justify-center
+            .col-auto {{ $t('message.loadingMetadata') }}
+            q-spinner-puff.col-auto
     q-card-actions(align='right' v-if="step==='2'")
-      q-btn(color='grey' flat label='Back' @click='back')
+      q-btn(color='grey' flat :label="$t('label.back')" @click='back')
       q-space
-      q-btn(color='primary' label='Create article' @click='createArticle')
+      q-btn(color='primary' :label="$t('label.createArticle')" @click='createArticle')
 </template>
 
 <script>
@@ -46,6 +65,7 @@ export default {
   },
   data () {
     return {
+      maximized: false,
       k: 0,
       step: '1',
       validatingDOI: false,
@@ -174,6 +194,7 @@ export default {
         }
       }
       this.step = '2'
+      this.maximized = true
     },
 
     async next () {
@@ -187,7 +208,7 @@ export default {
       await this.$refs.doi.validate()
       this.validatingDOI = false
     },
-    async skipDOI () {
+    skipDOI () {
       this.step = '2'
     },
     back () {
@@ -270,3 +291,7 @@ export default {
   }
 }
 </script>
+<style lang="sass">
+.dialog-window
+  z-index: 10000 !important
+</style>
