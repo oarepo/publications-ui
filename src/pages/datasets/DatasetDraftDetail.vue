@@ -39,23 +39,12 @@ q-page(padding).q-pa-xl.full-height.flex.flex-center
               p.col-grow.text-caption {{ Math.round(f.size/1024) }} kb
             q-card-actions(vertical)
               q-avatar.cursor-pointer(icon="las la-download" @click="download(f)")
-    q-card-actions
-      .text-overline.text-uppercase.text-accent.q-my-md.q-px-lg JSON Metadata
-      q-space
-      q-btn(
-        color="grey"
-        round
-        flat
-        dense
-        :icon="metadataExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
-        @click="metadataExpanded = !metadataExpanded")
-    q-slide-transition
-      .q-pa-md.bg-dark(v-show="metadataExpanded")
-        pre.text-code.text-white.wrap.overflow-auto {{ dataset }}
+    metadata-dropdown(:metadata="dataset")
 </template>
 <script>
 import {Component, Mixins} from 'vue-property-decorator'
 import DatasetActionBar from 'components/datasets/item/DatasetActionBar'
+import MetadataDropdown from 'components/common/MetadataDropdown'
 import {CommunityMixin} from 'src/mixins/Community'
 
 export default @Component({
@@ -70,24 +59,17 @@ export default @Component({
     }
   },
   components: {
-    DatasetActionBar
+    DatasetActionBar,
+    MetadataDropdown
   },
 })
 class DatasetDraftDetail extends Mixins(CommunityMixin) {
-  metadataExpanded = false
-
   get dataset() {
     return (this.record && this.record.metadata) || {titles: [{en: ''}], abstract: {description: {en: ''}}}
   }
 
   get datasetId() {
     return this.dataset && this.dataset.id
-  }
-
-  meta() {
-    return {
-      title: this.draftId
-    }
   }
 
   download(file) {

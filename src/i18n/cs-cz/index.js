@@ -99,6 +99,7 @@ export default {
     roles: 'Role'
   },
   message: {
+    copiedToClip: 'Zkopírováno do schránky',
     resolveDOIError: 'K zadánému DOI se nepodařilo získat metadata článku',
     noArticles: 'Žádné články nenalezeny',
     noDatasets: 'Žádné datasety nenalezeny',

@@ -101,6 +101,7 @@ export default {
     roles: 'Roles'
   },
   message: {
+    copiedToClip: 'Copied to clipboard',
     resolveDOIError: 'DOI could not be resolved',
     draftDeleted: 'Draft record was deleted',
     doYRlyWnt: 'Do you really want to',

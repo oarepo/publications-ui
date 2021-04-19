@@ -22,8 +22,7 @@
           @detail="navigateDetail"
           @click.native="navigateDetail(item)")
       .row.justify-around
-        q-pagination.q-mt-lg(v-model="$query.page" :max="pages" :max-pages="9" color="accent"
-          direction-links boundary-numbers size="lg" v-if="loaded && items.length")
+        pagination.q-mt-lg(:query="$query" :pages="pages" v-if="loaded && items.length")
     no-data-placeholder.full-height(v-else)
       .text-h6.text-weight-lighter {{ $t('message.noArticles') }}…
     portal(to="drawer")
@@ -40,6 +39,7 @@ import ItemListEntry from 'components/articles/list/ArticleListEntry'
 import { SearchMixin } from 'src/mixins/SearchMixin'
 import NoDataPlaceholder from 'src/components/common/NoDataPlaceholder'
 import FacetList from 'components/search/FacetList'
+import Pagination from 'components/navigation/Pagination'
 import { CommunityMixin } from 'src/mixins/Community'
 
 export default @Component({
@@ -56,7 +56,8 @@ export default @Component({
     // Logo,
     ItemListEntry,
     NoDataPlaceholder,
-    FacetList
+    FacetList,
+    Pagination
   }
 })
 class ArticleList extends Mixins(SearchMixin, CommunityMixin) {

@@ -10,7 +10,8 @@
         q-skeleton.q-mt-sm(type="text" width="300px")
         q-skeleton.q-mx-md.q-mb-sm.absolute-bottom.q-card__section--vert(type="text" :width="`${imageSize}px`")
       q-card-section(v-else)
-        .q-mr-xl.block.text-h5.q-mt-sm.q-mb-xs.gt-xs {{ d.titles[0].en }}
+        .q-mr-xl.block.text-h5.q-mt-sm.q-mb-xs.gt-xs
+          search-highlight(:item="item" :text="d.titles[0].en")
         q-separator
         q-card-section
           .text-subtitle1.ellipsis-3-lines
@@ -32,6 +33,7 @@
 <script>
 import { Component, Emit, Vue } from 'vue-property-decorator'
 import DatasetStatusRibbon from 'components/datasets/item/DatasetStatusRibbon'
+import SearchHighlight from 'components/search/SearchHighlight'
 
 export default @Component({
   name: 'DatasetListEntry',
@@ -40,6 +42,7 @@ export default @Component({
     item: Object
   },
   components: {
+    SearchHighlight,
     DatasetStatusRibbon
   }
 })
@@ -64,7 +67,4 @@ class DatasetListEntry extends Vue {
 </script>
 
 <style lang="sass">
-.highlight em
-  font-weight: bolder
-  color: #616161 !important
 </style>
