@@ -30,21 +30,14 @@ q-page(padding).q-pa-xl.full-height.flex.flex-center
       .row
         q-chip(v-for="r in dataset.rights" :key="r.right") {{ r.identifier }}
       .text-overline.text-uppercase.text-accent.q-mt-md {{ $t('label.files') }}
-      .row.q-gutter-lg
-        q-card.q-pa-sm.bg-grey-3(v-for="f in dataset['_files']" :key="f.file_id")
-          q-card-section(horizontal)
-            .column.justify-start
-              .col-auto.text-subtitle {{ f.key }}
-              p.col-auto.no-margin.text-overline.text-uppercase.text-accent {{ $t('label.size') }}
-              p.col-grow.text-caption {{ Math.round(f.size/1024) }} kb
-            q-card-actions(vertical)
-              q-avatar.cursor-pointer(icon="las la-download" @click="download(f)")
+      dataset-files(:files="dataset['_files']" :recordApi="recordApi")
     metadata-dropdown(:metadata="dataset")
 </template>
 <script>
 import {Component, Mixins} from 'vue-property-decorator'
 import DatasetActionBar from 'components/datasets/item/DatasetActionBar'
 import MetadataDropdown from 'components/common/MetadataDropdown'
+import DatasetFiles from 'components/datasets/item/DatasetFiles'
 import {CommunityMixin} from 'src/mixins/Community'
 
 export default @Component({
@@ -60,7 +53,8 @@ export default @Component({
   },
   components: {
     DatasetActionBar,
-    MetadataDropdown
+    MetadataDropdown,
+    DatasetFiles
   },
 })
 class DatasetDraftDetail extends Mixins(CommunityMixin) {
@@ -70,10 +64,6 @@ class DatasetDraftDetail extends Mixins(CommunityMixin) {
 
   get datasetId() {
     return this.dataset && this.dataset.id
-  }
-
-  download(file) {
-    window.open(`${file.url}?download`, '_blank')
   }
 }
 </script>
