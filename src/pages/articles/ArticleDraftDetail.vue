@@ -61,7 +61,7 @@ class ArticleDraftDetail extends Mixins(CommunityMixin) {
 
   datasetLink (d) {
     return {
-      name: `${this.article._primary_community}/draft-dataset/record`,
+      name: `${this.article._primary_community}/${d['oarepo:draft'] ? 'draft-' : ''}dataset/record`,
       params: { recordId: d.pid_value }
     }
   }
