@@ -38,39 +38,45 @@ export default {
     },
     confirm (articleLinks, article) {
       this.$q.dialog({
-        title: 'DOI already in repository',
-        message: 'DOI ' + this.doi + ' already exists in repository, would you like to attach this dataset to existing article?',
+        title: this.$t('section.articleExistsError'),
+        message: this.$t('message.articleExistsError'),
         cancel: true,
-        persistent: true
+        contentStyle: { zIndex: 8000 }
       }).onOk(async () => {
         this.$emit('exists', { links: articleLinks, metadata: article })
         // TODO: move this logic to NewArticleDialog
         this.doiError = false
       }).onCancel(() => {
         this.doiError = false
+        this.$emit('resolve', {})
       }).onDismiss(() => {
         this.doiError = false
+        this.$emit('resolve', {})
       })
     },
-    async validate () {
-      const response = (await axios.post(
+    validate () {
+      axios.post(
         `${this.articlesActionUrl('from-doi')}`,
-        { doi: this.doi })).data
-      let articleLinks = ''
-      try {
-        articleLinks = response.links
-      } catch {
-      }
-      if (articleLinks && this.doi !== '') {
-        this.confirm(articleLinks, response.article)
-        return
-      }
-      if (response.article && this.doi !== '') {
-        this.doiError = false
-        this.$emit('resolve', response.article)
-      } else {
-        this.doiError = true
-      }
+        { doi: this.doi })
+        .then((response) => {
+          const articleLinks = response.data?.links
+          const article = response.data?.article
+
+          if (articleLinks && this.doi !== '') {
+            this.confirm(articleLinks, article)
+            return
+          }
+          if (article && this.doi !== '') {
+            this.doiError = false
+            this.$emit('resolve', article)
+          } else {
+            this.doiError = true
+          }
+        }).catch(err => {
+          console.log(err)
+          this.doiError = true
+          this.$emit('invalid', this.doi)
+        })
     }
   }
 }

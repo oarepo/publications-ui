@@ -16,7 +16,10 @@ q-dialog.q-pa-lg.dialog-window(
     q-card-section
       q-stepper(v-model="step" flat)
         q-step(name="1" :title="$t('label.importFromDOI')" :done="step > 1")
-          doi-input(v-model="article.doi" ref="doi" @exists="articleExists" @resolve="articleResolved")
+          doi-input(v-model="article.doi" ref="doi"
+            @exists="articleExists"
+            @resolve="articleResolved"
+            @invalid="doiInvalid")
         q-step.full-width(name="2" :title="$t('label.articleMetadata')" :done="step > 2")
           q-input(v-model="article.title_lang" label="Title language *" :error="titleLangError" error-message="Wrong language format" @input="titleLangError=false")
           q-input(v-model="article.title_val" label="Title value *" :error="titleError" error-message="Title can't be empty" @input="titleError=false")
@@ -26,7 +29,14 @@ q-dialog.q-pa-lg.dialog-window(
           q-input(v-model="article.publication_year" type="number" label="Publication year *" :error="yearError" error-message="Publication year is required and must be valid year" @input="yearError=false")
           .text {{ $t('label.authors') }} *
           q-card-section(v-for='(input,k) in authors_inputs' :key='k' )
-            q-input(type='text' label="Author" :label='String(k + 1)' v-model='input.full_name' :error="authorError[k]" error-message="Authors name can't be empty" @input="authorError[k]=false")
+            q-input(
+              type='text'
+              label="Author"
+              :label='String(k + 1)'
+              v-model='input.full_name'
+              :error="authorError[k]"
+              error-message="Authors name can't be empty"
+              @input="authorError[k]=false")
           q-btn(:label="$t('action.addAuthor')" flat color="positive" icon="add" @click="addAuthor(k)")
             q-space
           q-btn(
@@ -36,17 +46,36 @@ q-dialog.q-pa-lg.dialog-window(
             icon="remove"
             v-show='authors_inputs.length > 1')
     q-card-actions(align='right' v-if="step==='1'").q-pa-md
-      q-btn.q-mb-sm(color='grey' flat :label="$t('label.skipDOI')" @click='skipDOI')
+      q-btn.q-mb-sm(color='grey' :disable="validatingDOI" flat :label="$t('label.skipDOI')" @click='skipDOI')
       q-space
-      q-btn.full-width(color='primary' :label="$t('label.importFromDOI')" @click='next' :loading="validatingDOI" )
+      q-btn.full-width(
+        color='primary'
+        :disable="validatingDOI"
+        :label="$t('label.importFromDOI')"
+        @click='next'
+        :loading="validatingDOI")
         template(v-slot:loading)
           .row.full-width.no-wrap.q-gutter-md.justify-center
             .col-auto {{ $t('message.loadingMetadata') }}
             q-spinner-puff.col-auto
-    q-card-actions(align='right' v-if="step==='2'")
-      q-btn(color='grey' flat :label="$t('label.back')" @click='back')
+    q-card-actions.q-mb-xl.q-mx-lg(align='right' v-if="step==='2'")
+      q-btn.q-mb-xl.q-ml-md(
+        color='grey'
+        flat
+        :disable="creatingArticle"
+        :label="$t('label.back')" @click='back')
       q-space
-      q-btn(color='primary' :label="$t('label.createArticle')" @click='createArticle')
+      q-btn.col-auto.q-mb-xl.q-mr-lg(
+        color='positive'
+        size="lg"
+        :disable="creatingArticle"
+        :label="$t('label.createArticle')"
+        @click='createArticle'
+        :loading="creatingArticle")
+        template(v-slot:loading)
+          .row.full-width.no-wrap.q-gutter-md.justify-center
+            .col-auto {{ $t('message.creatingArticle') }}
+            q-spinner-puff.col-auto
 </template>
 
 <script>
@@ -69,6 +98,7 @@ export default {
       k: 0,
       step: '1',
       validatingDOI: false,
+      creatingArticle: false,
       authorError: [false],
       generated_article: {},
       article: {
@@ -147,10 +177,11 @@ export default {
       this.authorError.splice(lastErrorValue, 1)
     },
 
-    async articleExists (article) {
+    articleExists (article) {
       // Called then article with a given DOI already exists
       console.log('article exists in repo', article.metadata)
-      await axios.patch(article.links.self,
+      axios.patch(
+        article.links.self,
         [{
           op: 'add',
           path: '/datasets/-',
@@ -159,17 +190,23 @@ export default {
             'oarepo:draft': this.dataset['oarepo:draft']
           }
         }], { headers: { 'Content-Type': 'application/json-patch+json' } })
-
-      await this.$router.push({
-        name: `${article.metadata._primary_community}/draft-article/record`,
-        params: { recordId: article.metadata.id }
-      })
-
-      this.hide()
+        .then((response) => {
+          this.$router.push({
+            name: `${article.metadata._primary_community}/draft-article/record`,
+            params: { recordId: article.metadata.id }
+          })
+          this.hide()
+        }).catch(err => {
+          this.articleCreateFailed(err)
+        }).finally(() => {
+          this.creatingArticle = false
+          this.validatingDOI = false
+        })
     },
 
     articleResolved (article) {
       console.log('article resolved from DOI', article)
+      this.validatingDOI = false
       this.generated_article = article
       this.article.document_type = article.document_type
       this.article.publication_year = article.publication_year
@@ -190,31 +227,47 @@ export default {
           this.authors_inputs[0].full_name = article.authors[0].full_name
         } else {
           this.authors_inputs.push({ full_name: article.authors[i].full_name })
-          this.authorError.push([false])
+          this.authorError.push(false)
         }
       }
       this.step = '2'
       this.maximized = true
     },
 
-    async next () {
+    doiInvalid (doi) {
+      this.validatingDOI = false
+    },
+
+    articleCreateFailed (err) {
+      console.log(err)
+      this.$q.notify({
+        message: this.$t('message.errorCreatingArticle'),
+        icon: 'announcement',
+        color: 'negative'
+      })
+    },
+
+    next () {
+      console.log('val')
+      this.validatingDOI = true
       this.titleError = false
       this.abstractLangError = false
       this.titleLangError = false
       this.doctypeError = false
       this.abstractError = false
       this.yearError = false
-      this.validatingDOI = true
-      await this.$refs.doi.validate()
-      this.validatingDOI = false
+      this.$refs.doi.validate()
     },
     skipDOI () {
+      this.maximized = true
       this.step = '2'
     },
     back () {
+      this.maximized = false
       this.step = '1'
     },
-    async createArticle () {
+    createArticle () {
+      this.creatingArticle = true
       this.titleError = false
       this.abstractLangError = false
       this.titleLangError = false
@@ -225,7 +278,7 @@ export default {
         this.authorError[k] = false
       }
       this.validate()
-      var authorErr = false
+      let authorErr = false
       for (k = 0; k < this.authorError.length; k++) {
         if (this.authorError[k] === true) {
           authorErr = true
@@ -234,23 +287,41 @@ export default {
       }
       if (this.titleError || authorErr || this.titleLangError || this.abstractLangError || this.doctypeError || this.yearError) { // if errors in validation
         // TODO(alzpeta): show error to user using Quasar Notify plugin
+        this.creatingArticle = false
       } else {
         const datasetUrl = this.datasetLinks.self
         if (this.article.doi !== '') {
           this.updateArticle() // set changes
           this.updateDatasetArray(this.generated_article, this.dataset) // set datasets
-          console.log(this.generated_article)
-          const data = (await axios.post(`${this.communityId}/articles/draft/`, this.generated_article)).data
-          const articleId = data.metadata.id
-          await this.$router.push({
-            name: `${this.generated_article._primary_community}/draft-article/record`,
-            params: { recordId: articleId }
-          })
+          axios.post(`${this.communityId}/articles/draft/`, this.generated_article)
+            .then((response) => {
+              const articleId = response.data.metadata.id
+              this.$router.push({
+                name: `${this.generated_article._primary_community}/draft-article/record`,
+                params: { recordId: articleId }
+              })
+            }).catch((err) => {
+              this.articleCreateFailed(err)
+            }).finally(() => {
+              this.creatingArticle = false
+              this.validatingDOI = false
+            })
         } else {
-          const data = (await axios.post(`${this.generated_article._primary_community}/articles/draft/without_doi/`,
-            { changes: this.article, authors: this.authors_inputs, datasetUrl: datasetUrl })).data
-          const articleId = data.metadata.id
-          this.$router.replace({ name: `${this.communityId}/draft-article/record`, params: { recordId: articleId } })
+          axios.post(
+            `${this.generated_article._primary_community}/articles/draft/without_doi/`,
+            { changes: this.article, authors: this.authors_inputs, datasetUrl: datasetUrl })
+            .then((response) => {
+              const articleId = response.data.metadata.id
+              this.$router.push({
+                name: `${this.communityId}/draft-article/record`,
+                params: { recordId: articleId }
+              })
+            }).catch((err) => {
+              this.articleCreateFailed(err)
+            }).finally(() => {
+              this.creatingArticle = false
+              this.validatingDOI = false
+            })
         }
         this.hide()
       }
@@ -293,5 +364,5 @@ export default {
 </script>
 <style lang="sass">
 .dialog-window
-  z-index: 10000 !important
+  z-index: 7100 !important
 </style>

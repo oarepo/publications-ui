@@ -96,6 +96,7 @@ export default {
     }
   },
   section: {
+    articleExistsError: 'Nalezen existující článek',
     articleList: 'Články',
     datasetList: 'Datasety',
     datasetDetail: 'Detail datasetu',
@@ -106,9 +107,12 @@ export default {
     roles: 'Role'
   },
   message: {
+    articleExistsError: 'Článek se zadaným DOI je již v repozitáři. Přejete si provázat dataset s tímto článkem?',
+    creatingArticle: 'Vytvářím článek',
+    errorCreatingArticle: 'Nepodařilo se vytvořit článek',
     loadingMetadata: 'Načítám metadata',
     copiedToClip: 'Zkopírováno do schránky',
-    resolveDOIError: 'K zadánému DOI se nepodařilo získat metadata článku',
+    resolveDOIError: 'K zadanému DOI se nepodařilo získat metadata článku',
     noArticles: 'Žádné články nenalezeny',
     noDatasets: 'Žádné datasety nenalezeny',
     draftDeleted: 'Záznam byl smazán',

@@ -93,6 +93,7 @@ export default {
     }
   },
   section: {
+    articleExistsError: 'Found article with DOI',
     articleList: 'Articles',
     datasetList: 'Datasets',
     addFiles: 'Add files',
@@ -108,6 +109,10 @@ export default {
     roles: 'Roles'
   },
   message: {
+    errorCreatingArticle: 'There was an error when creating the article',
+    articleExistsError: 'An article record with this DOI already exists in this repository.' +
+      'Would you like to attach the dataset to this article?',
+    creatingArticle: 'Creating article',
     loadingMetadata: 'Loading metadata',
     copiedToClip: 'Copied to clipboard',
     resolveDOIError: 'DOI could not be resolved',
