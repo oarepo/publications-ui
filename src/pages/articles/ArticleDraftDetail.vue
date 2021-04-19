@@ -30,7 +30,7 @@
           q-chip() {{ article.document_type}}
         .text-overline.text-uppercase.text-accent.q-mt-md {{ $t('label.datasets') }}
           .row
-          q-chip(v-for="d in article.datasets" :key="d.pid_value")
+          q-chip(v-for="d in datasetRefs" :key="d.pid_value")
             router-link(:to="datasetLink(d)") {{ d.pid_value }}
       metadata-dropdown(:metadata="article")
 </template>
@@ -68,6 +68,18 @@ class ArticleDraftDetail extends Mixins(CommunityMixin) {
       keys.push(k)
     }
     return keys
+  }
+
+  get datasetRefs () {
+    const result = []
+    const map = new Map()
+    for (const dataset of this.article.datasets) {
+      if (!map.has(dataset.pid_value)) {
+        map.set(dataset.pid_value, true)
+        result.push(dataset)
+      }
+    }
+    return result
   }
 
   get title () {

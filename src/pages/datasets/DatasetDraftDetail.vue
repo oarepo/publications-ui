@@ -30,7 +30,7 @@ q-page(padding).q-pa-xl.full-height.flex.flex-center
       .row
         q-chip(v-for="r in dataset.rights" :key="r.right") {{ r.identifier }}
       .text-overline.text-uppercase.text-accent.q-mt-md {{ $t('label.files') }}
-      dataset-files(:files="dataset['_files']" :recordApi="recordApi")
+      dataset-files(:files="dataset['_files']" :dataset="dataset" :recordApi="recordApi")
     metadata-dropdown(:metadata="dataset")
 </template>
 <script>

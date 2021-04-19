@@ -8,7 +8,7 @@
         p.col-grow.text-caption {{ Math.round(f.size/1024) }} kb
       q-card-actions(vertical)
         q-avatar.cursor-pointer(icon="las la-download" @click="download(f)")
-  OARepoUploader(:url="uploadUrl" :multipart-threshold="multipartTreshold"
+  OARepoUploader(v-if="canUpload" :url="uploadUrl" :multipart-threshold="multipartTreshold"
     :label="$t('action.upload')" auto-upload hide-upload-btn ref="uploader"
     :max-concurrency="10" :headers="uploaderHeaders" @uploaded="uploadDone")
 </template>
@@ -21,6 +21,7 @@ export default @Component({
   name: 'DatasetFiles',
   props: {
     recordApi: Object,
+    dataset: Object,
     files: Array,
     multipartTreshold: {
       type: Number,
@@ -31,6 +32,11 @@ export default @Component({
 class DatasetFiles extends Mixins(UploaderMixin) {
   download (file) {
     window.open(`${file.url}?download`, '_blank')
+  }
+
+  // TODO: add check of auth/state need provides
+  get canUpload () {
+    return this.dataset['oarepo:draft']
   }
 
   uploadDone (info) {
