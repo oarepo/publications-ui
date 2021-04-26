@@ -14,6 +14,8 @@
           search-highlight(:item="item" :text="d.title._")
         q-separator
         q-card-section
+          .row.q-mb-md
+            q-chip(v-for="(kw, idx) in d.keywords" :key="idx") {{ kw }}
           .text-subtitle1.ellipsis-3-lines
             span(v-html="$sanitize(d.abstract._)")
         q-card-section
