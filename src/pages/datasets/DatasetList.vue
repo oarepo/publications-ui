@@ -16,7 +16,7 @@
           q-tooltip {{ $t('action.uploadDataset') }}
     .column.q-mt-md.q-gutter-y-lg(v-if="items.length")
       div(v-for="item in items" :key="item.id")
-        item-list-entry.col.cursor-pointer.non-selectable(
+        dataset-list-entry.col.cursor-pointer.non-selectable(
           :loading="!loaded"
           :item="item"
           @detail="navigateDetail"
@@ -35,7 +35,7 @@
 </template>
 <script>
 import { Component, Mixins } from 'vue-property-decorator'
-import ItemListEntry from 'components/datasets/list/DatasetListEntry'
+import DatasetListEntry from 'components/datasets/list/DatasetListEntry'
 import { SearchMixin } from 'src/mixins/SearchMixin'
 import NoDataPlaceholder from 'src/components/common/NoDataPlaceholder'
 import FacetList from 'components/search/FacetList'
@@ -55,7 +55,7 @@ export default @Component({
   },
   components: {
     // Logo,
-    ItemListEntry,
+    DatasetListEntry,
     NoDataPlaceholder,
     FacetList,
     Pagination

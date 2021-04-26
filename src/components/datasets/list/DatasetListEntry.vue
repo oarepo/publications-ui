@@ -11,13 +11,15 @@
         q-skeleton.q-mx-md.q-mb-sm.absolute-bottom.q-card__section--vert(type="text" :width="`${imageSize}px`")
       q-card-section(v-else)
         .q-mr-xl.block.text-h5.q-mt-sm.q-mb-xs.gt-xs
-          search-highlight(:item="item" :text="d.titles[0].en")
+          search-highlight(:item="item" :text="d.title._")
         q-separator
         q-card-section
+          .row.q-mb-md
+            q-chip(v-for="(kw, idx) in d.keywords" :key="idx") {{ kw }}
           .text-subtitle1.ellipsis-3-lines
-            span(v-html="$sanitize(d.abstract.description.en)")
+            span(v-html="$sanitize(d.abstract._)")
         q-card-section
-          .text-subtitle2.text-grey-8 {{ $t('label.createdAt') }} {{ $d(new Date(d.created)) }}
+          .text-subtitle2.text-grey-8 {{ $t('label.createdAt') }} {{ $d(new Date(dateCreated)) }}
       q-skeleton.absolute-bottom-right.q-px-sm.q-ma-md(
         v-if="loading"
         animation="pulse"
@@ -50,6 +52,12 @@ class DatasetListEntry extends Vue {
   @Emit('detail')
   detail () {
     return this.item
+  }
+
+  get dateCreated () {
+    return this.d.dates.find((dat) => {
+      return dat.type === 'created'
+    }).date
   }
 
   get d () {
