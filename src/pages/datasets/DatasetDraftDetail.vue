@@ -6,20 +6,20 @@ q-page(padding).q-pa-xl.full-height.flex.flex-center
         .text-h5.no-wrap.row.q-gutter-md
           span.text-accent {{ dataset.id }}
           q-separator(color="primary" vertical)
-          span {{ dataset.titles[0].en }}
+          span {{ dataset.title._ }}
     dataset-action-bar(v-if="!loading" :dataset="dataset" :record="record" :recordApi="recordApi")
     q-separator
     q-card-section.q-pa-lg.bg-grey-4
       .row
-        q-chip.col-auto.text-white(color="primary" v-for="c in dataset.creators", :key="c.name")
-          q-avatar.no-padding(v-if="c.identifiers" icon="lab la-orcid" size="xl")
-            q-tooltip() {{ Object.keys(c.identifiers)[0] }}
-          span {{ c.name }}
+        q-chip.col-auto.text-white(color="primary" v-for="c in dataset.creators", :key="c.person_or_org.name")
+          q-avatar.no-padding(v-if="c.person_or_org.identifiers" icon="lab la-orcid" size="xl")
+            q-tooltip() {{ c.person_or_org.identifiers.find(i => {return i.scheme === 'orcid'}).identifier }}
+          span {{ c.person_or_org.name }}
             q-tooltip(v-if="c.affiliations") {{ c.affiliations.map((a => a.name)).join(', ') }}
           span.on-right.text-overline.text-warning(v-if="c.identifiers") {{ c.identifiers.orcid }}
     q-card-section.q-pa-lg.bg-white
       .text-overline.text-uppercase.text-accent {{ $t('label.abstract') }}
-      p(v-html="$sanitize(dataset.abstract.description.en)")
+      p(v-html="$sanitize(dataset.abstract.en)")
       .text-overline.text-uppercase.text-accent {{ $t('label.identifiers') }}
       .row
         q-chip(v-for="i in dataset.identifiers" :key="i.identifier")
@@ -28,7 +28,7 @@ q-page(padding).q-pa-xl.full-height.flex.flex-center
           span {{ i.identifier }}
       .text-overline.text-uppercase.text-accent.q-mt-md {{ $t('label.license') }}
       .row
-        q-chip(v-for="r in dataset.rights" :key="r.right") {{ r.identifier }}
+        q-chip(v-for="r in dataset.rights" :key="r.links.self" v-if="!r.is_ancestor") {{ r.title.cs }}
       .text-overline.text-uppercase.text-accent.q-mt-md {{ $t('label.files') }}
       dataset-files(:files="dataset['_files']" :dataset="dataset" :recordApi="recordApi")
     metadata-dropdown(:metadata="dataset")
@@ -59,7 +59,7 @@ export default @Component({
 })
 class DatasetDraftDetail extends Mixins(CommunityMixin) {
   get dataset() {
-    return (this.record && this.record.metadata) || {titles: [{en: ''}], abstract: {description: {en: ''}}}
+    return (this.record && this.record.metadata) || {title: {_: ''}, abstract: {_: ''}}
   }
 
   get datasetId() {
