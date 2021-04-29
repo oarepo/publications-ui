@@ -1,0 +1,42 @@
+// import admin from './admin'
+// import datasets from './datasets'
+// import articles from '@/router/articles'
+// import { COMMUNITIES } from '@/constants'
+
+const routes = [
+  { /* Dataset collection list routes */
+    path: '/',
+    component: () => import(/* webpackChunkName: 'homepage' */ '@/layouts/LandingLayout'),
+    children: [
+      {
+        name: 'homepage',
+        path: '',
+        component: () => import(/* webpackChunkName: 'homepage' */ '@/pages/Homepage')
+      },
+      // admin,
+      // {
+      //   name: 'logged-out',
+      //   path: 'logged-out',
+      //   component: () => import('pages/Logout.vue')
+      // }
+    ]
+  },
+  // {
+  //   path: '/',
+  //   component: () => import('layouts/MainLayout'),
+  //   children: COMMUNITIES.map(communityId => {
+  //     return [
+  //       ...datasets(communityId),
+  //       ...articles(communityId)
+  //     ]
+  //   }).flat(1)
+  // },
+  // Always leave this as last one,
+  // but you can also remove it
+  {
+    path: '/:catchAll(.*)*',
+    component: () => import('@/pages/Error404.vue')
+  }
+]
+
+export default routes
