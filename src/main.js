@@ -1,10 +1,16 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router'
-import { Quasar } from 'quasar'
+import {Quasar} from 'quasar'
 import quasarUserOptions from './quasar-user-options'
-import { i18n } from '@/boot/i18n'
-import addressbarColor from  '@/boot/addressbar-color'
+import {i18n} from '@/boot/i18n'
+import addressbarColor from '@/boot/addressbar-color'
+import '@/boot/axios'
+import VueQuerySynchronizer from "@oarepo/vue-query-synchronizer";
+import InvenioApi from '@oarepo/invenio-vue'
+import QuasarESFacets from '@oarepo/quasar-es-facets'
+import MultilingualTranslated from '@/i18n/multilingual'
+import PopupLogin, {usePopupLogin} from '@oarepo/vue-popup-login'
 
 const app = createApp(App)
 
@@ -14,5 +20,28 @@ app
     .use(router)
     .use(i18n)
     .use(addressbarColor)
+    .use(VueQuerySynchronizer, {
+        router,
+        debug: false
+    })
+    .use(InvenioApi)
+    .use(QuasarESFacets)
+    .use(MultilingualTranslated)
+    .use(PopupLogin, {
+        router,
+        loginUrl: '/oauth/login/eduid/',
+        logoutUrl: '/logout',
+        logoutMethod: 'POST',
+        completeUrl: '/oauth/complete/',
+        stateUrl: '/oauth/state/'
+    })
 
-app.mount('#app')
+    const auth = usePopupLogin()
+
+// https://next.router.vuejs.org/guide/migration/#all-navigations-are-now-always-asynchronous
+router.isReady()
+    .then(() => {
+        auth.check().then(() => {
+            app.mount('#app')
+        })
+    })

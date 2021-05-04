@@ -58,6 +58,7 @@ export default {
   },
   accessibility: {},
   label: {
+    goHome: 'Zpět na úvodní stránku',
     back: 'Zpět',
     authors: 'Autoři',
     isPublic: 'Záznam je veřejný',
@@ -121,6 +122,7 @@ export default {
     doYRlyWnt: 'Opravdu chcete',
     noData: 'Žádná data',
     loading: 'Načítám',
+    loggedOut: 'Byli jste odhlášeni',
     recordNotValid: 'V záznamu jsou chyby',
     gdprPrompt: 'Kliknutím na "Souhlasím", vyjadřujete souhlas s našimi pravidly využití služeb a podmínkami zpracování osobních údajů.',
     authRequired: 'Tato stránka vyžaduje autentizaci. Kliknutím na tlačítko níže se přihlásíte.'

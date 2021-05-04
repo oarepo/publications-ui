@@ -1,10 +1,10 @@
 const
-    API_DEV = 'https://127.0.0.1:8080/',
+    API_DEV = 'https://127.0.0.1:8080/'
     // API_STAGING = 'https://repozitar-test.cesnet.cz/',
     // API_PROD = 'https://repozitar.cesnet.cz/'
 
-const fs = require('fs')
-const packageJson = fs.readFileSync('./package.json')
+// const fs = require('fs')
+// const packageJson = fs.readFileSync('./package.json')
 // const version = JSON.parse(packageJson).version || '0'
 
 module.exports = {

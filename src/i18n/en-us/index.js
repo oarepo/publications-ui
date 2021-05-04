@@ -62,6 +62,7 @@ export default {
   },
   accessibility: {},
   label: {
+    goHome: 'Back to Homepage',
     back: 'Back',
     authors: 'Authors',
     isPublic: 'Record is public',
@@ -123,6 +124,7 @@ export default {
     noDatasets: 'No datasets found',
     noData: 'No data',
     loading: 'Loading',
+    loggedOut: 'You have been logged out',
     recordNotValid: 'Record is not valid',
     gdprPrompt: 'By clicking on "Accept", you give your consent with our Terms of Service and Privacy Policy for this service.',
     authRequired: 'This page requires authentication.'

@@ -18,11 +18,11 @@ q-btn-dropdown(
           slot.col-auto(name="avatar")
             q-icon.q-my-sm.text-h4.content-center.text-primary(name="face")
         .col-8.q-ml-md.column.no-wrap.justify-start
-          .col-auto.text-subtitle1.text-bold.no-wrap.text-dark {{ currentUserInfo.givenName }} {{ currentUserInfo.familyName }}
+          .col-auto.text-subtitle1.text-bold.no-wrap.text-dark {{ currentUserName }}
           .col-auto.text-grey.text-caption {{ currentUserInfo.email }}
           .col-auto.q-pt-md
             .row
-              q-badge.q-ma-xs(v-for="role in currentUser.roles" :key="role.id") {{ $t(`label.role.${role.label}`).replace('label.role.', '').replace(':', ' > ') }}
+              q-badge.q-ma-xs(v-for="role in currentUserRoles" :key="role.id") {{ $t(`label.role.${role.label}`).replace('label.role.', '').replace(':', ' > ') }}
       .row.no-wrap.q-px-md.q-pb-md.justify-center
         locale-switcher.col-12
       .row.no-wrap.q-pa-sm.justify-center.bg-grey-3
@@ -38,7 +38,7 @@ q-btn-dropdown(
               q-icon(:name="item.icon")
             q-item-section.text-secondary {{ $t(item.label) }}
 q-btn(v-else color="warning" text-color="dark"
-  :loading="authenticating" rounded icon="vpn_key" @click="login")
+  :loading="authenticating" rounded icon="vpn_key" @click="doLogin")
   template(#loading)
     q-spinner-dots
     span.q-pl-sm.q-pt-xs.disabled {{ $t('action.login') }}
@@ -47,40 +47,72 @@ q-btn(v-else color="warning" text-color="dark"
 </template>
 
 <script>
-import {Options, Vue} from 'vue-class-component'
 import LocaleSwitcher from '@/components/i18n/LocaleSwitcher'
-// import { AuthStateMixin } from '@/mixins/AuthStateMixin'
+import {computed, defineComponent, ref} from 'vue'
+import useAuth from "@/composables/useAuth";
 
-export default @Options({
+export default defineComponent({
   name: 'AccountDropdown',
   props: {
     dark: Boolean
   },
   components: {
     LocaleSwitcher
+  },
+  setup() {
+    const {
+      hasRole,
+      authenticated,
+      authenticating,
+      doLogin,
+      doLogout,
+      currentUserName,
+      currentUserInfo,
+      currentUserRoles
+    } = useAuth()
+
+    const adminMenuItems = ref([
+      {
+        id: 'admin',
+        label: 'nav.admin',
+        icon: 'settings',
+        action: () => this.$router.push({name: 'administration'})
+      }
+    ])
+
+    const menuItems = ref([
+      {
+        id: 'logout',
+        label: 'action.logout',
+        icon: 'input',
+        action: doLogout
+      }
+    ])
+
+    const currentUserMenuItems = computed(() => {
+      if (hasRole('admin')) {
+        return[
+          ...adminMenuItems.value,
+          ...menuItems.value
+        ]
+      }
+      return menuItems.value
+    })
+
+    return {
+      adminMenuItems,
+      menuItems,
+      currentUserMenuItems,
+      authenticating,
+      authenticated,
+      currentUserInfo,
+      currentUserName,
+      currentUserRoles,
+      doLogin,
+      doLogout
+    }
   }
 })
-class AccountDropdown extends Vue {
-  authenticating = false
-
-  adminMenuItems = [
-    {
-      id: 'admin',
-      label: 'nav.admin',
-      icon: 'settings',
-      action: () => this.$router.push({ name: 'administration' })
-    }
-  ]
-
-  menuItems = [
-    {
-      id: 'logout',
-      label: 'action.logout',
-      icon: 'input',
-      action: this.logout
-    }
-  ]
-}
 </script>
 
 <style lang="sass" scoped>

@@ -29,18 +29,18 @@ q-header.row.z-top.no-wrap.navbar__header
       img.navbar__logo.col-auto(
         src="logos/datacare_White.svg")
     q-toolbar-title.q-py-md.text-uppercase.text-weight-bold {{ productName }}
-    search-input.col-grow(@search="doSearch")
+    //search-input.col-grow(@search="doSearch")
     q-btn(
       stretch
       flat
       icon="cloud_upload"
-      //:to="{ name: `cesnet/draft-${collection}/upload`}"
+      :bla="{ name: `cesnet/draft-${collection}/upload`}"
       :label="$t('action.upload')")
       q-tooltip {{ $t(collection === 'datasets' ? 'action.uploadDataset': 'action.uploadArticle') }}
     //q-btn(stretch flat v-if="collection === 'datasets'" :to="{name: `${communityId}/all-articles`}" icon="article")
     //  q-tooltip {{ $t('section.articleList') }}
-    //q-btn(stretch flat v-if="collection === 'articles'" :to="{name: `${communityId}/all-datasets`}" icon="donut_small")
-    //  q-tooltip {{ $t('section.datasetList') }}
+    q-btn(stretch flat v-if="collection === 'articles'" :to="{name: `${communityId}/all-datasets`}" icon="donut_small")
+      q-tooltip {{ $t('section.datasetList') }}
   q-toolbar.col-auto
     q-space.q-ml-xl
     //account-dropdown(:authenticated="authenticated")
@@ -49,10 +49,9 @@ q-header.row.z-top.no-wrap.navbar__header
 <script>
 import {Options, mixins} from 'vue-class-component'
 // import AccountDropdown from '@/components/account/AccountDropdown'
-import SearchInput from '@/components/search/SearchInput'
+// import SearchInput from '@/components/search/SearchInput'
 import { SearchMixin } from '@/mixins/SearchMixin'
 // import { AuthStateMixin } from '@/mixins/AuthStateMixin'
-import { CommunityMixin } from '@/mixins/Community'
 
 export const Modes = Object.freeze({ INTRO: 'intro', LIST: 'list', DETAIL: 'detail' })
 
@@ -66,11 +65,11 @@ export default @Options({
     }
   },
   components: {
-    SearchInput,
+    // SearchInput,
     // AccountDropdown
   }
 })
-class Navbar extends mixins(SearchMixin, CommunityMixin) {
+class Navbar extends mixins(SearchMixin) {
   get modes () {
     return Modes
   }

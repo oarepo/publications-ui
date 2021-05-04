@@ -4,24 +4,27 @@ q-header.row.z-top.no-wrap
       q-btn.col-4(flat :to="{ name: 'homepage' }")
         img.logo(src="logos/datacare_White.svg")
       q-space
-      //account-dropdown.lt-md.q-mr-sm(:authenticated="authenticated")
+      account-dropdown.lt-md.q-mr-sm(:authenticated="authenticated")
     q-toolbar.gt-sm.col-5.q-py-md.q-pr-xl.bg-white.justify-end.items-center
-      //account-dropdown.q-mr-sm(dark :authenticated="authenticated")
+      account-dropdown.q-mr-sm(dark :authenticated="authenticated")
 </template>
 
 <script>
-import {Options, Vue} from 'vue-class-component'
-// import { AuthStateMixin } from '@/mixins/AuthStateMixin'
 import AccountDropdown from '@/components/account/AccountDropdown'
+import {defineComponent} from 'vue'
+import useAuth from "@/composables/useAuth";
 
-export default @Options({
+export default defineComponent({
   name: 'LandingHeader',
   components: {
     AccountDropdown
+  },
+  setup () {
+    const { authenticated } = useAuth()
+
+    return { authenticated }
   }
 })
-class LandingHeader extends Vue {
-}
 </script>
 
 <style lang="sass" scoped>
