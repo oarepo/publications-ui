@@ -5,29 +5,10 @@ import { ARTICLES_COLLECTION_CODE, ARTICLES_DRAFT_COLLECTION_CODE, DATASETS_DRAF
 
 function articles (communityId) {
   return [
-    // Published article detail
-    record({
-      name: `${communityId}/article/record`,
-      collectionCode: ARTICLES_COLLECTION_CODE,
-      path: `${communityId}/articles/:recordId`,
-      apiUrl: `/${communityId}`,
-      component: () => import('pages/articles/ArticleDraftDetail'),
-      loadingComponent: () => import('components/common/LoadingPlaceholder'),
-      httpGetProps: {
-        dedupingInterval: 100,
-        revalidateDebounce: 0,
-        shouldRetryOnError: false
-      }
-    }, {
-      meta: {
-        title: 'route.title.articleDetail',
-        communityId: communityId
-      }
-    }),
     collection(
       {
-        path: `${communityId}/articles/`,
-        collectionCode: ARTICLES_COLLECTION_CODE,
+        path: `${communityId}/articles/all/`,
+        collectionCode: `${ARTICLES_COLLECTION_CODE}/all/`,
         name: `${communityId}/all-articles`,
         component: () => import('pages/articles/ArticleList'),
         loadingComponent: 'viewer',
@@ -58,6 +39,25 @@ function articles (communityId) {
           communityId: communityId
         }
       }),
+    // Published article detail
+    record({
+      name: `${communityId}/article/record`,
+      collectionCode: ARTICLES_COLLECTION_CODE,
+      path: `${communityId}/articles/:recordId`,
+      apiUrl: `/${communityId}`,
+      component: () => import('pages/articles/ArticleDraftDetail'),
+      loadingComponent: () => import('components/common/LoadingPlaceholder'),
+      httpGetProps: {
+        dedupingInterval: 100,
+        revalidateDebounce: 0,
+        shouldRetryOnError: false
+      }
+    }, {
+      meta: {
+        title: 'route.title.articleDetail',
+        communityId: communityId
+      }
+    }),
     { /* Article detail routes */
       name: `${communityId}/article-detail`,
       path: `${communityId}/articles/draft/`,

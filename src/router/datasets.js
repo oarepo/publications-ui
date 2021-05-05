@@ -5,30 +5,10 @@ import { collection, record } from '@oarepo/invenio-api-vue-composition'
 
 function datasets (communityId) {
   return [
-    // Published dataset detail
-    record({
-      name: `${communityId}/dataset/record`,
-      collectionCode: DATASETS_COLLECTION_CODE,
-      path: `${communityId}/datasets/:recordId`,
-      apiUrl: `/${communityId}`,
-      component: () => import('pages/datasets/DatasetDraftDetail'),
-      loadingComponent: () => import('components/common/LoadingPlaceholder'),
-      httpGetProps: {
-        dedupingInterval: 100,
-        revalidateDebounce: 0,
-        shouldRetryOnError: false
-      }
-    },
-    {
-      meta: {
-        communityId: communityId,
-        title: 'route.title.datasetDetail'
-      }
-    }),
     collection(
       {
-        path: `${communityId}/datasets/`,
-        collectionCode: DATASETS_COLLECTION_CODE,
+        path: `${communityId}/datasets/all/`,
+        collectionCode: `${DATASETS_COLLECTION_CODE}/all/`,
         name: `${communityId}/all-datasets`,
         component: () => import('pages/datasets/DatasetList'),
         loadingComponent: 'viewer',
@@ -59,6 +39,26 @@ function datasets (communityId) {
           communityId: communityId
         }
       }),
+    // Published dataset detail
+    record({
+      name: `${communityId}/dataset/record`,
+      collectionCode: DATASETS_COLLECTION_CODE,
+      path: `${communityId}/datasets/:recordId`,
+      apiUrl: `/${communityId}`,
+      component: () => import('pages/datasets/DatasetDraftDetail'),
+      loadingComponent: () => import('components/common/LoadingPlaceholder'),
+      httpGetProps: {
+        dedupingInterval: 100,
+        revalidateDebounce: 0,
+        shouldRetryOnError: false
+      }
+    },
+    {
+      meta: {
+        communityId: communityId,
+        title: 'route.title.datasetDetail'
+      }
+    }),
     { /* Dataset editation routes */
       name: `${communityId}/dataset-edit`,
       path: `${communityId}/datasets/edit`,
