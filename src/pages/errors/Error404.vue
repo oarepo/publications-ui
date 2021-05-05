@@ -2,7 +2,7 @@
 .fullscreen.bg-accent.text-white.text-center.q-pa-md.flex.flex-center
   div
     div(style="font-size: 30vh") 404
-    .text-h2(style="opacity:.4") Oops. Nothing here...
+    .text-h2(style="opacity:.4") {{ $t('message.notFound') }}…
     go-home-btn
 </template>
 

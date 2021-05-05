@@ -5,7 +5,6 @@ q-header.row.z-top.no-wrap.navbar__header
       flat
       rounded
       dense
-      v-go-back.single
       color="white"
       icon="arrow_back"
     )
@@ -22,12 +21,11 @@ q-header.row.z-top.no-wrap.navbar__header
       flat
       rounded
       dense
-      v-go-back.single
       color="white"
       icon="arrow_back")
     q-btn(stretch flat :to="{ name: 'homepage' }")
       img.navbar__logo.col-auto(
-        src="logos/datacare_White.svg")
+        src="/logos/datacare_White.svg")
     q-toolbar-title.q-py-md.text-uppercase.text-weight-bold {{ productName }}
     //search-input.col-grow(@search="doSearch")
     q-btn(
@@ -47,10 +45,9 @@ q-header.row.z-top.no-wrap.navbar__header
 </template>
 
 <script>
-import {Options, mixins} from 'vue-class-component'
+import {Options, Vue} from 'vue-class-component'
 // import AccountDropdown from '@/components/account/AccountDropdown'
 // import SearchInput from '@/components/search/SearchInput'
-import { SearchMixin } from '@/mixins/SearchMixin'
 // import { AuthStateMixin } from '@/mixins/AuthStateMixin'
 
 export const Modes = Object.freeze({ INTRO: 'intro', LIST: 'list', DETAIL: 'detail' })
@@ -69,7 +66,7 @@ export default @Options({
     // AccountDropdown
   }
 })
-class Navbar extends mixins(SearchMixin) {
+class Navbar extends Vue {
   get modes () {
     return Modes
   }

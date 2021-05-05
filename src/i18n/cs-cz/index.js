@@ -109,6 +109,7 @@ export default {
     roles: 'Role'
   },
   message: {
+    notFound: 'Stránka nenalezena',
     articleExistsError: 'Článek se zadaným DOI je již v repozitáři. Přejete si provázat dataset s tímto článkem?',
     creatingArticle: 'Vytvářím článek',
     errorCreatingArticle: 'Nepodařilo se vytvořit článek',

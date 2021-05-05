@@ -5,7 +5,7 @@ import {collection} from '@oarepo/invenio-vue'
 import {DATASETS_COLLECTION_CODE} from '@/constants'
 
 const routes = [
-  { /* Dataset collection list routes */
+  { /* Homepage routes */
     path: '/',
     component: () => import(/* webpackChunkName: 'homepage' */ '@/layouts/LandingLayout'),
     children: [
@@ -17,7 +17,7 @@ const routes = [
       // admin,
     ]
   },
-  {
+  { /* Record collection routes */
     path: '/',
     component: () => import(/* webpackChunkName: 'layouts' */ '@/layouts/MainLayout'),
     children: [
@@ -34,7 +34,7 @@ const routes = [
           useFacets: true,
         }
       }),
-      {
+      { /* Other routes */
         path: '/logged-out',
         name: 'logged-out',
         component: () => import(/* webpackChunkName: 'auth' */ '@/pages/auth/LoggedOut.vue')

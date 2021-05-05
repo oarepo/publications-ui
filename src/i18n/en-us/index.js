@@ -111,6 +111,7 @@ export default {
     roles: 'Roles'
   },
   message: {
+    notFound: 'Oops. Nothing here',
     errorCreatingArticle: 'There was an error when creating the article',
     articleExistsError: 'An article record with this DOI already exists in this repository.' +
       'Would you like to attach the dataset to this article?',

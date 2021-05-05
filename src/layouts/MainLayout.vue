@@ -1,8 +1,8 @@
 <template lang="pug">
 q-layout.bg-grey-1(view="hhh lpR lFf")
-  //navbar(
-  //  @facets="facetsDrawer = !facetsDrawer"
-  //)
+  navbar(
+    @facets="facetsDrawer = !facetsDrawer"
+  )
   q-page-container
     router-view
   q-drawer.scrolling-drawer(
@@ -16,12 +16,12 @@ q-layout.bg-grey-1(view="hhh lpR lFf")
 
 <script>
 import {Options, Vue} from 'vue-class-component'
-// import Navbar from '@/components/navigation/Navbar'
+import Navbar from '@/components/navigation/Navbar'
 
 export default @Options({
   name: 'MainLayout',
   components: {
-    // Navbar
+    Navbar
   }
 })
 class MainLayout extends Vue {
