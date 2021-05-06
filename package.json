@@ -1,6 +1,6 @@
 {
   "name": "publications-ui",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "CESNET Digital Repository of scientific publications and associated datasets",
   "productName": "Digital Repository",
   "author": "Miroslav Bauer <bauer@cesnet.cz>",

@@ -43,7 +43,7 @@ function articles (communityId) {
     record({
       name: `${communityId}/article/record`,
       collectionCode: ARTICLES_COLLECTION_CODE,
-      path: `${communityId}/articles/:recordId`,
+      path: `${communityId}/articles/:recordId/`,
       apiUrl: `/${communityId}`,
       component: () => import('pages/articles/ArticleDraftDetail'),
       loadingComponent: () => import('components/common/LoadingPlaceholder'),
@@ -72,7 +72,7 @@ function articles (communityId) {
         record({
           name: `${communityId}/draft-article/record`,
           collectionCode: ARTICLES_DRAFT_COLLECTION_CODE,
-          path: ':recordId',
+          path: ':recordId/',
           apiUrl: `/${communityId}`,
           component: () => import('pages/articles/ArticleDraftDetail'),
           loadingComponent: () => import('components/common/LoadingPlaceholder'),

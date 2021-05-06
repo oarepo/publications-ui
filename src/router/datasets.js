@@ -43,7 +43,7 @@ function datasets (communityId) {
     record({
       name: `${communityId}/dataset/record`,
       collectionCode: DATASETS_COLLECTION_CODE,
-      path: `${communityId}/datasets/:recordId`,
+      path: `${communityId}/datasets/:recordId/`,
       apiUrl: `/${communityId}`,
       component: () => import('pages/datasets/DatasetDraftDetail'),
       loadingComponent: () => import('components/common/LoadingPlaceholder'),
@@ -92,7 +92,7 @@ function datasets (communityId) {
         record({
           name: `${communityId}/draft-dataset/record`,
           collectionCode: DATASETS_DRAFT_COLLECTION_CODE,
-          path: ':recordId',
+          path: ':recordId/',
           apiUrl: `/${communityId}`,
           component: () => import('pages/datasets/DatasetDraftDetail'),
           loadingComponent: () => import('components/common/LoadingPlaceholder'),
