@@ -1,0 +1,79 @@
+<template lang="pug">
+q-card(flat clickable)
+  q-toolbar.absolute.q-pt-md.q-pb-sm.justify-end
+    //dataset-status-ribbon(v-if="!loading" :dataset="d" dense)
+  q-card-section(horizontal)
+    q-card-section
+      q-skeleton(v-if="loading" :width="`${thumbnailSize}px`" :height="`${thumbnailSize}px`")
+    q-card-section(v-if="loading")
+      q-skeleton(type="rect" width="400px" height="40px")
+      q-skeleton.q-mt-sm(type="text" width="300px")
+      q-skeleton.q-mx-md.q-mb-sm.absolute-bottom.q-card__section--vert(type="text" :width="`${thumbnailSize}px`")
+    q-card-section(v-else)
+      .q-mr-xl.block.text-h5.q-mt-sm.q-mb-xs.gt-xs
+        //search-highlight(:item="item" :text="d.title._")
+      q-separator
+      q-card-section
+        .row.q-mb-md
+          q-chip(v-for="(kw, idx) in d.keywords" :key="idx") {{ kw }}
+        .text-subtitle1.ellipsis-3-lines
+          span(v-html="$sanitize(d.abstract._)")
+      q-card-section
+        .text-subtitle2.text-grey-8 {{ $t('label.createdAt') }} {{ $d(new Date(dateCreated)) }}
+    q-skeleton.absolute-bottom-right.q-px-sm.q-ma-md(
+      v-if="loading"
+      animation="pulse"
+      type="QBtn")
+    q-btn.absolute-bottom-right.q-px-sm.q-ma-md(
+      v-else
+      color="primary"
+      rounded
+      :label="$t('nav.detail')"
+      @click.stop="detail")
+</template>
+
+<script>
+// import DatasetStatusRibbon from 'components/datasets/item/DatasetStatusRibbon'
+// import SearchHighlight from 'components/search/SearchHighlight'
+
+import {computed, defineComponent} from 'vue'
+import {useQuasar} from 'quasar'
+
+export default defineComponent({
+  name: 'DatasetListEntry',
+  props: {
+    loading: Boolean,
+    item: Object
+  },
+  components: {
+    // SearchHighlight,
+    // DatasetStatusRibbon
+  },
+  setup(props) {
+    const $q = useQuasar()
+
+    const d = computed(() => {
+      return props.item.metadata || {}
+    })
+
+    const dateCreated = computed(() => {
+      return d.value.dates.find((dat) => {
+        return dat.type === 'created'
+      }).date
+    })
+
+    const thumbnailSize = computed(() => {
+      if ($q.screen.lt.sm) {
+        return 100
+      } else {
+        return 200
+      }
+    })
+
+    return {d, dateCreated, thumbnailSize}
+  }
+})
+</script>
+
+<style lang="sass">
+</style>

@@ -67,8 +67,6 @@ export default function useAuth() {
         logout()
     }
 
-    console.log(state.value)
-
     return {
         state,
         authenticated,

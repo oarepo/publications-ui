@@ -7,11 +7,12 @@ q-header.row.z-top.no-wrap.navbar__header
       dense
       color="white"
       icon="arrow_back"
+      @click="$router.back()"
     )
     q-btn.q-mx-md(
       v-if="$route.meta.useFacets"
       flat
-      @click="facets"
+      @click="toggleFacets"
       round
       dense
       icon="menu")
@@ -22,38 +23,44 @@ q-header.row.z-top.no-wrap.navbar__header
       rounded
       dense
       color="white"
+      @click="$router.back()"
       icon="arrow_back")
     q-btn(stretch flat :to="{ name: 'homepage' }")
       img.navbar__logo.col-auto(
         src="/logos/datacare_White.svg")
-    q-toolbar-title.q-py-md.text-uppercase.text-weight-bold {{ productName }}
+    q-toolbar-title.q-py-md.text-uppercase.text-weight-bold {{ $t('app.productName') }}
     //search-input.col-grow(@search="doSearch")
     q-btn(
       stretch
       flat
       icon="cloud_upload"
-      :bla="{ name: `cesnet/draft-${collection}/upload`}"
+      :bla="{ name: `cesnet/draft-${collectionId}/upload`}"
       :label="$t('action.upload')")
-      q-tooltip {{ $t(collection === 'datasets' ? 'action.uploadDataset': 'action.uploadArticle') }}
-    //q-btn(stretch flat v-if="collection === 'datasets'" :to="{name: `${communityId}/all-articles`}" icon="article")
+      q-tooltip {{ $t(collectionId === DATASETS_COLLECTION_CODE ? 'action.uploadDataset': 'action.uploadArticle') }}
+    //q-btn(stretch flat v-if="collectionId === DATASETS_COLLECTION_CODE" :to="{name: 'all-articles'}" icon="article")
     //  q-tooltip {{ $t('section.articleList') }}
-    q-btn(stretch flat v-if="collection === 'articles'" :to="{name: `${communityId}/all-datasets`}" icon="donut_small")
+    q-btn(stretch flat v-if="collectionId === ARTICLES_COLLECTION_CODE" :to="{name: `all-datasets`}" icon="donut_small")
       q-tooltip {{ $t('section.datasetList') }}
   q-toolbar.col-auto
     q-space.q-ml-xl
-    //account-dropdown(:authenticated="authenticated")
+    account-dropdown(:authenticated="authenticated")
 </template>
 
 <script>
-import {Options, Vue} from 'vue-class-component'
-// import AccountDropdown from '@/components/account/AccountDropdown'
+import {ARTICLES_COLLECTION_CODE, DATASETS_COLLECTION_CODE} from '@/constants'
+import AccountDropdown from '@/components/account/AccountDropdown'
+import {defineComponent, ref} from 'vue'
+import useAuth from '@/composables/useAuth'
+import useCollection from "@/composables/useCollection";
 // import SearchInput from '@/components/search/SearchInput'
-// import { AuthStateMixin } from '@/mixins/AuthStateMixin'
 
-export const Modes = Object.freeze({ INTRO: 'intro', LIST: 'list', DETAIL: 'detail' })
+export const Modes = Object.freeze({INTRO: 'intro', LIST: 'list', DETAIL: 'detail'})
 
-export default @Options({
+export default defineComponent({
   name: 'Navbar',
+  components: {
+    AccountDropdown
+  },
   props: {
     mode: {
       type: String,
@@ -61,39 +68,25 @@ export default @Options({
       validator: mode => Object.values(Modes).indexOf(mode) > -1
     }
   },
-  components: {
-    // SearchInput,
-    // AccountDropdown
+  setup(props, context) {
+    const {authenticated} = useAuth()
+    const modes = ref(Modes)
+    const {collectionId} = useCollection()
+
+    function toggleFacets() {
+      context.emit('facets')
+    }
+
+    return {DATASETS_COLLECTION_CODE, ARTICLES_COLLECTION_CODE, authenticated, modes, collectionId, toggleFacets}
   }
 })
-class Navbar extends Vue {
-  get modes () {
-    return Modes
-  }
-
-  get productName () {
-    return this.$i18n.t('app.productName')
-  }
-
-  get collection () {
-    if (this.$route.name.includes('dataset')) {
-      return 'datasets'
-    } else if (this.$route.name.includes('article')) {
-      return 'articles'
-    }
-    return ''
-  }
-
-  facets () {
-    this.$emit('facets')
-  }
-}
 </script>
 
 <style lang="sass" scoped>
 .navbar
   &__header
     background: linear-gradient(145deg, var(--q-primary) 11%, var(--q-secondary) 100%)
+
   &__logo
     min-height: 50px
     max-height: 50px

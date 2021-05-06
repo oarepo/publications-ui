@@ -4,6 +4,18 @@
 import {collection} from '@oarepo/invenio-vue'
 import {DATASETS_COLLECTION_CODE} from '@/constants'
 
+// Route map (route matched from top to bottom)
+
+// / -> LandingLayout
+// |-- . -> Homepage
+//
+// / -> MainLayout
+// |-- datasets/all/ -> DatasetList
+// |-- logged-out -> LoggedOut
+// |-- not-found -> Error404
+// L * -> Error404
+//
+
 const routes = [
   { /* Homepage routes */
     path: '/',
@@ -27,6 +39,7 @@ const routes = [
         component: () => import(/* webpackChunkName: 'datasets' */ '@/pages/datasets/DatasetList')
       }, {
         meta: {
+          collectionId: DATASETS_COLLECTION_CODE,
           query: {
             sort: 'string:alphabetical'
           },
@@ -35,19 +48,19 @@ const routes = [
         }
       }),
       { /* Other routes */
-        path: '/logged-out',
+        path: 'logged-out',
         name: 'logged-out',
         component: () => import(/* webpackChunkName: 'auth' */ '@/pages/auth/LoggedOut.vue')
       },
       {
-        path: '/:pathMatch(.*)*',
+        path: ':pathMatch(.*)*',
         name: 'not-found',
         component: () => import(/* webpackChunkName: 'errors' */ '@/pages/errors/Error404.vue')
       },
       // Always leave this as last one,
       // but you can also remove it
       {
-        path: '/:catchAll(.*)*',
+        path: ':catchAll(.*)*',
         component: () => import(/* webpackChunkName: 'errors' */ '@/pages/errors/Error404.vue')
       }
     ]
