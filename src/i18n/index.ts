@@ -4,5 +4,4 @@ import csCZ from './cs-cz'
 export default {
   'en-us': enUS,
   'cs-cz': csCZ,
-  cs: csCZ
 }

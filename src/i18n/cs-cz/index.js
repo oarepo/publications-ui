@@ -94,7 +94,9 @@ export default {
     role: {
       'system administrator': 'Administrátor',
       admin: 'admin',
-      curator: 'kurátor'
+      curator: 'kurátor',
+      member: 'člen',
+      publisher: 'editor'
     }
   },
   section: {
@@ -130,8 +132,9 @@ export default {
   },
   value: {
     lang: {
-      csCZ: 'Česky',
-      enUS: 'Anglicky'
+      'cs': 'Česky',
+      'cs-cz': 'Česky',
+      'en-us': 'Anglicky'
     }
   },
   route: {

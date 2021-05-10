@@ -2,10 +2,11 @@
 .column.facets
   .col.collection-facets.full-height
     div.q-mx-sm.q-mt-md
-      teleport(to="#facets-drawer" v-if="facetsDrawerVisible")
+      teleport(to="#facets-drawer" v-if="facetsEnabled")
         facets(
           :definition="facetDefinitions"
           :facetLoader="facetLoader"
+          :options="facetOptions"
           @facetSelected="facetSelected")
 </template>
 
@@ -25,18 +26,16 @@ export default defineComponent({
   setup(props, ctx) {
     const {
       defaults,
-      types,
       definitions,
       facetDefinitions,
       facetLoader,
       transformFacet,
-      facetsDrawerVisible
+      facetsEnabled,
     } = useFacets(props.collection)
     const query = useQuery()
 
-    const facetsOptions = ref({
+    const facetOptions = ref({
       defaults: defaults,
-      types: types
     })
 
     function facetSelected(facetSelection) {
@@ -50,7 +49,7 @@ export default defineComponent({
       ctx.emit('update:activeFacets', facetSelection)
     }
 
-    return {definitions, facetsOptions, facetSelected, facetLoader, facetDefinitions, facetsDrawerVisible}
+    return {definitions, facetOptions, facetSelected, facetLoader, facetDefinitions, facetsEnabled}
   }
 })
 </script>

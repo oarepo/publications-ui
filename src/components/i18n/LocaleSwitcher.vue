@@ -4,10 +4,10 @@ q-select.full-width(
   filled
   square
   icon="flag"
-  v-model="lang"
-  :options="langOptions"
+  v-model="$i18n.locale"
+  :options="$i18n.availableLocales"
   :label="$t('label.localeSwitcher')"
-  :option-label="opt => Object(opt) === opt ? $t(opt.label) : ''"
+  :option-label="opt => $t(`value.lang.${opt}`)"
   dense
   options-cover
   emit-value
@@ -19,19 +19,6 @@ q-select.full-width(
 import {defineComponent} from 'vue'
 
 export default defineComponent({
-  data () {
-    return {
-      lang: this.$i18n.locale,
-      langOptions: [
-        { value: 'en-us', label: 'value.lang.enUS' },
-        { value: 'cs-cz', label: 'value.lang.csCZ' }
-      ]
-    }
-  },
-  watch: {
-    lang (lang) {
-      this.$i18n.locale = lang
-    }
-  }
+  name: 'LocaleSwitcher'
 })
 </script>

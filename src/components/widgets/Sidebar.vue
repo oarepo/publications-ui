@@ -1,37 +1,37 @@
 <template lang="pug">
 q-drawer.bg-grey-3.text-dark.scrolling-drawer(
   v-if="$route.meta.useFacets"
-  v-model="facetsDrawerVisible"
+  v-model="facetsSidebarVisible"
   :width="320"
   :breakpoint="700")
-  .column.q-gutter-y-md.q-py-xl.q-px-lg.justify-start.full-height
-    .col-auto.row
+  .column.no-wrap.q-gutter-y-md.q-py-xl.q-px-lg.justify-start.full-height
+    .col-auto.full-width
       .text-overline.text-grey-7.text-bold.text-uppercase {{ $t('label.filters') }}
-    .col-auto.column(id="facets-drawer")
+    .col-auto.full-width.column(id="facets-drawer")
 </template>
 
 <script>
 import {defineComponent, watchEffect} from 'vue'
 import {useRoute} from 'vue-router'
-import useFacets from "@/composables/useFacets";
+import useFacets from '@/composables/useFacets'
 
 export default defineComponent({
   name: "Sidebar",
   setup () {
     const route = useRoute()
-    const {facetsDrawerVisible} = useFacets()
+    const {facetsEnabled, facetsSidebarVisible} = useFacets()
 
     watchEffect(() => {
       if (route.meta.useFacets) {
         setTimeout(() => {
-          facetsDrawerVisible.value = true
+          facetsEnabled.value = true
         })
       } else {
-        facetsDrawerVisible.value = false
+        facetsEnabled.value = false
       }
     })
 
-    return {facetsDrawerVisible}
+    return {facetsEnabled, facetsSidebarVisible}
   }
 })
 </script>

@@ -36,7 +36,9 @@ export default function useAuth() {
 
     const currentUserName = computed(() => {
         if (state.value) {
-            return currentUserInfo.value?.givenName || currentUser.value?.email
+            const cui = currentUserInfo.value
+            if (cui.givenName && cui.familyName)
+            return `${cui.givenName} ${cui.familyName}` || currentUser.value?.email
         }
         return ''
     })

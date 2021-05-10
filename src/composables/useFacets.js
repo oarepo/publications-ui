@@ -2,7 +2,8 @@ import {computed, ref} from 'vue'
 import deepmerge from 'deepmerge'
 
 const activeFacets = ref(null)
-const facetsDrawerVisible = ref(false)
+const facetsEnabled = ref(false)
+const facetsSidebarVisible = ref(true)
 
 export default function useFacets(collection) {
     const defaults = ref({
@@ -15,29 +16,7 @@ export default function useFacets(collection) {
                     color: 'secondary',
                     keepColor: true
                 }
-            },
-            listBucketLabel: {
-                component: 'div',
-                useChildren: true,
-                html: true,
-                // eslint-disable-next-line no-unused-vars
-                translator: ({bucket, facet}) => {
-                    return `${(bucket.key_as_string || bucket.key)}      (${bucket.doc_count})`
-                }
-            },
-            listBucketValue: {
-                component: null,
-            },
-            // drawer: {
-            //     component: 'facets-drawer',
-            //     attrs: {},
-            //     style: {'border-bottom': null},
-            //     class: []
-            // },
-            // TODO: implement active facets drawer
-            // drawerBucket: {
-            //     component: () => import(/* webpackChunkName: 'facets' */ '@/components/search/facets/')
-            // },
+            }
         }
     })
 
@@ -52,22 +31,6 @@ export default function useFacets(collection) {
     })
 
     const definitions = ref({
-        accessRights: {
-            type: 'nested',
-            aggs: {
-                inner_facet: {
-                    label: "accessRights"
-                }
-            }
-        },
-        accessRightsCurator: {
-            type: 'nested',
-            aggs: {
-                inner_facet: {
-                    label: "access Rights Curator"
-                }
-            }
-        },
         resourceType: {
             type: 'nested',
             aggs: {
@@ -89,22 +52,6 @@ export default function useFacets(collection) {
             aggs: {
                 inner_facet: {
                     label: "rights"
-                }
-            }
-        },
-        provider: {
-            type: 'nested',
-            aggs: {
-                inner_facet: {
-                    label: "provider"
-                }
-            }
-        },
-        entities: {
-            type: 'nested',
-            aggs: {
-                inner_facet: {
-                    label: "entities"
                 }
             }
         }
@@ -157,7 +104,8 @@ export default function useFacets(collection) {
         definitions,
         facetDefinitions,
         activeFacets,
-        facetsDrawerVisible,
+        facetsEnabled,
+        facetsSidebarVisible,
         facetLoader,
         transformFacet
     }

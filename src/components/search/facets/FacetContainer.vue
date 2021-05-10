@@ -1,15 +1,18 @@
 <template lang="pug">
 //q-skeleton.q-my-md.full-width(v-if="isLoading" animation="pulse" type="box" height="30px")
 q-expansion-item.text-black.text-capitalize(
-  expand-icon="svguse:/icons.svg#arrow-right"
-  expanded-icon="svguse:/icons.svg#arrow-down"
+  expand-icon="expand_more"
+  expanded-icon="expand_less"
   @show="$emit('open')"
   @hide="$emit('close')")
   template(v-slot:header)
-    q-item-section.facet-name
-      span {{ label }}
+    q-item-section.q-py-xs.facet-name
+      .flex-inline.q-gutter-x-md
+        q-icon(name="filter_alt")
+        span {{ label }}
   template(v-slot="slotData")
-    slot(v-bind="slotData")
+    div.bg-grey-4
+      slot(v-bind="slotData")
 </template>
 <script>
 import {defineComponent} from 'vue'

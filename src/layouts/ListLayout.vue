@@ -1,6 +1,6 @@
 <template lang="pug">
 q-layout.bg-grey-1(view="hhh lpR lFf")
-  navbar(@facets="facetsDrawerVisible = !facetsDrawerVisible")
+  navbar(@facets="facetsSidebarVisible = !facetsSidebarVisible")
   q-page-container
     router-view
   sidebar
@@ -19,8 +19,8 @@ export default defineComponent({
     Navbar
   },
   setup () {
-    const {facetsDrawerVisible} = useFacets()
-    return {facetsDrawerVisible}
+    const {facetsSidebarVisible} = useFacets()
+    return {facetsSidebarVisible}
   }
 })
 </script>

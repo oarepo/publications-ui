@@ -9,7 +9,7 @@ q-btn-dropdown(
   padding="md md"
   unelevated
   icon="person"
-  :label="currentUserName"
+  :label="currentUserInfo?.givenName"
   v-if="authenticated")
   slot(name="authenticated")
     .bg-white.account
@@ -22,7 +22,10 @@ q-btn-dropdown(
           .col-auto.text-grey.text-caption {{ currentUserInfo.email }}
           .col-auto.q-pt-md
             .row
-              q-badge.q-ma-xs(v-for="role in currentUserRoles" :key="role.id") {{ $t(`label.role.${role.label}`).replace('label.role.', '').replace(':', ' > ') }}
+              q-badge.q-ma-xs(v-for="role in currentUserRoles" :key="role.id")
+                span {{ role.label.split('-')[0] }}
+                q-icon(name="arrow_right")
+                span {{ $t(translateRoleLabel(role.label)) }}
       .row.no-wrap.q-px-md.q-pb-md.justify-center
         locale-switcher.col-12
       .row.no-wrap.q-pa-sm.justify-center.bg-grey-3
@@ -99,6 +102,11 @@ export default defineComponent({
       return menuItems.value
     })
 
+    function translateRoleLabel (label) {
+      // Returns i18n path for last component of role label separated by '-'
+      return `label.role.${label.split('-').slice(-1)[0].trim()}`
+    }
+
     return {
       adminMenuItems,
       menuItems,
@@ -109,7 +117,8 @@ export default defineComponent({
       currentUserName,
       currentUserRoles,
       doLogin,
-      doLogout
+      doLogout,
+      translateRoleLabel
     }
   }
 })
