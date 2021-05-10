@@ -21,11 +21,17 @@ q-page.q-mx-lg-xl(padding)
       :item="record"
       @detail="navigateDetail(record)"
       @click.native="navigateDetail(record)")
+    facet-list(
+      :collection="collection"
+      :drawer="drawer"
+      v-model:activeFacets="activeFacets")
 </template>
 <script>
-import {defineComponent} from 'vue'
+import {defineComponent, onMounted, ref} from 'vue'
+import FacetList from '@/components/search/facets/FacetList'
 import DatasetListEntry from '@/components/datasets/list/DatasetListEntry'
-import {useRouter} from "vue-router";
+import {useRouter} from 'vue-router'
+import useFacets from '@/composables/useFacets'
 
 export default defineComponent({
   name: 'CollectionList',
@@ -35,12 +41,15 @@ export default defineComponent({
   components: {
     // Logo,
     DatasetListEntry,
+    FacetList,
     // NoDataPlaceholder,
-    // FacetList,
     // Pagination
   },
-  setup () {
+  setup (props) {
     const router = useRouter()
+    const {activeFacets} = useFacets(props.collection)
+
+    const drawer = ref(null)
 
     function pathFromUrl(url) {
       return new URL(url).pathname
@@ -50,7 +59,13 @@ export default defineComponent({
       router.push(pathFromUrl(record.links.self))
     }
 
-    return {navigateDetail}
+    onMounted(() => {
+      setTimeout(() => {
+        drawer.value = '#facets-drawer'
+      })
+    })
+
+    return {navigateDetail, activeFacets, drawer}
   }
 })
 </script>

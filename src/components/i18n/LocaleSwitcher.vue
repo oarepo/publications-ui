@@ -16,7 +16,9 @@ q-select.full-width(
 )
 </template>
 <script>
-export default {
+import {defineComponent} from 'vue'
+
+export default defineComponent({
   data () {
     return {
       lang: this.$i18n.locale,
@@ -31,5 +33,5 @@ export default {
       this.$i18n.locale = lang
     }
   }
-}
+})
 </script>

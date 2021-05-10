@@ -18,6 +18,8 @@
     "@quasar/extras": "^1.0.0",
     "animate.css": "^4.1.1",
     "core-js": "^3.6.5",
+    "deepcopy": "^2.1.0",
+    "deepmerge": "^4.2.2",
     "quasar": "^2.0.0-beta.1",
     "vue": "^3.0.0",
     "vue-3-sanitize": "^0.1.3",

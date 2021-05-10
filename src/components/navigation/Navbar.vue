@@ -29,7 +29,7 @@ q-header.row.z-top.no-wrap.navbar__header
       img.navbar__logo.col-auto(
         src="/logos/datacare_White.svg")
     q-toolbar-title.q-py-md.text-uppercase.text-weight-bold {{ $t('app.productName') }}
-    //search-input.col-grow(@search="doSearch")
+    search-input.col-grow()
     q-btn(
       stretch
       flat
@@ -52,14 +52,15 @@ import AccountDropdown from '@/components/account/AccountDropdown'
 import {defineComponent, ref} from 'vue'
 import useAuth from '@/composables/useAuth'
 import useCollection from "@/composables/useCollection";
-// import SearchInput from '@/components/search/SearchInput'
+import SearchInput from '@/components/search/SearchInput'
 
 export const Modes = Object.freeze({INTRO: 'intro', LIST: 'list', DETAIL: 'detail'})
 
 export default defineComponent({
   name: 'Navbar',
   components: {
-    AccountDropdown
+    AccountDropdown,
+    SearchInput
   },
   emits: ['facets'],
   props: {
@@ -71,8 +72,8 @@ export default defineComponent({
   },
   setup() {
     const {authenticated} = useAuth()
-    const modes = ref(Modes)
     const {collectionId} = useCollection()
+    const modes = ref(Modes)
 
     return {DATASETS_COLLECTION_CODE, ARTICLES_COLLECTION_CODE, authenticated, modes, collectionId}
   }

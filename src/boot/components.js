@@ -1,4 +1,7 @@
-import {boot} from 'quasar/wrappers'
+import FacetContainer from '@/components/search/facets/FacetContainer'
 
-export default boot(({app}) => {
-})
+export default {
+    install (app) {
+        app.component('facet-container', FacetContainer)
+    }
+}

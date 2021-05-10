@@ -31,7 +31,7 @@ const routes = [
   },
   { /* Record collection routes */
     path: '/',
-    component: () => import(/* webpackChunkName: 'layouts' */ '@/layouts/MainLayout'),
+    component: () => import(/* webpackChunkName: 'layouts' */ '@/layouts/ListLayout'),
     children: [
       collection({
         path: `${DATASETS_COLLECTION_CODE}/all/`,
@@ -41,7 +41,13 @@ const routes = [
         meta: {
           collectionId: DATASETS_COLLECTION_CODE,
           query: {
+            q: 'string:',
             sort: 'string:alphabetical'
+          },
+          querySettings: {
+            onInit: (props) => {
+              props['q'].defaultValue = ''
+            }
           },
           title: 'route.title.datasetList',
           useFacets: true,

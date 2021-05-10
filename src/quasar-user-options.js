@@ -2,7 +2,27 @@ import './styles/quasar.sass'
 import '@quasar/extras/material-icons/material-icons.css'
 import '@quasar/extras/material-icons-outlined/material-icons-outlined.css'
 import '@quasar/extras/fontawesome-v5/fontawesome-v5.css'
-import {AddressbarColor, BottomSheet, Cookies, Dialog, Loading, LoadingBar, Meta, Notify} from 'quasar'
+import {
+    AddressbarColor,
+    BottomSheet,
+    Cookies,
+    Dialog,
+    Loading,
+    LoadingBar,
+    Meta,
+    Notify,
+    QBadge,
+    QBtn,
+    QCheckbox,
+    QChip,
+    QExpansionItem,
+    QItem,
+    QItemSection,
+    QList,
+    QTab,
+    QTabs,
+    QTooltip
+} from 'quasar'
 
 export default {
     config: {
@@ -19,6 +39,11 @@ export default {
             warning: '#FBB731'
         }
     },
+    components: [
+        QExpansionItem, QList, QItem,
+        QItemSection, QBadge, QCheckbox,
+        QTabs, QTab, QBtn, QChip, QTooltip,
+    ],
     plugins: {
         AddressbarColor,
         Cookies,
