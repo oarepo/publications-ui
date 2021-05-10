@@ -12,7 +12,7 @@ q-header.row.z-top.no-wrap.navbar__header
     q-btn.q-mx-md(
       v-if="$route.meta.useFacets"
       flat
-      @click="toggleFacets"
+      @click="$emit('facets')"
       round
       dense
       icon="menu")
@@ -61,6 +61,7 @@ export default defineComponent({
   components: {
     AccountDropdown
   },
+  emits: ['facets'],
   props: {
     mode: {
       type: String,
@@ -68,16 +69,12 @@ export default defineComponent({
       validator: mode => Object.values(Modes).indexOf(mode) > -1
     }
   },
-  setup(props, context) {
+  setup() {
     const {authenticated} = useAuth()
     const modes = ref(Modes)
     const {collectionId} = useCollection()
 
-    function toggleFacets() {
-      context.emit('facets')
-    }
-
-    return {DATASETS_COLLECTION_CODE, ARTICLES_COLLECTION_CODE, authenticated, modes, collectionId, toggleFacets}
+    return {DATASETS_COLLECTION_CODE, ARTICLES_COLLECTION_CODE, authenticated, modes, collectionId}
   }
 })
 </script>

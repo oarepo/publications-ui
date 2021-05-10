@@ -14,20 +14,21 @@ q-page.q-mx-lg-xl(padding)
         :bla="{ name: `cesnet/draft-datasets/upload`}"
         :label="$t('action.upload')")
         q-tooltip {{ $t('action.uploadDataset') }}
-  .column.q-mt-md.q-gutter-y-lg(v-if="items.length")
-    div(v-for="item in items" :key="item.id")
-      dataset-list-entry.col.cursor-pointer.non-selectable(
-        :loading="!loaded"
-        :item="item"
-        @detail="navigateDetail"
-        @click.native="navigateDetail(item)")
+  .column.q-mt-md.q-gutter-y-lg(v-if="collection.records.length")
+    dataset-list-entry.col.cursor-pointer.non-selectable(
+      v-for="record in collection.records" :key="record.id"
+      :loading="!collection.loaded"
+      :item="record"
+      @detail="navigateDetail(record)"
+      @click.native="navigateDetail(record)")
 </template>
 <script>
 import {defineComponent} from 'vue'
 import DatasetListEntry from '@/components/datasets/list/DatasetListEntry'
+import {useRouter} from "vue-router";
 
 export default defineComponent({
-  name: 'DatasetList',
+  name: 'CollectionList',
   props: {
     collection: Object,
   },
@@ -37,6 +38,19 @@ export default defineComponent({
     // NoDataPlaceholder,
     // FacetList,
     // Pagination
+  },
+  setup () {
+    const router = useRouter()
+
+    function pathFromUrl(url) {
+      return new URL(url).pathname
+    }
+
+    function navigateDetail(record) {
+      router.push(pathFromUrl(record.links.self))
+    }
+
+    return {navigateDetail}
   }
 })
 </script>

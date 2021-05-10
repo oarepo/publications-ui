@@ -29,7 +29,7 @@ q-card(flat clickable)
       color="primary"
       rounded
       :label="$t('nav.detail')"
-      @click.stop="detail")
+      @click.stop="$emit('detail')")
 </template>
 
 <script>
@@ -45,6 +45,7 @@ export default defineComponent({
     loading: Boolean,
     item: Object
   },
+  emits: ['detail'],
   components: {
     // SearchHighlight,
     // DatasetStatusRibbon

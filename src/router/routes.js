@@ -36,7 +36,7 @@ const routes = [
       collection({
         path: `${DATASETS_COLLECTION_CODE}/all/`,
         name: 'all-datasets',
-        component: () => import(/* webpackChunkName: 'datasets' */ '@/pages/datasets/DatasetList')
+        component: () => import(/* webpackChunkName: 'collections' */ '@/pages/collections/CollectionList')
       }, {
         meta: {
           collectionId: DATASETS_COLLECTION_CODE,

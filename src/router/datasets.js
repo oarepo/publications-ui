@@ -112,7 +112,7 @@ function datasets (communityId) {
     }
     // collectionApi({
     //   collectionCode: DATASETS_DRAFT_COLLECTION_CODE,
-    //   name: `${communityId}/draft-datasets/upload`,
+    //   name: `${communityId}/draftdatasets/upload`,
     //   path: `${communityId}/datasets/draft/upload`,
     //   component: () => import('pages/datasets/DatasetUpload'),
     //   loadingComponent: () => import('components/common/LoadingPlaceholder')

@@ -1,15 +1,28 @@
-<template>
-<router-view></router-view>
+<template lang="pug">
+router-view(v-slot="{ Component }")
+  transition(name="fade")
+    component(:is="Component")
 </template>
 
 <script>
-import {useMeta} from 'quasar'
-import {useI18n} from "vue-i18n/index";
+import {useMeta, useQuasar} from 'quasar'
+import {useI18n} from 'vue-i18n/index'
+import {defineComponent} from 'vue'
 
-export default {
+export default defineComponent({
   name: 'App',
   setup() {
-    const {t} = useI18n()
+    const {t, locale} = useI18n({useScope: 'global'})
+    const q = useQuasar()
+    locale.value = 'cs'
+    try {
+      import('quasar/lang/cs')
+          .then(lang => {
+            q.lang.set(lang.default)
+          })
+    } catch (err) {
+      console.log(err)
+    }
 
     useMeta(() => {
       return {
@@ -21,5 +34,5 @@ export default {
       }
     })
   }
-}
+})
 </script>

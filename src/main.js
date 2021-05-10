@@ -11,6 +11,7 @@ import InvenioApi from '@oarepo/invenio-vue'
 import QuasarESFacets from '@oarepo/quasar-es-facets'
 import MultilingualTranslated from '@/i18n/multilingual'
 import PopupLogin, {usePopupLogin} from '@oarepo/vue-popup-login'
+import Vue3Sanitize from 'vue-3-sanitize/dist/vue-3-sanitize'
 
 const app = createApp(App)
 
@@ -35,6 +36,7 @@ app
         completeUrl: '/oauth/complete/',
         stateUrl: '/oauth/state/'
     })
+    .use(Vue3Sanitize)
 
     const auth = usePopupLogin()
 
