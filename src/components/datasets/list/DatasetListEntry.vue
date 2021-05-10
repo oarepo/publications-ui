@@ -11,13 +11,14 @@ q-card(flat clickable)
       q-skeleton.q-mx-md.q-mb-sm.absolute-bottom.q-card__section--vert(type="text" :width="`${thumbnailSize}px`")
     q-card-section(v-else)
       .q-mr-xl.block.text-h5.q-mt-sm.q-mb-xs.gt-xs
-        //search-highlight(:item="item" :text="d.title._")
+        mt(:text="m.title")
+        //search-highlight(:item="item" :text="m.title._")
       q-separator
       q-card-section
         .row.q-mb-md
-          q-chip(v-for="(kw, idx) in d.keywords" :key="idx") {{ kw }}
+          q-chip(v-for="(kw, idx) in m.keywords" :key="idx") {{ kw }}
         .text-subtitle1.ellipsis-3-lines
-          span(v-html="$sanitize(d.abstract._)")
+          span(v-html="$sanitize(m.abstract._)")
       q-card-section
         .text-subtitle2.text-grey-8 {{ $t('label.createdAt') }} {{ $d(new Date(dateCreated)) }}
     q-skeleton.absolute-bottom-right.q-px-sm.q-ma-md(
@@ -53,12 +54,12 @@ export default defineComponent({
   setup(props) {
     const $q = useQuasar()
 
-    const d = computed(() => {
+    const m = computed(() => {
       return props.item.metadata || {}
     })
 
     const dateCreated = computed(() => {
-      return d.value.dates.find((dat) => {
+      return m.value.dates.find((dat) => {
         return dat.type === 'created'
       }).date
     })
@@ -71,7 +72,7 @@ export default defineComponent({
       }
     })
 
-    return {d, dateCreated, thumbnailSize}
+    return {m, dateCreated, thumbnailSize}
   }
 })
 </script>
