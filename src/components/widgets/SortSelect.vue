@@ -14,7 +14,7 @@
     :option-label="opt => $t(opt.label)"
     v-model="query.sort")
       template(v-slot:prepend)
-        q-icon(name="sort_by_alpha")
+        q-icon(size="xs" name="sort_by_alpha")
 </template>
 <script>
 import {defineComponent, ref} from 'vue'

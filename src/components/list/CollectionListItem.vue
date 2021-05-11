@@ -1,7 +1,7 @@
 <template lang="pug">
 q-card(flat clickable)
   q-toolbar.absolute.q-pt-md.q-pb-sm.justify-end
-    //dataset-status-ribbon(v-if="!loading" :dataset="d" dense)
+    status-ribbon(v-if="!loading" :metadata="m" dense)
   q-card-section(horizontal)
     q-card-section
       q-skeleton(v-if="loading" :width="`${thumbnailSize}px`" :height="`${thumbnailSize}px`")
@@ -34,7 +34,7 @@ q-card(flat clickable)
 </template>
 
 <script>
-// import DatasetStatusRibbon from 'components/datasets/item/DatasetStatusRibbon'
+import StatusRibbon from '@/components/widgets/StatusRibbon'
 // import SearchHighlight from 'components/search/SearchHighlight'
 
 import {computed, defineComponent} from 'vue'
@@ -49,7 +49,7 @@ export default defineComponent({
   emits: ['detail'],
   components: {
     // SearchHighlight,
-    // DatasetStatusRibbon
+    StatusRibbon
   },
   setup(props) {
     const $q = useQuasar()

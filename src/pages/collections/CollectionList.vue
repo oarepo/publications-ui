@@ -1,7 +1,7 @@
 <template lang="pug">
 q-page.q-mx-lg-xl(padding)
   collection-list-header(:collection="collection")
-  .column.q-mt-md(v-if="collection.records.length")
+  .column.q-mt-md.q-gutter-y-md(v-if="collection.records.length")
     collection-list-item.col.cursor-pointer.non-selectable(
       v-for="record in collection.records" :key="record.id"
       :loading="!collection.loaded"

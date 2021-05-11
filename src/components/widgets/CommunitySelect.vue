@@ -17,7 +17,7 @@ q-select(
   :loading="communitiesLoading")
   template(v-slot:selected)
     .row.full-width.q-my-sm(v-if="model")
-      .col-auto.self-center.q-pr-md
+      .col-auto.self-start.q-pr-md
         q-avatar(size="50px" color="primary" text-color="white" :icon="model.metadata?.logo")
           .text-bold.text-code {{ model?.title[0] }}
       .column.col-8.justify-between
