@@ -14,23 +14,24 @@
 import {defineComponent, ref} from 'vue'
 import useFacets from '@/composables/useFacets'
 import {useQuery} from "@oarepo/vue-query-synchronizer";
+import {useContext} from "vue-context-composition";
+import {facets} from "@/contexts/facets";
 
 export default defineComponent({
   name: 'FacetList',
   props: {
     collection: Object,
-    drawer: String,
     facetsSelected: Boolean
   },
   emits: ['update:activeFacets'],
   setup(props, ctx) {
+    const {facetsEnabled} = useContext(facets)
     const {
       defaults,
       definitions,
       facetDefinitions,
       facetLoader,
       transformFacet,
-      facetsEnabled,
     } = useFacets(props.collection)
     const query = useQuery()
 

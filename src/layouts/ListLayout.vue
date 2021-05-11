@@ -1,6 +1,6 @@
 <template lang="pug">
 q-layout.bg-grey-1(view="hhh lpR lFf")
-  navbar(@facets="facetsSidebarVisible = !facetsSidebarVisible")
+  navbar
   q-page-container
     router-view
   sidebar
@@ -10,7 +10,8 @@ q-layout.bg-grey-1(view="hhh lpR lFf")
 import Navbar from '@/components/navigation/Navbar'
 import {defineComponent} from 'vue'
 import Sidebar from '@/components/widgets/Sidebar'
-import useFacets from "@/composables/useFacets";
+import {facets} from '@/contexts/facets'
+import {provideContext} from 'vue-context-composition'
 
 export default defineComponent({
   name: 'ListLayout',
@@ -19,8 +20,7 @@ export default defineComponent({
     Navbar
   },
   setup () {
-    const {facetsSidebarVisible} = useFacets()
-    return {facetsSidebarVisible}
+    provideContext(facets)
   }
 })
 </script>

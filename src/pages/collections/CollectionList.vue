@@ -14,7 +14,16 @@ q-page.q-mx-lg-xl(padding)
         :bla="{ name: `cesnet/draft-datasets/upload`}"
         :label="$t('action.upload')")
         q-tooltip {{ $t('action.uploadDataset') }}
-  .column.q-mt-md.q-gutter-y-lg(v-if="collection.records.length")
+  .column.q-mt-md(v-if="collection.records.length")
+    //q-table.bg-grey-3(
+    //  flat
+    //  :data="collection.records"
+    //  :columns="columns"
+    //  row-key="id"
+    //  :pagination.sync="pagination"
+    //  :loading="!collection.loaded"
+    //  binary-state-sort
+    //)
     dataset-list-entry.col.cursor-pointer.non-selectable(
       v-for="record in collection.records" :key="record.id"
       :loading="!collection.loaded"
@@ -23,15 +32,15 @@ q-page.q-mx-lg-xl(padding)
       @click.native="navigateDetail(record)")
     facet-list(
       :collection="collection"
-      :drawer="drawer"
       v-model:activeFacets="activeFacets")
 </template>
 <script>
-import {defineComponent, onMounted, ref} from 'vue'
+import {defineComponent} from 'vue'
 import FacetList from '@/components/search/facets/FacetList'
 import DatasetListEntry from '@/components/datasets/list/DatasetListEntry'
 import {useRouter} from 'vue-router'
-import useFacets from '@/composables/useFacets'
+import {useContext} from 'vue-context-composition'
+import {facets} from '@/contexts/facets'
 
 export default defineComponent({
   name: 'CollectionList',
@@ -45,11 +54,9 @@ export default defineComponent({
     // NoDataPlaceholder,
     // Pagination
   },
-  setup (props) {
+  setup () {
     const router = useRouter()
-    const {activeFacets} = useFacets(props.collection)
-
-    const drawer = ref(null)
+    const {activeFacets} = useContext(facets)
 
     function pathFromUrl(url) {
       return new URL(url).pathname
@@ -59,13 +66,7 @@ export default defineComponent({
       router.push(pathFromUrl(record.links.self))
     }
 
-    onMounted(() => {
-      setTimeout(() => {
-        drawer.value = '#facets-drawer'
-      })
-    })
-
-    return {navigateDetail, activeFacets, drawer}
+    return {navigateDetail, activeFacets}
   }
 })
 </script>

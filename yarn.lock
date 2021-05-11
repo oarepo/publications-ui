@@ -8919,6 +8919,11 @@ vue-cli-plugin-quasar@^4.0.0-beta.1:
   resolved "https://registry.npm.taobao.org/vue-cli-plugin-quasar/download/vue-cli-plugin-quasar-4.0.0-beta.1.tgz#5d2ae33cd1b6e566b0385426994813354204a844"
   integrity sha1-XSrjPNG25WawOFQmmUgTNUIEqEQ=
 
+vue-context-composition@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/vue-context-composition/-/vue-context-composition-0.2.3.tgz#9acb552fb544be41f1730bfc26671b77acc55d93"
+  integrity sha512-oogLnR5cXph6bNeScNJZ/tch6rzDecjob80boicwyEAI1jfeBDPGzvdrj2aLjsFPa4/WVb6JKQZcWml3+yhB5A==
+
 vue-eslint-parser@^7.6.0:
   version "7.6.0"
   resolved "https://registry.npm.taobao.org/vue-eslint-parser/download/vue-eslint-parser-7.6.0.tgz#01ea1a2932f581ff244336565d712801f8f72561"

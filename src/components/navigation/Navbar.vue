@@ -12,7 +12,7 @@ q-header.row.z-top.no-wrap.navbar__header
     q-btn.q-mx-md(
       v-if="$route.meta.useFacets"
       flat
-      @click="$emit('facets')"
+      @click="toggleFacetsSidebar"
       round
       dense
       icon="menu")
@@ -51,8 +51,10 @@ import {ARTICLES_COLLECTION_CODE, DATASETS_COLLECTION_CODE} from '@/constants'
 import AccountDropdown from '@/components/account/AccountDropdown'
 import {defineComponent, ref} from 'vue'
 import useAuth from '@/composables/useAuth'
-import useCollection from "@/composables/useCollection";
+import useCollection from '@/composables/useCollection'
 import SearchInput from '@/components/search/SearchInput'
+import {useContext} from 'vue-context-composition'
+import {facets} from '@/contexts/facets'
 
 export const Modes = Object.freeze({INTRO: 'intro', LIST: 'list', DETAIL: 'detail'})
 
@@ -62,7 +64,6 @@ export default defineComponent({
     AccountDropdown,
     SearchInput
   },
-  emits: ['facets'],
   props: {
     mode: {
       type: String,
@@ -71,11 +72,20 @@ export default defineComponent({
     }
   },
   setup() {
+    const {toggleFacetsSidebar} = useContext(facets)
+
     const {authenticated} = useAuth()
     const {collectionId} = useCollection()
     const modes = ref(Modes)
 
-    return {DATASETS_COLLECTION_CODE, ARTICLES_COLLECTION_CODE, authenticated, modes, collectionId}
+    return {
+      DATASETS_COLLECTION_CODE,
+      ARTICLES_COLLECTION_CODE,
+      authenticated,
+      modes,
+      collectionId,
+      toggleFacetsSidebar
+    }
   }
 })
 </script>

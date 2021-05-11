@@ -1,9 +1,6 @@
 import {computed, ref} from 'vue'
 import deepmerge from 'deepmerge'
 
-const activeFacets = ref(null)
-const facetsEnabled = ref(false)
-const facetsSidebarVisible = ref(true)
 
 export default function useFacets(collection) {
     const defaults = ref({
@@ -103,9 +100,6 @@ export default function useFacets(collection) {
         types,
         definitions,
         facetDefinitions,
-        activeFacets,
-        facetsEnabled,
-        facetsSidebarVisible,
         facetLoader,
         transformFacet
     }

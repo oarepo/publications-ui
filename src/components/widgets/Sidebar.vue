@@ -1,6 +1,6 @@
 <template lang="pug">
 q-drawer.bg-grey-3.text-dark.scrolling-drawer(
-  v-if="$route.meta.useFacets"
+  v-if="facetsEnabled"
   v-model="facetsSidebarVisible"
   :width="320"
   :breakpoint="700")
@@ -11,26 +11,14 @@ q-drawer.bg-grey-3.text-dark.scrolling-drawer(
 </template>
 
 <script>
-import {defineComponent, watchEffect} from 'vue'
-import {useRoute} from 'vue-router'
-import useFacets from '@/composables/useFacets'
+import {defineComponent} from 'vue'
+import {facets} from "@/contexts/facets";
+import {useContext} from "vue-context-composition";
 
 export default defineComponent({
   name: "Sidebar",
   setup () {
-    const route = useRoute()
-    const {facetsEnabled, facetsSidebarVisible} = useFacets()
-
-    watchEffect(() => {
-      if (route.meta.useFacets) {
-        setTimeout(() => {
-          facetsEnabled.value = true
-        })
-      } else {
-        facetsEnabled.value = false
-      }
-    })
-
+    const { facetsEnabled, facetsSidebarVisible } = useContext(facets)
     return {facetsEnabled, facetsSidebarVisible}
   }
 })
