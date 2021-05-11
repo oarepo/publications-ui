@@ -1,0 +1,17 @@
+import {computed} from 'vue'
+import {useRoute} from 'vue-router'
+import {ARTICLES_COLLECTION_CODE, DATASETS_COLLECTION_CODE} from '@/constants'
+
+export default function useModel() {
+    const route = useRoute()
+
+    const isDatasets = computed(() => {
+        return route.params.model === DATASETS_COLLECTION_CODE
+    })
+
+    const isArticles = computed(() => {
+        return route.params.model === ARTICLES_COLLECTION_CODE
+    })
+
+    return {isDatasets, isArticles, model: route.params.model}
+}

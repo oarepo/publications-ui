@@ -11,7 +11,8 @@ import Navbar from '@/components/navigation/Navbar'
 import {defineComponent} from 'vue'
 import Sidebar from '@/components/widgets/Sidebar'
 import {facets} from '@/contexts/facets'
-import {provideContext} from 'vue-context-composition'
+import {provideContext, useContext} from 'vue-context-composition'
+import {community} from '@/contexts/community'
 
 export default defineComponent({
   name: 'ListLayout',
@@ -21,6 +22,9 @@ export default defineComponent({
   },
   setup () {
     provideContext(facets)
+    const {loadCommunities} = useContext(community)
+
+    loadCommunities()
   }
 })
 </script>

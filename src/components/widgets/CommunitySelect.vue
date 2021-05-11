@@ -10,6 +10,7 @@ q-select(
   hide-hint
   hide-dropdown-icon
   v-model="model"
+  @clear="setCommunity(null)"
   :options="communities"
   option-value="id"
   option-label="title"
@@ -25,23 +26,36 @@ q-select(
     .row.justify-between.items-center(v-else)
       .col-auto.text-primary.text-h7 {{ $t('label.noCommunitySelected') }}
       .col-auto
-        q-btn(flat :label="$t('action.choose')" @click.native="")
+        q-btn(flat :label="$t('action.choose')")
 </template>
 
 <script>
 import {defineComponent, ref, watch} from 'vue'
 import {useContext} from 'vue-context-composition'
 import {community} from '@/contexts/community'
-// import deepcopy from 'deepcopy'
 
 export default defineComponent({
   name: 'CommunitySelect',
   setup () {
-    const {communities, currentCommunity, communitiesLoading, setCommunity} = useContext(community)
-    const model = ref(currentCommunity.value || null)
+    const {communities, communitiesLoading, currentCommunity, setCommunity} = useContext(community)
+    const model = ref(null)
 
-    watch(model, (model) => {
-      setCommunity(model?.id || null)
+    function updateCommunity () {
+      if ((model?.value?.id || null) !== (currentCommunity?.value?.id || null)) {
+        console.log('update comm', model.value)
+        setCommunity(model?.value?.id || null)
+      }
+    }
+
+    watch(currentCommunity, async () => {
+      if (!model.value && currentCommunity.value) {
+        model.value = {...currentCommunity.value}
+      }
+      await updateCommunity()
+    })
+
+    watch(model, async() => {
+      await updateCommunity()
     })
 
     return {model, communities, communitiesLoading, setCommunity}

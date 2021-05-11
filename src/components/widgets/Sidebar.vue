@@ -21,7 +21,6 @@ q-drawer.bg-grey-3.text-dark.scrolling-drawer(
 <script>
 import {defineComponent} from 'vue'
 import {facets} from '@/contexts/facets'
-import {community} from '@/contexts/community'
 import {useContext} from 'vue-context-composition'
 import CommunitySelect from '@/components/widgets/CommunitySelect'
 
@@ -29,14 +28,9 @@ export default defineComponent({
   name: "Sidebar",
   components: {CommunitySelect},
   setup () {
-    const {loadCommunities, communities} = useContext(community)
     const {facetsEnabled, facetsSidebarVisible} = useContext(facets)
 
-    if (!communities.value) {
-      loadCommunities()
-    }
-
-    return {facetsEnabled, facetsSidebarVisible, communities}
+    return {facetsEnabled, facetsSidebarVisible}
   }
 })
 </script>

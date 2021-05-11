@@ -24,13 +24,13 @@ import Pagination from '@/components/navigation/Pagination'
 import FacetList from '@/components/search/facets/FacetList'
 import CollectionListItem from '@/components/list/CollectionListItem'
 import CollectionListHeader from '@/components/list/CollectionListHeader'
-import {useRoute, useRouter} from 'vue-router'
+import {useRouter} from 'vue-router'
 import {useContext} from 'vue-context-composition'
 import {facets} from '@/contexts/facets'
 import ScrollTopFab from '@/components/widgets/ScrollTopFab'
 import {useMeta} from 'quasar'
 import {useI18n} from 'vue-i18n/index'
-import {ARTICLES_COLLECTION_CODE, DATASETS_COLLECTION_CODE} from '@/constants'
+import useModel from '@/composables/useModel'
 
 export default defineComponent({
   name: 'CollectionList',
@@ -49,18 +49,15 @@ export default defineComponent({
     const {activeFacets} = useContext(facets)
 
     const {t} = useI18n()
+    const {isDatasets, isArticles} = useModel()
     const router = useRouter()
-    const route = useRoute()
 
     useMeta(() => {
       let titlePath = ''
-      switch (route.params.model) {
-        case DATASETS_COLLECTION_CODE:
-          titlePath = 'route.title.datasetList'
-          break
-        case ARTICLES_COLLECTION_CODE:
-          titlePath = 'route.title.articleList'
-          break
+      if (isDatasets) {
+        titlePath = 'route.title.datasetList'
+      } else if (isArticles) {
+        titlePath = 'route.title.articleList'
       }
       return {title: t(titlePath)}
     })

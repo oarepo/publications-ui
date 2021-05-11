@@ -1,39 +1,32 @@
 import {defineContext} from 'vue-context-composition'
-import {computed, ref, watch, readonly} from 'vue'
+import {computed, ref, readonly} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
-import {useHttp} from '@oarepo/invenio-vue'
+import {axios} from "@/boot/axios";
 
 export const community = defineContext(() => {
     const route = useRoute()
     const router = useRouter()
-    const communities = ref(null)
-    const http = useHttp(
-        '/communities/',
-        '',
-        {loadInitial: true, method: 'get'})
-
-    watch(http.data, () => {
-        communities.value = (http.data.value || []).map(
-            (community) => {
-                if (!community.links?.ui && community.links?.self) {
-                    community.links.ui = new URL(community.links.self).pathname
-                }
-                return community
-            })
-    })
+    const communities = ref([])
+    const loading = ref(false)
 
     function loadCommunities() {
-        http.load()
+        loading.value = true
+        axios.get('/communities/')
+            .then(resp => {
+                communities.value = resp.data
+            }).finally(() => {
+                loading.value = false
+            })
     }
 
-    function setCommunity(communityId) {
+    async function setCommunity(communityId) {
         let routeParams = {
             model: route.params.model,
             state: route.params.state
         }
 
         if (communityId) {
-            return router.push({
+            return await router.push({
                 name: 'community-list',
                 params: {
                     communityId: communityId,
@@ -41,8 +34,7 @@ export const community = defineContext(() => {
                 }
             })
         }
-
-        return router.push({name: 'list', params: routeParams})
+        await router.push({name: 'list', params: routeParams})
     }
 
     const communityId = computed(() => {
@@ -59,6 +51,6 @@ export const community = defineContext(() => {
         communities: readonly(communities),
         communityId: readonly(communityId),
         currentCommunity: readonly(currentCommunity),
-        communitiesLoading: readonly(http.loading)
+        communitiesLoading: readonly(loading)
     }
 })
