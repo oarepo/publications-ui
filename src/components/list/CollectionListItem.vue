@@ -41,7 +41,7 @@ import {computed, defineComponent} from 'vue'
 import {useQuasar} from 'quasar'
 
 export default defineComponent({
-  name: 'DatasetListEntry',
+  name: 'CollectionListItem',
   props: {
     loading: Boolean,
     item: Object

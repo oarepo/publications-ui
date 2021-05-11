@@ -1,62 +1,69 @@
 <template lang="pug">
 q-page.q-mx-lg-xl(padding)
-  .row.justify-between.items-center.q-col-gutter-x-lg.q-mt-md.q-mt-lg-xl.q-mb-md
-    .col-auto
-      .text-h3.gt-md {{ $t('section.datasetList') }}
-      .text-h4.lt-lg.gt-sm.q-mt-none.q-mb-lg {{ $t('section.datasetList') }}
-      .text-h6.lt-md.q-mt-none.q-mb-md {{ $t('section.datasetList') }}
-    .col-auto.items-center
-      q-btn(
-        stretch
-        flat
-        color="dark"
-        icon="cloud_upload"
-        :bla="{ name: `cesnet/draft-datasets/upload`}"
-        :label="$t('action.upload')")
-        q-tooltip {{ $t('action.uploadDataset') }}
+  collection-list-header(:collection="collection")
   .column.q-mt-md(v-if="collection.records.length")
-    //q-table.bg-grey-3(
-    //  flat
-    //  :data="collection.records"
-    //  :columns="columns"
-    //  row-key="id"
-    //  :pagination.sync="pagination"
-    //  :loading="!collection.loaded"
-    //  binary-state-sort
-    //)
-    dataset-list-entry.col.cursor-pointer.non-selectable(
+    collection-list-item.col.cursor-pointer.non-selectable(
       v-for="record in collection.records" :key="record.id"
       :loading="!collection.loaded"
       :item="record"
       @detail="navigateDetail(record)"
       @click.native="navigateDetail(record)")
-    facet-list(
-      :collection="collection"
-      v-model:activeFacets="activeFacets")
+    .col
+      pagination.q-mt-lg(:collection="collection")
+  no-data.full-height(v-else)
+    .text-h6.text-weight-lighter {{ $t('message.noDatasets') }}…
+  scroll-top-fab
+  facet-list(
+    :collection="collection"
+    v-model:activeFacets="activeFacets")
 </template>
 <script>
 import {defineComponent} from 'vue'
+import NoData from '@/components/widgets/NoData'
+import Pagination from '@/components/navigation/Pagination'
 import FacetList from '@/components/search/facets/FacetList'
-import DatasetListEntry from '@/components/datasets/list/DatasetListEntry'
-import {useRouter} from 'vue-router'
+import CollectionListItem from '@/components/list/CollectionListItem'
+import CollectionListHeader from '@/components/list/CollectionListHeader'
+import {useRoute, useRouter} from 'vue-router'
 import {useContext} from 'vue-context-composition'
 import {facets} from '@/contexts/facets'
+import ScrollTopFab from '@/components/widgets/ScrollTopFab'
+import {useMeta} from 'quasar'
+import {useI18n} from 'vue-i18n/index'
+import {ARTICLES_COLLECTION_CODE, DATASETS_COLLECTION_CODE} from '@/constants'
 
 export default defineComponent({
   name: 'CollectionList',
   props: {
-    collection: Object,
+    collection: Object
   },
   components: {
-    // Logo,
-    DatasetListEntry,
+    CollectionListHeader,
+    ScrollTopFab,
+    CollectionListItem,
     FacetList,
-    // NoDataPlaceholder,
-    // Pagination
+    NoData,
+    Pagination
   },
   setup () {
-    const router = useRouter()
     const {activeFacets} = useContext(facets)
+
+    const {t} = useI18n()
+    const router = useRouter()
+    const route = useRoute()
+
+    useMeta(() => {
+      let titlePath = ''
+      switch (route.params.model) {
+        case DATASETS_COLLECTION_CODE:
+          titlePath = 'route.title.datasetList'
+          break
+        case ARTICLES_COLLECTION_CODE:
+          titlePath = 'route.title.articleList'
+          break
+      }
+      return {title: t(titlePath)}
+    })
 
     function pathFromUrl(url) {
       return new URL(url).pathname

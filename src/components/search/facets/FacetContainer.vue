@@ -8,7 +8,6 @@ q-expansion-item.text-black.text-capitalize(
   template(v-slot:header)
     q-item-section.q-py-xs.facet-name
       .flex-inline.q-gutter-x-md
-        q-icon(name="filter_alt")
         span {{ label }}
   template(v-slot="slotData")
     div.bg-grey-4

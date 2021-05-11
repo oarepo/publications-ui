@@ -8,10 +8,14 @@ router-view(v-slot="{ Component }")
 import {useMeta, useQuasar} from 'quasar'
 import {useI18n} from 'vue-i18n/index'
 import {defineComponent} from 'vue'
+import {provideContext} from 'vue-context-composition'
+import {community} from '@/contexts/community'
 
 export default defineComponent({
   name: 'App',
   setup() {
+    provideContext(community)
+
     const {t, locale} = useI18n({useScope: 'global'})
     const q = useQuasar()
     locale.value = 'cs'

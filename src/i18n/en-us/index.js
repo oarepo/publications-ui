@@ -33,6 +33,9 @@ export default {
     }
   },
   action: {
+    choose: 'Choose',
+    filterByCommunity: 'Browse community records',
+    sort: 'Order',
     delete_draft: 'delete draft record',
     make_private: 'unpublish record',
     make_public: 'publish record',
@@ -57,11 +60,13 @@ export default {
     decline: 'Decline',
     upload: 'Upload',
     uploadDataset: 'Upload new dataset',
-    uploadArticle: 'Upload new article'
-
+    uploadArticle: 'Upload new article',
+    scrollToTop: 'Scroll to top'
   },
   accessibility: {},
   label: {
+    pageSize: 'Page size',
+    recordsFound: 'Found {count} record | Found {count} records',
     goHome: 'Back to Homepage',
     back: 'Back',
     authors: 'Authors',
@@ -88,6 +93,9 @@ export default {
     community: 'Community',
     privacy: 'Privacy Policy',
     docs: 'User Documentation',
+    sort: {
+      alphabetical: 'Alphabetical'
+    },
     role: {
       'system administrator': 'System administrator',
       admin: 'admin',

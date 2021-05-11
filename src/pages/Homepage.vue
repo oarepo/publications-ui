@@ -16,7 +16,7 @@ q-page.hero.full-height.no-padding.row.overflow-hidden
             rounded
             icon="leaderboard"
             padding="lg"
-            :to="{name: 'all-datasets'}"
+            :to="{name: 'list', params: {model: DATASETS_COLLECTION_CODE, state: 'all'}}"
             :label="$t('section.datasetList')")
           q-btn.full-width.shadow-5(
             color="dark"
@@ -30,15 +30,15 @@ q-page.hero.full-height.no-padding.row.overflow-hidden
   .col-0.right-tiles.gt-sm
 </template>
 <script>
-import {Options, Vue} from 'vue-class-component'
+import {DATASETS_COLLECTION_CODE} from '@/constants'
+import {defineComponent} from "vue";
 
-export default @Options({
+export default defineComponent({
   name: 'Homepage',
-  components: {
+  setup () {
+    return {DATASETS_COLLECTION_CODE}
   }
 })
-class Homepage extends Vue {
-}
 </script>
 <style lang="sass">
 .hero

@@ -7,8 +7,8 @@ q-layout.bg-grey-1(view="hhh lpR fff")
 </template>
 <script>
 import {Options, Vue} from 'vue-class-component'
-import LandingHeader from '@/components/navigation/LandingHeader'
-import LandingFooter from '@/components/navigation/LandingFooter'
+import LandingHeader from '@/components/homepage/LandingHeader'
+import LandingFooter from '@/components/homepage/LandingFooter'
 
 export default @Options({
   name: 'LandingLayout',

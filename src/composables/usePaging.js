@@ -2,7 +2,7 @@ import {computed} from 'vue'
 import {useQuery} from '@oarepo/vue-query-synchronizer'
 
 export default function usePaging(collection) {
-    const $query = useQuery()
+    const query = useQuery()
 
     const pages = computed(() => {
         const ret = []
@@ -15,7 +15,7 @@ export default function usePaging(collection) {
     })
 
     function setPage(page) {
-        $query.page = page
+        query.page = page
     }
 
     return {pages, setPage}

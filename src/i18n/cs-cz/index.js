@@ -20,6 +20,9 @@ export default {
     detail: 'Detail'
   },
   action: {
+    choose: 'Vybrat',
+    filterByCommunity: 'Procházet záznamy ve vybrané komunitě',
+    sort: 'Seřadit výsledky',
     delete_draft: 'smazat rozpracovaný záznam',
     make_private: 'skrýt záznam',
     make_public: 'zveřejnit záznam',
@@ -44,7 +47,8 @@ export default {
     decline: 'Nesouhlasím',
     upload: 'Nahrát',
     uploadDataset: 'Nahrát nový dataset',
-    uploadArticle: 'Nahrát nový článek'
+    uploadArticle: 'Nahrát nový článek',
+    scrollToTop: 'Zpět nahoru'
   },
   error: {
     stateChangeFail: 'Chyba při změně stavu',
@@ -58,6 +62,8 @@ export default {
   },
   accessibility: {},
   label: {
+    pageSize: 'Počet na stránku',
+    recordsFound: 'Nalezen {count} výsledek | Nalezeno {count} výsledků',
     goHome: 'Zpět na úvodní stránku',
     back: 'Zpět',
     authors: 'Autoři',
@@ -81,6 +87,7 @@ export default {
     identifierScheme: 'Schema',
     files: 'Soubory',
     filters: 'Filtry',
+    noCommunitySelected: 'Nevybrána žádná komunita',
     community: 'Komunita',
     size: 'Velikost',
     license: 'Licence',
@@ -91,6 +98,9 @@ export default {
     contact: 'Kontaktujte nás',
     privacy: 'Ochrana osobních údajů',
     docs: 'Uživatelská dokumentace',
+    sort: {
+      alphabetical: 'Abecedně'
+    },
     role: {
       'system administrator': 'Administrátor',
       admin: 'admin',

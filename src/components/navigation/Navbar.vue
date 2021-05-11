@@ -34,13 +34,13 @@ q-header.row.z-top.no-wrap.navbar__header
       stretch
       flat
       icon="cloud_upload"
-      :bla="{ name: `cesnet/draft-${collectionId}/upload`}"
+      :bla="{ name: `cesnet/draft/upload`}"
       :label="$t('action.upload')")
-      q-tooltip {{ $t(collectionId === DATASETS_COLLECTION_CODE ? 'action.uploadDataset': 'action.uploadArticle') }}
+      //q-tooltip {{ $t(collectionId === DATASETS_COLLECTION_CODE ? 'action.uploadDataset': 'action.uploadArticle') }}
     //q-btn(stretch flat v-if="collectionId === DATASETS_COLLECTION_CODE" :to="{name: 'all-articles'}" icon="article")
     //  q-tooltip {{ $t('section.articleList') }}
-    q-btn(stretch flat v-if="collectionId === ARTICLES_COLLECTION_CODE" :to="{name: `all-datasets`}" icon="donut_small")
-      q-tooltip {{ $t('section.datasetList') }}
+    //q-btn(stretch flat v-if="collectionId === ARTICLES_COLLECTION_CODE" :to="{name: `all-datasets`}" icon="donut_small")
+    //  q-tooltip {{ $t('section.datasetList') }}
   q-toolbar.col-auto
     q-space.q-ml-xl
     account-dropdown(:authenticated="authenticated")
@@ -51,7 +51,6 @@ import {ARTICLES_COLLECTION_CODE, DATASETS_COLLECTION_CODE} from '@/constants'
 import AccountDropdown from '@/components/account/AccountDropdown'
 import {defineComponent, ref} from 'vue'
 import useAuth from '@/composables/useAuth'
-import useCollection from '@/composables/useCollection'
 import SearchInput from '@/components/search/SearchInput'
 import {useContext} from 'vue-context-composition'
 import {facets} from '@/contexts/facets'
@@ -75,7 +74,6 @@ export default defineComponent({
     const {toggleFacetsSidebar} = useContext(facets)
 
     const {authenticated} = useAuth()
-    const {collectionId} = useCollection()
     const modes = ref(Modes)
 
     return {
@@ -83,7 +81,6 @@ export default defineComponent({
       ARTICLES_COLLECTION_CODE,
       authenticated,
       modes,
-      collectionId,
       toggleFacetsSidebar
     }
   }
