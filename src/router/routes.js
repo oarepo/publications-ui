@@ -1,17 +1,19 @@
 // import admin from './admin'
 // import articles from '@/router/articles'
 import collections from '@/router/collections'
+import forms from '@/router/forms'
 
 // Route map (route matched from top to bottom)
-
-// / -> LandingLayout
-// |-- . -> Homepage
 //
-// / -> MainLayout
-// |-- datasets/all/ -> DatasetList
-// |-- logged-out -> LoggedOut
-// |-- not-found -> Error404
-// L * -> Error404
+// / homepage
+// /
+// /:model/create create
+// /:communityId/:model/create community-create
+// /:model/:state/ list
+// /:communityId/:model/:state/ community-list
+// /logged-out logged-out
+// /:pathMatch(.*)* not-found
+// /:catchAll(.*)*
 //
 
 const routes = [
@@ -29,10 +31,10 @@ const routes = [
     },
     { /* Record collection routes */
         path: '/',
-        component: () => import(/* webpackChunkName: 'layouts' */ '@/layouts/ListLayout'),
+        component: () => import(/* webpackChunkName: 'layouts' */ '@/layouts/WrapperLayout'),
         children: [
-            /* Dataset collection Routes */
-            ...collections,
+            forms,
+            collections,
             { /* Other routes */
                 path: 'logged-out',
                 name: 'logged-out',

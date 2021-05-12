@@ -30,7 +30,7 @@ q-select(
 </template>
 
 <script>
-import {defineComponent, ref, watch} from 'vue'
+import {defineComponent, onBeforeUnmount, ref, watch} from 'vue'
 import {useContext} from 'vue-context-composition'
 import {community} from '@/contexts/community'
 
@@ -39,6 +39,7 @@ export default defineComponent({
   setup () {
     const {communities, communitiesLoading, currentCommunity, setCommunity} = useContext(community)
     const model = ref(null)
+    const beingUnmounted = ref(false)
 
     function updateCommunity () {
       if ((model?.value?.id || null) !== (currentCommunity?.value?.id || null)) {
@@ -47,18 +48,30 @@ export default defineComponent({
       }
     }
 
+    onBeforeUnmount(() => {
+      beingUnmounted.value = true
+    })
+
     watch(currentCommunity, async () => {
       if (!model.value && currentCommunity.value) {
         model.value = {...currentCommunity.value}
       }
-      await updateCommunity()
+      setTimeout(async () => {
+        if (!beingUnmounted.value) {
+          await updateCommunity()
+        }
+      })
     })
 
     watch(model, async() => {
-      await updateCommunity()
+      setTimeout(async () => {
+        if (!beingUnmounted.value) {
+          await updateCommunity()
+        }
+      })
     })
 
-    return {model, communities, communitiesLoading, setCommunity}
+    return {model, communities, communitiesLoading, setCommunity, beingUnmounted}
   }
 })
 </script>

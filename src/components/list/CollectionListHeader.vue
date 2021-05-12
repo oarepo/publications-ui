@@ -16,7 +16,7 @@
 import {defineComponent} from 'vue'
 import SortSelect from '@/components/widgets/SortSelect'
 import CreateRecordBtn from '@/components/widgets/CreateRecordBtn'
-import PageSizeSelect from "@/components/widgets/PageSizeSelect";
+import PageSizeSelect from '@/components/widgets/PageSizeSelect'
 
 export default defineComponent({
   name: 'CollectionListHeader',

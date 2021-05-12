@@ -17,19 +17,11 @@ q-header.row.z-top.no-wrap.navbar__header
       dense
       icon="menu")
     .col-1(v-else)
-    q-btn(
-      v-if="mode !== modes.LIST"
-      flat
-      rounded
-      dense
-      color="white"
-      @click="$router.back()"
-      icon="arrow_back")
     q-btn(stretch flat :to="{ name: 'homepage' }")
       img.navbar__logo.col-auto(
         src="/logos/datacare_White.svg")
     q-toolbar-title.q-py-md.text-uppercase.text-weight-bold {{ $t('app.productName') }}
-    search-input.col-grow()
+    search-input.col-grow
     q-btn(
       stretch
       flat
@@ -49,11 +41,12 @@ q-header.row.z-top.no-wrap.navbar__header
 <script>
 import {ARTICLES_COLLECTION_CODE, DATASETS_COLLECTION_CODE} from '@/constants'
 import AccountDropdown from '@/components/account/AccountDropdown'
-import {defineComponent, ref} from 'vue'
+import {computed, defineComponent, ref} from 'vue'
 import useAuth from '@/composables/useAuth'
 import SearchInput from '@/components/search/SearchInput'
 import {useContext} from 'vue-context-composition'
 import {facets} from '@/contexts/facets'
+import {useRoute} from 'vue-router'
 
 export const Modes = Object.freeze({INTRO: 'intro', LIST: 'list', DETAIL: 'detail'})
 
@@ -71,9 +64,16 @@ export default defineComponent({
     }
   },
   setup() {
-    const {toggleFacetsSidebar} = useContext(facets)
-
+    const route = useRoute()
     const {authenticated} = useAuth()
+    const toggleFacets = computed(() => {
+      if (route.meta.useFacets) {
+        const {toggleFacetsSidebar} = useContext(facets)
+        return toggleFacetsSidebar
+      }
+      return null
+    })
+
     const modes = ref(Modes)
 
     return {
@@ -81,7 +81,7 @@ export default defineComponent({
       ARTICLES_COLLECTION_CODE,
       authenticated,
       modes,
-      toggleFacetsSidebar
+      toggleFacetsSidebar: toggleFacets
     }
   }
 })
