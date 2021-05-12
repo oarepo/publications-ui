@@ -11,7 +11,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@oarepo/invenio-vue": "^1.0.0-a8",
+    "@oarepo/invenio-vue": "^1.0.0-a9",
     "@oarepo/quasar-es-facets": "^1.0.0-a18",
     "@oarepo/vue-popup-login": "^3.0.0-a3",
     "@oarepo/vue-query-synchronizer": "^3.0.0-a5",
