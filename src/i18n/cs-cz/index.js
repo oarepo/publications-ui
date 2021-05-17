@@ -66,6 +66,7 @@ export default {
     recordsFound: 'Nalezen {count} výsledek | Nalezeno {count} výsledků',
     goHome: 'Zpět na úvodní stránku',
     back: 'Zpět',
+    continue: 'Pokračovat',
     authors: 'Autoři',
     isPublic: 'Záznam je veřejný',
     isPendingApproval: 'Záznam čeká na schválení kurátorem',

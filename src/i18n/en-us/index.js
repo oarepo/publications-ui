@@ -69,6 +69,7 @@ export default {
     recordsFound: 'Found {count} record | Found {count} records',
     goHome: 'Back to Homepage',
     back: 'Back',
+    next: 'Continue',
     authors: 'Authors',
     isPublic: 'Record is public',
     isPendingApproval: 'Record is awaiting curator approval',

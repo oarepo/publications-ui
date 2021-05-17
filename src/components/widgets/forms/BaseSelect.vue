@@ -1,15 +1,21 @@
 <template lang="pug">
 q-select(
+  ref="input"
   v-bind="$attrs"
   :label="label"
+  :rules="rules"
   v-model="modelValue"
   :options="options"
   @update:model-value="$emit('update:modelValue', $event)")
 </template>
 
 <script>
+import {ref} from 'vue'
+import ValidateMixin from '@/mixins/ValidateMixin'
+
 export default {
   name: 'BaseSelect',
+  mixins: [ValidateMixin],
   emits: ['update:modelValue'],
   props: {
     label: {
@@ -21,9 +27,13 @@ export default {
       required: true
     },
     modelValue: {
-      type: [String, Number],
+      type: [String, Number, Array],
       default: ''
     }
+  },
+  setup () {
+    const input = ref(null)
+    return {input}
   }
 }
 </script>
