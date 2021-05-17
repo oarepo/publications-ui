@@ -27,7 +27,7 @@ import CollectionListHeader from '@/components/list/CollectionListHeader'
 import {useRouter} from 'vue-router'
 import {useContext} from 'vue-context-composition'
 import {facets} from '@/contexts/facets'
-import ScrollTopFab from '@/components/widgets/ScrollTopFab'
+import ScrollTopFab from '@/components/widgets/button/ScrollTopFab'
 import {useMeta} from 'quasar'
 import {useI18n} from 'vue-i18n/index'
 import useModel from '@/composables/useModel'
@@ -35,7 +35,10 @@ import useModel from '@/composables/useModel'
 export default defineComponent({
   name: 'CollectionList',
   props: {
-    collection: Object
+    collection: {
+      type: Object,
+      required: true
+    }
   },
   components: {
     CollectionListHeader,

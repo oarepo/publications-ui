@@ -14,15 +14,18 @@
 </template>
 <script>
 import {defineComponent} from 'vue'
-import SortSelect from '@/components/widgets/SortSelect'
-import CreateRecordBtn from '@/components/widgets/CreateRecordBtn'
-import PageSizeSelect from '@/components/widgets/PageSizeSelect'
+import SortSelect from '@/components/widgets/select/SortSelect'
+import CreateRecordBtn from '@/components/widgets/button/CreateRecordBtn'
+import PageSizeSelect from '@/components/widgets/select/PageSizeSelect'
 
 export default defineComponent({
   name: 'CollectionListHeader',
   components: {PageSizeSelect, CreateRecordBtn, SortSelect},
   props: {
-    collection: Object
+    collection: {
+      type: Object,
+      required: true
+    }
   }
 })
 </script>

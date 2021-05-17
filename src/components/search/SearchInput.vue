@@ -27,7 +27,10 @@ import {useRouter} from 'vue-router'
 export default defineComponent({
   name: 'SearchInput',
   props: {
-    modelValue: String,
+    modelValue: {
+      type: String,
+      default: ''
+    },
     route: Object
   },
   emits: ['update:modelValue'],

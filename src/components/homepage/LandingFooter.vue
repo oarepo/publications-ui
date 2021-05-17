@@ -20,8 +20,7 @@ import {Options, Vue} from 'vue-class-component'
 import { openURL } from 'quasar'
 
 export default @Options({
-  name: 'LandingFooter',
-  props: {}
+  name: 'LandingFooter'
 })
 class LandingFooter extends Vue {
   openURL = openURL

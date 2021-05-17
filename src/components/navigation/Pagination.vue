@@ -12,7 +12,10 @@ import {useQuery} from '@oarepo/vue-query-synchronizer'
 export default defineComponent({
   name: 'Pagination',
   props: {
-    collection: Object,
+    collection: {
+      type: Object,
+      required: true
+    }
   },
   setup () {
     const query = useQuery()

@@ -6,19 +6,17 @@ q-layout.bg-grey-1(view="hhh lpR fff")
   landing-footer
 </template>
 <script>
-import {Options, Vue} from 'vue-class-component'
 import LandingHeader from '@/components/homepage/LandingHeader'
 import LandingFooter from '@/components/homepage/LandingFooter'
+import {defineComponent} from 'vue'
 
-export default @Options({
+export default defineComponent({
   name: 'LandingLayout',
   components: {
     LandingHeader,
     LandingFooter
   }
 })
-class LandingLayout extends Vue {
-}
 </script>
 <style lang="sass">
 </style>

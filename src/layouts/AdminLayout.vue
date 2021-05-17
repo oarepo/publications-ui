@@ -9,8 +9,6 @@ import {Options, Vue} from 'vue-class-component'
 
 export default @Options({
   name: 'AdminLayout',
-  components: {
-  }
 })
 class AdminLayout extends Vue {
 }

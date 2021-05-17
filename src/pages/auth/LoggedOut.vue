@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import GoHomeBtn from '@/components/widgets/GoHomeBtn'
+import GoHomeBtn from '@/components/widgets/button/GoHomeBtn'
 
 export default {
   name: 'LoggedOut',

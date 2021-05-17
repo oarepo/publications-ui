@@ -43,8 +43,14 @@ import {useQuasar} from 'quasar'
 export default defineComponent({
   name: 'CollectionListItem',
   props: {
-    loading: Boolean,
-    item: Object
+    loading: {
+      type: Boolean,
+      default: true
+    },
+    item: {
+      type: Object,
+      required: true
+    }
   },
   emits: ['detail'],
   components: {

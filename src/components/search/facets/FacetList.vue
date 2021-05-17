@@ -20,8 +20,10 @@ import {facets} from "@/contexts/facets";
 export default defineComponent({
   name: 'FacetList',
   props: {
-    collection: Object,
-    facetsSelected: Boolean
+    collection: {
+      type: Object,
+      required: true
+    }
   },
   emits: ['update:activeFacets'],
   setup(props, ctx) {

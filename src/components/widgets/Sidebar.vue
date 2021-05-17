@@ -22,7 +22,7 @@ q-drawer.bg-grey-3.text-dark.scrolling-drawer(
 import {defineComponent} from 'vue'
 import {facets} from '@/contexts/facets'
 import {useContext} from 'vue-context-composition'
-import CommunitySelect from '@/components/widgets/CommunitySelect'
+import CommunitySelect from '@/components/widgets/select/CommunitySelect'
 
 export default defineComponent({
   name: "Sidebar",

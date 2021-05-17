@@ -57,7 +57,10 @@ import useAuth from "@/composables/useAuth";
 export default defineComponent({
   name: 'AccountDropdown',
   props: {
-    dark: Boolean
+    dark: {
+      type: Boolean,
+      default: false
+    }
   },
   components: {
     LocaleSwitcher

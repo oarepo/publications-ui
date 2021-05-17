@@ -41,27 +41,18 @@ q-header.row.z-top.no-wrap.navbar__header
 <script>
 import {ARTICLES_COLLECTION_CODE, DATASETS_COLLECTION_CODE} from '@/constants'
 import AccountDropdown from '@/components/account/AccountDropdown'
-import {computed, defineComponent, ref} from 'vue'
+import {computed, defineComponent} from 'vue'
 import useAuth from '@/composables/useAuth'
 import SearchInput from '@/components/search/SearchInput'
 import {useContext} from 'vue-context-composition'
 import {facets} from '@/contexts/facets'
 import {useRoute} from 'vue-router'
 
-export const Modes = Object.freeze({INTRO: 'intro', LIST: 'list', DETAIL: 'detail'})
-
 export default defineComponent({
   name: 'Navbar',
   components: {
     AccountDropdown,
     SearchInput
-  },
-  props: {
-    mode: {
-      type: String,
-      default: Modes.LIST,
-      validator: mode => Object.values(Modes).indexOf(mode) > -1
-    }
   },
   setup() {
     const route = useRoute()
@@ -74,13 +65,10 @@ export default defineComponent({
       return null
     })
 
-    const modes = ref(Modes)
-
     return {
       DATASETS_COLLECTION_CODE,
       ARTICLES_COLLECTION_CODE,
       authenticated,
-      modes,
       toggleFacetsSidebar: toggleFacets
     }
   }

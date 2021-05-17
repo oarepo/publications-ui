@@ -20,7 +20,10 @@ export default defineComponent({
   name: 'FacetContainer',
   emits: ['open', 'close'],
   props: {
-    label: String
+    label: {
+      type: String,
+      required: true
+    }
   }
 })
 </script>

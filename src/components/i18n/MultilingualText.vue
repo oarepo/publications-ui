@@ -16,7 +16,10 @@ import {useTranslated} from "@/i18n/multilingual";
 export default defineComponent({
   name: 'mt',
   props: {
-    text: [Array, Object],
+    text: {
+      type: [Array, Object],
+      required: true
+    },
     separator: {
       type: String,
       default: ' : '

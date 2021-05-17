@@ -30,5 +30,5 @@ export default defineComponent({
 
 <style lang="sass" scoped>
 .inset-shadow-all
-  box-shadow: 1px 1px 60px 9px rgba(0, 0, 0, 0.1) inset !important
+  box-shadow: 1px 1px 30px 9px rgba(0, 0, 0, 0.1) inset !important
 </style>

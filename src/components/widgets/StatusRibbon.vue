@@ -31,7 +31,10 @@ export default defineComponent({
       type: Boolean,
       default: true
     },
-    metadata: Object
+    metadata: {
+      type: Object,
+      required: true
+    }
   },
   setup (props) {
     const {isApproved, isPendingApproval, isDraft, isPublic, isEdited} = useState(props.metadata)
