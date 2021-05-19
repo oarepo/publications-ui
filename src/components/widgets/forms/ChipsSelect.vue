@@ -12,7 +12,7 @@ base-select.full-width(
   hide-dropdown-icon
   new-value-mode="add-unique"
   @clear="clear"
-  @update:model-value="onChange($event)")
+  @update:model-value="$emit('update:modelValue', $event || [])")
 </template>
 <script>
 import {defineComponent, ref} from 'vue'
@@ -28,7 +28,7 @@ export default defineComponent({
       default: () => []
     }
   },
-  setup (props, ctx) {
+  setup (props) {
     const input = ref(null)
     const model = ref(props.modelValue)
     const keywordOptions = ref([])
@@ -38,11 +38,7 @@ export default defineComponent({
       model.value = []
     }
 
-    function onChange (event) {
-      ctx.emit('update:modelValue', event || [])
-    }
-
-    return {model, input, keywordOptions, clear, onChange}
+    return {model, input, keywordOptions, clear}
   }
 })
 </script>

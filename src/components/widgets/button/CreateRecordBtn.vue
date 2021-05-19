@@ -11,13 +11,13 @@ q-btn.col-auto(
 
 <script>
 import {computed, defineComponent} from 'vue'
-import useModel from '@/composables/useModel'
+import useCollection from '@/composables/useCollection'
 import {ARTICLES_COLLECTION_CODE, DATASETS_COLLECTION_CODE} from '@/constants'
 
 export default defineComponent({
   name: 'CreateRecordBtn',
   setup () {
-    const {isDatasets, isArticles} = useModel()
+    const {isDatasets, isArticles} = useCollection()
 
     const createRoute = computed(() => {
       if (isDatasets) {

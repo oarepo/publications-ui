@@ -24,7 +24,7 @@ q-field.row(:label="label" borderless)
 
 <script>
 import {reactive, ref} from 'vue'
-import {useI18n} from 'vue-i18n'
+import {useI18n} from 'vue-i18n/index'
 import LocaleSelect from '@/components/widgets/forms/LocaleSelect'
 import ValidateMixin from '@/mixins/ValidateMixin'
 

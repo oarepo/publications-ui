@@ -1,38 +1,53 @@
 <template lang="pug">
-q-stepper(
-  flat
-  keep-alive
-  v-model="step"
-  doneIcon="done"
-  done-color="positive"
-  vertical
-  color="primary"
-  animated)
-  q-step(
-    icon="info"
-    :name="steps.BASIC"
-    :title="$t('label.forms.basicInfo')"
-    :done="step > steps.BASIC"
-    done-icon="done"
-    done-color="positive")
-    basic-info(
-      v-model="formData"
-      @next="step = steps.IDENTIFIERS")
-  q-step(
-    icon="tag"
-    :name="steps.IDENTIFIERS"
-    :title="$t('label.forms.identifiers')")
-    identifiers(
-      v-model="formData"
-      @next="step = steps.AUTHORS"
-      @prev="step = steps.BASIC")
-  q-step(
-    icon="groups"
-    :name="steps.AUTHORS"
-    :title="$t('label.forms.authors')")
-  q-step(
-    :name="steps.UPLOAD"
-    :title="$t('label.forms.uploadData')")
+q-splitter(v-model="spl")
+  template(v-slot:after)
+    q-toolbar
+      q-toolbar-title(shrink).text-h5 Metadata
+    q-card(flat)
+      q-card-section
+        pre.bg-dark.text-code.text-white.text-bold.q-pa-md {{ formData }}
+  template(v-slot:before)
+    q-stepper(
+      flat
+      keep-alive
+      v-model="step"
+      doneIcon="done"
+      done-color="positive"
+      vertical
+      color="primary"
+      animated)
+      q-step(
+        icon="info"
+        :name="steps.BASIC"
+        :title="$t('label.forms.basicInfo')"
+        :done="step > steps.BASIC"
+        done-icon="done"
+        done-color="positive")
+        basic-info(
+          v-model="formData"
+          @next="step = steps.IDENTIFIERS")
+      q-step(
+        icon="tag"
+        :name="steps.IDENTIFIERS"
+        :title="$t('label.forms.identifiers')"
+        :caption="$t('label.forms.identifiersCaption')"
+        :done="step > steps.IDENTIFIERS")
+        identifiers(s
+          v-model="formData"
+          @next="step = steps.AUTHORS"
+          @prev="step = steps.BASIC")
+      q-step(
+        icon="groups"
+        :name="steps.AUTHORS"
+        :title="$t('label.forms.authors')")
+        authors(
+          v-model="formData"
+          @prev="step = steps.IDENTIFIERS"
+          @next="step = steps.UPLOAD")
+      q-step(
+        icon="cloud_upload"
+        :name="steps.UPLOAD"
+        :title="$t('label.forms.uploadData')")
 </template>
 
 <script>
@@ -40,22 +55,24 @@ import {defineComponent, ref} from 'vue'
 import UploadData from '@/components/form/steps/UploadData'
 import BasicInfo from '@/components/form/steps/BasicInfo'
 import Identifiers from '@/components/form/steps/Identifiers'
+import Authors from "@/components/form/steps/Authors";
 
 export const steps = Object.freeze({
   BASIC: 1,
   IDENTIFIERS: 2,
-  AUTHORS: 3
+  AUTHORS: 3,
+  UPLOAD: 4
 })
 
 export default defineComponent({
   name: 'CreateDatasetForm',
-  components: {BasicInfo, UploadData, Identifiers},
+  components: {Authors, BasicInfo, UploadData, Identifiers},
   setup () {
     const formData = ref({})
-
+    const spl = 70
     const step = ref(steps.BASIC)
 
-    return {formData, step, steps}
+    return {formData, step, steps, spl}
   }
 })
 </script>

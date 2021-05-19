@@ -19,7 +19,14 @@ export default {
     admin: 'Administrace',
     detail: 'Detail'
   },
+  hint: {
+    localeSwitcher: 'Zadejte kód jazyka ve formátu ISO 639-2'
+  },
   action: {
+    addItem: 'Přidat položku',
+    rmItem: 'Odebrat položku',
+    addLang: "Přidat jazykovou variantu",
+    rmLang: "Odebrat jazykovou variantu",
     choose: 'Vybrat',
     filterByCommunity: 'Procházet záznamy ve vybrané komunitě',
     sort: 'Seřadit výsledky',
@@ -62,11 +69,23 @@ export default {
   },
   accessibility: {},
   label: {
+    forms: {
+      basicInfo: 'Základní informace',
+      identifiers: 'Identifikátory',
+      identifiersCaption: 'Zadejte existující identifikátory spojené s tímto datasetem',
+      authors: 'Autoři',
+      uploadData: 'Upload dat',
+      keywords: 'Klíčová slova',
+      additionalTitles: 'Další názvy'
+    },
+    identifier: 'Identifikátor',
+    chooseLocale: 'Vyberte prosím jazyk',
+    scheme: 'Schema',
     pageSize: 'Počet na stránku',
     recordsFound: 'Nalezen {count} výsledek | Nalezeno {count} výsledků',
     goHome: 'Zpět na úvodní stránku',
     back: 'Zpět',
-    continue: 'Pokračovat',
+    continue: 'Dále',
     authors: 'Autoři',
     isPublic: 'Záznam je veřejný',
     isPendingApproval: 'Záznam čeká na schválení kurátorem',

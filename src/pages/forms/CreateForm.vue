@@ -17,13 +17,13 @@ q-page.q-mt-lg.q-mx-lg-xl.full-height(padding)
 <script>
 import {computed, defineComponent} from 'vue'
 import CreateDatasetForm from '@/components/form/CreateDatasetForm'
-import useModel from '@/composables/useModel'
+import useCollection from '@/composables/useCollection'
 
 export default defineComponent({
   name: 'CreateForm',
   components: {CreateDatasetForm},
   setup () {
-    const {isDatasets, isArticles} = useModel()
+    const {isDatasets, isArticles} = useCollection()
 
     const header = computed(() => {
       if (isDatasets) {

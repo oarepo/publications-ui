@@ -4,7 +4,7 @@ export default {
     },
     methods: {
         validate () {
-            this.$refs.input.validate()
+            return this.$refs.input.validate()
         }
     },
     computed: {

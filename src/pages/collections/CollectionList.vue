@@ -30,7 +30,7 @@ import {facets} from '@/contexts/facets'
 import ScrollTopFab from '@/components/widgets/button/ScrollTopFab'
 import {useMeta} from 'quasar'
 import {useI18n} from 'vue-i18n/index'
-import useModel from '@/composables/useModel'
+import useCollection from '@/composables/useCollection'
 
 export default defineComponent({
   name: 'CollectionList',
@@ -52,7 +52,7 @@ export default defineComponent({
     const {activeFacets} = useContext(facets)
 
     const {t} = useI18n()
-    const {isDatasets, isArticles} = useModel()
+    const {isDatasets, isArticles} = useCollection()
     const router = useRouter()
 
     useMeta(() => {

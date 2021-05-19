@@ -1,21 +1,15 @@
 <template lang="pug">
 .column.q-col-gutter-md
-  identifier-input-list(
-    v-model="model.identifiers"
-    ref="input"
-    :label="$t('label.identifiers')"
-    :item-label="$t('label.identifier')")
   stepper-nav(has-prev @next="onNext" @prev="$emit('prev')")
 </template>
 <script>
 import {defineComponent, reactive, ref, watch} from 'vue'
 import StepperNav from '@/components/navigation/StepperNav'
-import IdentifierInput from '@/components/widgets/forms/IdentifierInput'
 import useNotify from '@/composables/useNotify'
 
 export default defineComponent({
-  name: 'Identifiers',
-  components: {IdentifierInput, StepperNav},
+  name: 'Authors',
+  components: {StepperNav},
   emits: ['update:modelValue', 'prev', 'next'],
   props: {
     modelValue: Object
@@ -23,7 +17,7 @@ export default defineComponent({
   setup (props, ctx) {
     const {notifyError} = useNotify()
 
-    const model = reactive({...props.modelValue, identifiers: []})
+    const model = reactive({...props.modelValue, creators: []})
     const input = ref(null)
 
     watch (model, () => {

@@ -7,7 +7,8 @@ base-select.full-width(
   v-model="model"
   :options="$i18n.availableLocales"
   :label="$t('label.localeSwitcher')"
-  :option-label="opt => $t(`value.lang.${opt}`) + ` (${opt})`"
+  :option-label="opt => opt? $t(`value.lang.${opt}`) + ` (${opt})`: `${$t('label.chooseLocale')}…`"
+  :hint="$t('hint.localeSwitcher')"
   dense
   options-cover
   emit-value

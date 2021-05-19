@@ -27,7 +27,7 @@ q-btn-dropdown(
                 q-icon(name="arrow_right")
                 span {{ $t(translateRoleLabel(role.label)) }}
       .row.no-wrap.q-px-md.q-pb-md.justify-center
-        locale-switcher.col-12
+        locale-switcher(hide-hint).col-12
       .row.no-wrap.q-pa-sm.justify-center.bg-grey-3
         q-list.full-width(color="grey")
           q-item(

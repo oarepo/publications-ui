@@ -1,13 +1,14 @@
 <template lang="pug">
-q-field.row(
+q-field.row.fit(
   ref="fieldRef"
   v-bind="$attrs"
   :label="label"
   :error="error"
-  :error_message="errorMessage"
+  :error-message="errorMessage"
+  @focus="onFocus"
   borderless)
   template(v-slot:control)
-    .row(v-for="(val, idx) in model" :key="idx")
+    .row.full-width(v-for="(val, idx) in model" :key="idx")
       .row.col-12.no-wrap.justify-between
         locale-select.col.q-mt-md(
           use-input
@@ -15,7 +16,7 @@ q-field.row(
           new-value-mode="add-unique"
           :rules="[required($t('error.validation.required'))]"
           @update:model-value="onChange")
-        q-btn.q-mt-md.col-1(round dense flat icon="remove" color="negative"  @click="rmLang(idx)")
+        q-btn.q-ma-md.col-auto(round dense flat icon="remove" color="negative"  @click.prevent="rmLang(idx)")
           q-tooltip {{ $t('action.rmLang') }}
       q-editor.col-12.q-mt-md.col-12.no-outline(
         :ref="setInputRef"
@@ -24,15 +25,16 @@ q-field.row(
         v-model="model[idx].val"
         @update:model-value="onChange")
   template(v-slot:append)
-    q-btn(round dense flat color="positive" icon="add" @click="addLang")
+    q-btn(v-if="!isEmpty" round dense flat color="positive" icon="add" @click.stop="addLang")
       q-tooltip {{ $t('action.addLang') }}
 </template>
 
 <script>
-import {computed, onBeforeUpdate, reactive, ref} from 'vue'
-import {useI18n} from 'vue-i18n'
+import {computed, reactive, ref} from 'vue'
+import {useI18n} from 'vue-i18n/index'
 import LocaleSelect from '@/components/widgets/forms/LocaleSelect'
 import useValidation from '@/composables/useValidation'
+import useModel from '@/composables/useModel'
 
 export default {
   name: 'MultilingualEditor',
@@ -63,6 +65,8 @@ export default {
     const inputRefs = ref([])
 
     const model = ref([])
+    const {isEmpty} = useModel(ctx, model)
+
     if (!Object.keys(props.modelValue).length && !props.empty) {
       model.value.push(reactive({lang: i18n.locale.value, val: ''}))
     } else {
@@ -77,30 +81,21 @@ export default {
       }
     }
 
-    onBeforeUpdate(() => {
-      inputRefs.value = []
-    })
-
     function validate() {
-      let result = true
       resetValidation()
       props.rules.forEach(rule => {
-        model.value.forEach((item) => {
-          const res = rule(item.val)
-          if (res !== true) {
-            console.log('fail')
-            result = res
-          }
-        })
+        const res = rule(modelExternal.value)
+        if (res !== true) {
+          error.value = true
+          errorMessage.value = res
+        }
       })
-      if (result !== true) {
-        console.log(result)
-        error.value = true
-        errorMessage.value = result
-      } else {
+
+      if (error.value !== true) {
         resetValidation()
+        return true
       }
-      return result
+      return errorMessage.value
     }
 
     function rmLang(idx) {
@@ -115,6 +110,12 @@ export default {
     function onChange() {
       resetValidation()
       ctx.emit('update:modelValue', modelExternal.value)
+    }
+
+    function onFocus() {
+      if (isEmpty.value) {
+        addLang()
+      }
     }
 
     const modelExternal = computed(() => {
@@ -138,7 +139,9 @@ export default {
       required,
       errorMessage,
       resetValidation,
-      onChange
+      onChange,
+      onFocus,
+      isEmpty
     }
   }
 }
