@@ -10,11 +10,13 @@ import MultilingualEditorList from '@/components/widgets/forms/MultilingualEdito
 import SchemaSelect from '@/components/widgets/forms/SchemaSelect'
 import IdentifierInput from '@/components/widgets/forms/IdentifierInput'
 import IdentifierInputList from '@/components/widgets/forms/IdentifierInputList'
+import AuthorInput from '@/components/widgets/forms/AuthorInput'
 
 export default {
     install (app) {
         app.component('base-input', BaseInput)
         app.component('identifier-input', IdentifierInput)
+        app.component('author-input', AuthorInput)
         app.component('identifier-input-list', IdentifierInputList)
         app.component('multilingual-input', MultilingualInput)
         app.component('multilingual-editor', MultilingualEditor)

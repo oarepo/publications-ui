@@ -1,15 +1,21 @@
 <template lang="pug">
 .column.q-col-gutter-md
+  author-input-list(
+    v-model="model.creators"
+    ref="input"
+    :label="$t('label.authors')"
+    :item-label="$t('label.author')")
   stepper-nav(has-prev @next="onNext" @prev="$emit('prev')")
 </template>
 <script>
 import {defineComponent, reactive, ref, watch} from 'vue'
 import StepperNav from '@/components/navigation/StepperNav'
 import useNotify from '@/composables/useNotify'
+import AuthorInputList from '@/components/widgets/forms/AuthorInputList'
 
 export default defineComponent({
   name: 'Authors',
-  components: {StepperNav},
+  components: {AuthorInputList, StepperNav},
   emits: ['update:modelValue', 'prev', 'next'],
   props: {
     modelValue: Object
