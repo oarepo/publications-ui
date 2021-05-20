@@ -3,6 +3,7 @@
   identifier-input-list(
     v-model="model.identifiers"
     ref="input"
+    :schemes="RESOURCE_IDENTIFIER_SCHEMES"
     :label="$t('label.identifiers')"
     :item-label="$t('label.identifier')")
   stepper-nav(has-prev @next="onNext" @prev="$emit('prev')")
@@ -12,6 +13,7 @@ import {defineComponent, reactive, ref, watch} from 'vue'
 import StepperNav from '@/components/navigation/StepperNav'
 import IdentifierInput from '@/components/widgets/forms/IdentifierInput'
 import useNotify from '@/composables/useNotify'
+import {RESOURCE_IDENTIFIER_SCHEMES} from '@/constants'
 
 export default defineComponent({
   name: 'Identifiers',
@@ -41,7 +43,7 @@ export default defineComponent({
       ctx.emit('next')
     }
 
-    return {model, input, onNext}
+    return {model, input, onNext, RESOURCE_IDENTIFIER_SCHEMES}
   }
 })
 </script>

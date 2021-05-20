@@ -78,6 +78,13 @@ export default {
       keywords: 'Klíčová slova',
       additionalTitles: 'Další názvy'
     },
+    roles: 'Role',
+    affiliations: 'Afilace',
+    name: 'Název',
+    author: 'Autor',
+    authorType: 'Typ autora',
+    givenName: 'Křestní jméno',
+    familyName: 'Příjmení',
     identifier: 'Identifikátor',
     chooseLocale: 'Vyberte prosím jazyk',
     scheme: 'Schema',
@@ -161,6 +168,10 @@ export default {
     authRequired: 'Tato stránka vyžaduje autentizaci. Kliknutím na tlačítko níže se přihlásíte.'
   },
   value: {
+    authorType: {
+      personal: 'Osoba',
+      organizational: 'Organizace'
+    },
     lang: {
       'cs': 'Česky',
       'cs-cz': 'Česky',

@@ -5,7 +5,7 @@ base-select(
   :label="$t('label.scheme')"
   :rules="rules"
   v-model="model"
-  :options="options"
+  :options="schemes"
   @update:model-value="$emit('update:modelValue', $event)")
 </template>
 
@@ -22,6 +22,10 @@ export default {
       type: String,
       default: ''
     },
+    schemes: {
+      type: Array,
+      default: () => []
+    },
     modelValue: {
       type: [String, Number, Array],
       default: ''
@@ -31,29 +35,7 @@ export default {
     const input = ref(null)
     const model = ref(props.modelValue)
 
-    const options = [
-      "ark",
-      "arxiv",
-      "bibcode",
-      "doi",
-      "ean13",
-      "eissn",
-      "handle",
-      "igsn",
-      "isbn",
-      "issn",
-      "istc",
-      "lissn",
-      "lsid",
-      "pmid",
-      "purl",
-      "upc",
-      "url",
-      "urn",
-      "w3id"
-    ]
-
-    return {model, options, input}
+    return {model, input}
   }
 }
 </script>

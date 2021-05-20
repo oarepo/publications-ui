@@ -78,6 +78,13 @@ export default {
       authors: 'Authors',
       uploadData: 'Data Upload',
     },
+    roles: 'Roles',
+    affiliations: 'Affiliations',
+    name: 'Name',
+    givenName: 'Given Name',
+    familyName: 'Family Name',
+    authorType: 'Author Type',
+    author: 'Author',
     identifier: 'Identifier',
     scheme: 'Schema',
     pageSize: 'Page size',
@@ -157,6 +164,10 @@ export default {
     authRequired: 'This page requires authentication.'
   },
   value: {
+    authorType: {
+      personal: 'Person',
+      organizational: 'Organization'
+    },
     lang: {
       'cs': 'Czech',
       'cs-cz': 'Czech',

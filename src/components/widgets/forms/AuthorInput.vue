@@ -3,38 +3,81 @@ q-field.fit(
   filled
   borderless
   ref="input"
+  v-bind="$attrs"
   :error="error"
   stack-label
-  :label="label")
+  :label="authorLabel")
   template(v-slot:control)
-    .row.no-wrap.full-width
-      author-type-select.col-3(
+    .row.full-width.q-mt-md
+      author-type-select.col-auto(
         ref="authorType"
         v-model="model.person_or_org.type"
         :rules="[required($t('error.validation.required'))]"
         @update:model-value="onChange")
-      //base-input.q-ml-sm.col-grow(
-      //  autogrow
-      //  ref="identifier"
-      //  :rules="rules || [required($t('error.validation.required'))]"
-      //  v-bind="$attrs"
-      //  :label="$t('label.identifier')"
-      //  v-model="model.person_or_org"
-      //  @update:model-value="onChange")
+      base-input.q-ml-sm.col-grow(
+        v-if="model.person_or_org.type === AUTHOR_TYPES.PERSON"
+        autogrow
+        ref="givenName"
+        v-model="model.person_or_org.given_name"
+        :rules="[required($t('error.validation.required'))]"
+        :label="$t('label.givenName')"
+        @update:model-value="onChange")
+      base-input.q-ml-sm.col-grow(
+        v-if="model.person_or_org.type === AUTHOR_TYPES.PERSON"
+        autogrow
+        ref="familyName"
+        v-model="model.person_or_org.family_name"
+        :rules="[required($t('error.validation.required'))]"
+        :label="$t('label.familyName')"
+        @update:model-value="onChange")
+      base-input.q-ml-sm.col-grow(
+        v-if="model.person_or_org.type === AUTHOR_TYPES.ORGANIZATION"
+        autogrow
+        ref="name"
+        v-model="model.person_or_org.name"
+        :rules="[required($t('error.validation.required'))]"
+        :label="$t('label.name')"
+        @update:model-value="onChange")
+    .row.full-width.q-mb-sm
+      .col-4.q-mr-sm
+        chips-select(
+          ref="roles"
+          :label="$t('label.roles')"
+          v-model="model.roles"
+          :options="CONTRIBUTOR_ROLES"
+          @update:model-value="onChange")
+      .col-grow
+        chips-select(
+          ref="affiliations"
+          :label="$t('label.affiliations')"
+          v-model="model.affiliations"
+          :options="AFFILIATIONS"
+          @update:model-value="onChange")
+    .row.full-width
+      identifier-input-list(
+        v-model="model.person_or_org.identifiers"
+        ref="identifiers"
+        :schemes="PERSON_IDENTIFIER_SCHEMES"
+        :label="$t('label.identifiers')"
+        :item-label="$t('label.identifier')"
+        @update:model-value="onChange")
 </template>
 
 <script>
-import {reactive, ref} from 'vue'
+import {computed, reactive, ref} from 'vue'
 import ValidateMixin from '@/mixins/ValidateMixin'
 import useValidation from '@/composables/useValidation'
 import useInputRefs from '@/composables/useInputRefs'
 import AuthorTypeSelect from '@/components/widgets/forms/AuthorTypeSelect'
+import IdentifierInputList from '@/components/widgets/forms/IdentifierInputList'
+import {AUTHOR_TYPES, PERSON_IDENTIFIER_SCHEMES, AFFILIATIONS, CONTRIBUTOR_ROLES} from '@/constants'
+import {useI18n} from 'vue-i18n/index'
 
 export default {
   name: 'IdentifierInput',
   emits: ['update:modelValue'],
   mixins: [ValidateMixin],
-  components: {AuthorTypeSelect},
+  components: {IdentifierInputList, AuthorTypeSelect},
   props: {
     label: {
       type: String,
@@ -58,28 +101,79 @@ export default {
   setup(props, ctx) {
     const {error, required} = useValidation()
     const {input} = useInputRefs()
-
+    const {t} = useI18n()
     const authorType = ref(null)
-    const identifier = ref(null)
+    const givenName = ref(null)
+    const familyName = ref(null)
+    const name = ref(null)
+    const identifiers = ref(null)
+
     const model = reactive(props.modelValue)
 
-    console.log(model, props)
+    const personName = computed(() => {
+      return `${model.person_or_org.family_name}, ${model.person_or_org.given_name}`
+    })
+
+    const authorLabel = computed(() => {
+      console.log(personName.value, model.person_or_org.name)
+      if (model.person_or_org.name === '') {
+        return props.label
+      } else {
+        return `${t('label.author')} - ${model.person_or_org.name}`
+      }
+    })
 
     function onChange() {
+      if (model.person_or_org.type === AUTHOR_TYPES.PERSON) {
+        model.person_or_org.name = personName.value
+      }
       ctx.emit('update:modelValue', model)
     }
 
     function validate() {
-      authorType.value.validate()
-      identifier.value.validate()
+      const atr = authorType.value.validate()
+      const idr = identifiers.value.validate()
 
-      if (authorType.value.hasError || identifier.value.hasError) {
-        error.value = true
+      if (model.person_or_org.type === AUTHOR_TYPES.PERSON) {
+        const gnr = givenName.value.validate()
+        const fnr = familyName.value.validate()
+        if (atr !== true ||
+            gnr !== true ||
+            fnr !== true ||
+            idr !== true) {
+          error.value = true
+        }
+      } else if (model.person_or_org.type === AUTHOR_TYPES.ORGANIZATION) {
+        const nr = name.value.validate()
+        if (atr !== true ||
+            nr !== true ||
+            idr !== true) {
+          error.value = true
+        }
       }
+
       return error.value ? 'error.validationFail' : true
     }
 
-    return {input, authorType, identifier, error, model, validate, onChange, required}
+    return {
+      input,
+      authorType,
+      givenName,
+      familyName,
+      name,
+      identifiers,
+      error,
+      model,
+      personName,
+      authorLabel,
+      validate,
+      onChange,
+      required,
+      PERSON_IDENTIFIER_SCHEMES,
+      AUTHOR_TYPES,
+      AFFILIATIONS,
+      CONTRIBUTOR_ROLES
+    }
   }
 }
 </script>

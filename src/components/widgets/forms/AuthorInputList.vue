@@ -58,8 +58,6 @@ export default {
     const model = ref([...props.modelValue] || [])
     const {isEmpty, onChange} = useModel(ctx, model)
 
-    console.log(model)
-
     function addItem() {
       model.value.push(reactive({
         person_or_org: {

@@ -10,6 +10,7 @@ q-field.fit(
     .row.no-wrap.full-width
       schema-select.col-3(
         ref="scheme"
+        :schemes="schemes"
         v-model="model.scheme"
         :rules="[required($t('error.validation.required'))]"
         @update:model-value="onChange")
@@ -37,6 +38,10 @@ export default {
     label: {
       type: String,
       default: ''
+    },
+    schemes: {
+      type: Array,
+      default: () => []
     },
     modelValue: {
       type: Object,

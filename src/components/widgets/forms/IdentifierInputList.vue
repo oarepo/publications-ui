@@ -15,6 +15,7 @@ q-field.fit.row(
         identifier-input(
           :label="`${itemLabel} #${idx + 1}`"
           v-model="model[idx]"
+          :schemes="schemes"
           :ref="setInputRef"
           @update:model-value="onChange")
   template(v-if="model.length > 0" v-slot:append)
@@ -40,6 +41,10 @@ export default {
     label: {
       type: String,
       default: ''
+    },
+    schemes: {
+      type: Array,
+      default: () => []
     },
     itemLabel: {
       type: String,

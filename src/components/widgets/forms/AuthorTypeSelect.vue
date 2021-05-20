@@ -5,7 +5,7 @@ base-select(
   :label="$t('label.authorType')"
   :rules="rules"
   v-model="model"
-  :options="options"
+  :options="Object.values(AUTHOR_TYPES)"
   :option-label="opt => opt? $t(`value.authorType.${opt}`): `${$t('label.chooseAuthorType')}…`"
   @update:model-value="$emit('update:modelValue', $event)")
 </template>
@@ -13,6 +13,7 @@ base-select(
 <script>
 import {ref} from 'vue'
 import ValidateMixin from '@/mixins/ValidateMixin'
+import {AUTHOR_TYPES} from '@/constants'
 
 export default {
   name: 'SchemaSelect',
@@ -32,12 +33,7 @@ export default {
     const input = ref(null)
     const model = ref(props.modelValue)
 
-    const options = [
-        'personal',
-        'organizational'
-    ]
-
-    return {model, options, input}
+    return {model, input, AUTHOR_TYPES}
   }
 }
 </script>
