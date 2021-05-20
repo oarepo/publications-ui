@@ -115,7 +115,6 @@ export default {
     })
 
     const authorLabel = computed(() => {
-      console.log(personName.value, model.person_or_org.name)
       if (model.person_or_org.name === '') {
         return props.label
       } else {
@@ -126,6 +125,10 @@ export default {
     function onChange() {
       if (model.person_or_org.type === AUTHOR_TYPES.PERSON) {
         model.person_or_org.name = personName.value
+      }
+      // TODO: migrate to taxonomy terms
+      if (model.roles) {
+        model.roles = model.roles.map((rol) => `${window.location.origin}/2.0/taxonomies/contributor-type/${rol}`)
       }
       ctx.emit('update:modelValue', model)
     }
