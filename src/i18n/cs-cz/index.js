@@ -22,6 +22,7 @@ export default {
   hint: {
     publicationDate: 'Pokud byl váš upload již publikován jinde, použijte datum prvního zveřejnění. Formát: RRRR-MM-DD, RRRR-MM nebo RRRR. Pro intervaly použijte DATE / DATE, např. 1939/1945. ',
     localeSwitcher: 'Zadejte kód jazyka ve formátu ISO 639-2/B',
+    primaryCommunity: 'Vyberte primární komunitu / skupinu do které bude záznam patřit'
   },
   action: {
     addItem: 'Přidat položku',
@@ -59,6 +60,7 @@ export default {
     scrollToTop: 'Zpět nahoru'
   },
   error: {
+    submissionFail: 'Při vytváření záznamu došlo k chybě',
     stateChangeFail: 'Chyba při změně stavu',
     stateChangeMessage: 'Při změně stavu došlo k následující neočekávané chybě',
     popupLoginFail: 'Nebylo možno se přihlásit, prosím povolte v prohlížeči vyskakovací okna pro tento web',
@@ -77,8 +79,12 @@ export default {
       authorsContributors: 'Autoři a přispěvatelé',
       uploadData: 'Upload dat',
       keywords: 'Klíčová slova',
-      additionalTitles: 'Další názvy'
+      additionalTitles: 'Další názvy',
+      submission: 'Vytvoření draftového záznamu',
     },
+    retry: 'Zkusit znovu',
+    primaryCommunity: 'Primární komunita',
+    submit: 'Vytvořit záznam',
     contributors: 'Přispěvatelé',
     contributor: 'Přispěvatel',
     languages: 'Jazyky',
@@ -154,6 +160,7 @@ export default {
     roles: 'Role'
   },
   message: {
+    submissionSuccess: 'Záznam s ID {pid} úspěšně vytvořen',
     notFound: 'Stránka nenalezena',
     articleExistsError: 'Článek se zadaným DOI je již v repozitáři. Přejete si provázat dataset s tímto článkem?',
     creatingArticle: 'Vytvářím článek',
@@ -171,7 +178,9 @@ export default {
     loggedOut: 'Byli jste odhlášeni',
     recordNotValid: 'V záznamu jsou chyby',
     gdprPrompt: 'Kliknutím na "Souhlasím", vyjadřujete souhlas s našimi pravidly využití služeb a podmínkami zpracování osobních údajů.',
-    authRequired: 'Tato stránka vyžaduje autentizaci. Kliknutím na tlačítko níže se přihlásíte.'
+    authRequired: 'Tato stránka vyžaduje autentizaci. Kliknutím na tlačítko níže se přihlásíte.',
+    submissionInfo: 'Pokračováním dojde k vytvoření draftového záznamu s přiděleným unikátním perzistentním identifikátorem.',
+    submitting: 'Vytvářím záznam'
   },
   value: {
     authorType: {

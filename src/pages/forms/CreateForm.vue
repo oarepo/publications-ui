@@ -1,7 +1,7 @@
 <template lang="pug">
 q-page.q-mt-lg.q-mx-lg-xl.full-height(padding)
-  .row.justify-begin.items-center
-    .col-auto
+  .column.justify-center.items-center
+    .col.row.q-pb-md
       .text-h3.gt-md
         span {{ $t(header?.title) }}
         q-icon.q-pl-md(color="accent" size="md" :name="header?.icon")
@@ -11,8 +11,8 @@ q-page.q-mt-lg.q-mx-lg-xl.full-height(padding)
       .text-h6.lt-md.q-mt-none.q-mb-md
         span {{ $t(header?.title) }}
         q-icon.q-pl-md(color="accent" size="xs" :name="header?.icon")
-  q-separator(spaced)
-  create-dataset-form.row
+    .q-separator(spaced)
+    create-dataset-form.col.q-pr-md
 </template>
 <script>
 import {computed, defineComponent} from 'vue'

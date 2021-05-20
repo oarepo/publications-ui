@@ -9,5 +9,9 @@ export default function useNotify() {
         $q.notify({message: t(msg), color: 'negative'})
     }
 
-    return {notifyError}
+    function notifySuccess (msg, args) {
+        $q.notify({message: t(msg, args), color: 'positive'})
+    }
+
+    return {notifyError, notifySuccess}
 }

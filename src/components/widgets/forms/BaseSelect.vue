@@ -1,6 +1,8 @@
 <template lang="pug">
 q-select(
+  input-class="col-auto"
   ref="input"
+  label-slot
   v-bind="$attrs"
   :label="label"
   :rules="rules"
@@ -27,7 +29,7 @@ export default {
       required: true
     },
     modelValue: {
-      type: [String, Number, Array],
+      type: [String, Number, Array, Object],
       default: ''
     }
   },

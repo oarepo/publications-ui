@@ -1,6 +1,6 @@
 <template lang="pug">
 router-view(v-slot="{ Component }")
-  transition(name="fade")
+  transition(leave-from-class="fadeOut" enter-from-class="fadeIn")
     component(:is="Component")
 </template>
 

@@ -10,7 +10,7 @@ q-field.fit.row(
   borderless)
   q-list(dense).fit.no-margin.q-pt-md
     q-separator(spaced v-if="model.length > 0")
-    q-item.full-width(v-for="(val,idx) in model" :key="idx")
+    q-item.no-padding.no-margin.full-width(v-for="(val,idx) in model" :key="idx")
       q-item-section
         identifier-input(
           :label="`${itemLabel} #${idx + 1}`"

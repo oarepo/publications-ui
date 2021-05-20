@@ -35,7 +35,7 @@ import {useContext} from 'vue-context-composition'
 import {community} from '@/contexts/community'
 
 export default defineComponent({
-  name: 'CommunitySelect',
+  name: 'CommunitySwitcher',
   setup () {
     const {communities, communitiesLoading, currentCommunity, setCommunity} = useContext(community)
     const model = ref(null)
@@ -43,7 +43,6 @@ export default defineComponent({
 
     function updateCommunity () {
       if ((model?.value?.id || null) !== (currentCommunity?.value?.id || null)) {
-        console.log('update comm', model.value)
         setCommunity(model?.value?.id || null)
       }
     }

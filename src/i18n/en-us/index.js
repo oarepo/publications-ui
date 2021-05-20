@@ -22,6 +22,7 @@ export default {
         detail: 'Detail'
     },
     error: {
+        submissionFail: 'Failed to submit the record',
         completeSuccess: 'Completed successfully',
         stateChangeFail: 'State change failed',
         stateChangeMessage: 'There was a following error when trying to change the record state',
@@ -33,6 +34,7 @@ export default {
         }
     },
     hint: {
+        primaryCommunity: 'Choose a primary community / group to which the record will belong to',
         localeSwitcher: 'Language code in ISO 639-2 format',
         publicationDate: 'In case your upload was already published elsewhere, please use the date of the first publication. Format: YYYY-MM-DD, YYYY-MM, or YYYY. For intervals use DATE/DATE, e.g. 1939/1945.'
     },
@@ -82,7 +84,11 @@ export default {
             authors: 'Authors',
             uploadData: 'Data Upload',
             authorsContributors: 'Authors and Contributors',
+            submission: 'DRAFT Record Submission',
         },
+        retry: 'Retry',
+        primaryCommunity: 'Primary Community',
+        submit: 'Submit',
         contributors: 'Contributors',
         contributor: 'Contributor',
         languages: 'Languages',
@@ -154,6 +160,7 @@ export default {
         roles: 'Roles'
     },
     message: {
+        submissionSuccess: 'Successfully submitted a new record with ID {pid}',
         notFound: 'Oops. Nothing here',
         errorCreatingArticle: 'There was an error when creating the article',
         articleExistsError: 'An article record with this DOI already exists in this repository.' +
@@ -171,7 +178,9 @@ export default {
         loggedOut: 'You have been logged out',
         recordNotValid: 'Record is not valid',
         gdprPrompt: 'By clicking on "Accept", you give your consent with our Terms of Service and Privacy Policy for this service.',
-        authRequired: 'This page requires authentication.'
+        authRequired: 'This page requires authentication.',
+        submissionInfo: 'A new DRAFT record will be created with an unique persistent identifier.',
+        submitting: 'Submitting record'
     },
     value: {
         authorType: {

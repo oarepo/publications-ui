@@ -21,7 +21,7 @@ q-header.row.z-top.no-wrap.navbar__header
       img.navbar__logo.col-auto(
         src="/logos/datacare_White.svg")
     q-toolbar-title.q-py-md.text-uppercase.text-weight-bold {{ $t('app.productName') }}
-    search-input.col-grow
+    search-input(v-if="route.meta.useFacets").col-grow
     q-btn(
       stretch
       flat
@@ -69,6 +69,7 @@ export default defineComponent({
       DATASETS_COLLECTION_CODE,
       ARTICLES_COLLECTION_CODE,
       authenticated,
+      route,
       toggleFacetsSidebar: toggleFacets
     }
   }

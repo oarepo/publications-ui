@@ -12,6 +12,7 @@ import IdentifierInput from '@/components/widgets/forms/IdentifierInput'
 import IdentifierInputList from '@/components/widgets/forms/IdentifierInputList'
 import AuthorInput from '@/components/widgets/forms/AuthorInput'
 import DateInput from '@/components/widgets/forms/DateInput'
+import CircularSpinner from '@/components/widgets/progress/CircularSpinner'
 
 export default {
     install (app) {
@@ -28,6 +29,7 @@ export default {
         app.component('base-select', BaseSelect)
         app.component('schema-select', SchemaSelect)
         app.component('facet-container', FacetContainer)
+        app.component('circular-spinner', CircularSpinner)
         app.component('mt', MultilingualText)
     }
 }

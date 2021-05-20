@@ -42,6 +42,7 @@ q-field.fit(
       .col-4.q-mr-sm
         chips-select(
           ref="roles"
+          options-dense
           :label="$t('label.roles')"
           v-model="model.roles"
           :options="CONTRIBUTOR_ROLES"
@@ -49,6 +50,7 @@ q-field.fit(
       .col-grow
         chips-select(
           ref="affiliations"
+          options-dense
           :label="$t('label.affiliations')"
           v-model="model.affiliations"
           :options="AFFILIATIONS"

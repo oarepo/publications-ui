@@ -1,6 +1,11 @@
 <template lang="pug">
 .column.q-col-gutter-md
-  base-input.col(
+  community-select.col(
+    ref="primaryCommunity"
+    filled
+    v-model="basicInfo._primary_community"
+    :rules="[required($t('error.validation.required'))]")
+  multilingual-input.col(
     ref="title"
     filled
     v-model="basicInfo.title"
@@ -57,10 +62,11 @@ import useNotify from '@/composables/useNotify'
 import StepperNav from '@/components/navigation/StepperNav'
 import LanguagesSelect from '@/components/widgets/forms/LanguagesSelect'
 import LicensesSelect from '@/components/widgets/forms/LicensesSelect'
+import CommunitySelect from '@/components/widgets/forms/CommunitySelect'
 
 export default defineComponent({
   name: 'BasicInfo',
-  components: {StepperNav, LanguagesSelect, LicensesSelect},
+  components: {CommunitySelect, StepperNav, LanguagesSelect, LicensesSelect},
   emits: ['update:modelValue', 'next'],
   props: {
     modelValue: Object
@@ -69,6 +75,7 @@ export default defineComponent({
     const {required} = useValidation()
     const {notifyError} = useNotify()
 
+    const primaryCommunity = ref(null)
     const title = ref(null)
     const abstract = ref(null)
     const keywords = ref(null)
@@ -81,12 +88,14 @@ export default defineComponent({
     })
 
     const onNext = () => {
+      const pcr = primaryCommunity.value.validate()
       const tr = title.value.validate()
       const abr = abstract.value.validate()
       const kr = keywords.value.validate()
       const atr = additionalTitles.value.validate()
 
-      if (tr !== true ||
+      if (pcr !== true ||
+          tr !== true ||
           abr !== true ||
           kr !== true ||
           atr !== true) {
@@ -97,7 +106,7 @@ export default defineComponent({
       }
     }
 
-    return {basicInfo, required, title, abstract, keywords, additionalTitles, onNext}
+    return {basicInfo, required, primaryCommunity, title, abstract, keywords, additionalTitles, onNext}
   }
 })
 </script>

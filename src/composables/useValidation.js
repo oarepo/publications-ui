@@ -16,7 +16,7 @@ export default function useValidation() {
             if (valid && x.length !== undefined) {
                 valid = !!x.length
             }
-            if (typeof x === 'object') {
+            if (x && typeof x === 'object') {
                 valid = Object.keys(x).length > 0 && Object.values(x).every(val => {
                     return !!val
                 })

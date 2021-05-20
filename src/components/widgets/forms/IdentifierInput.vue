@@ -7,7 +7,7 @@ q-field.fit(
   stack-label
   :label="label")
   template(v-slot:control)
-    .row.no-wrap.full-width
+    .row.no-padding.no-wrap.full-width
       schema-select.col-3(
         ref="scheme"
         :schemes="schemes"

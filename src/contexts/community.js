@@ -1,7 +1,7 @@
 import {defineContext} from 'vue-context-composition'
 import {computed, ref, readonly} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
-import {axios} from "@/boot/axios";
+import {axios} from '@/boot/axios'
 
 export const community = defineContext(() => {
     const route = useRoute()

@@ -5,6 +5,7 @@ base-select(
   :label="$t('label.scheme')"
   :rules="rules"
   v-model="model"
+  options-dense
   :options="schemes"
   @update:model-value="$emit('update:modelValue', $event)")
 </template>

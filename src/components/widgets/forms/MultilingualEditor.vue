@@ -35,6 +35,7 @@ import {useI18n} from 'vue-i18n/index'
 import LocaleSelect from '@/components/widgets/forms/LocaleSelect'
 import useValidation from '@/composables/useValidation'
 import useModel from '@/composables/useModel'
+import useInputRefs from '@/composables/useInputRefs'
 
 export default {
   name: 'MultilingualEditor',
@@ -62,10 +63,10 @@ export default {
     const {error, required, errorMessage, resetValidation} = useValidation()
 
     const fieldRef = ref(null)
-    const inputRefs = ref([])
 
     const model = ref([])
     const {isEmpty} = useModel(ctx, model)
+    const {setInputRef, inputRefs} = useInputRefs()
 
     if (!Object.keys(props.modelValue).length && !props.empty) {
       model.value.push(reactive({lang: i18n.locale.value, val: ''}))
@@ -73,12 +74,6 @@ export default {
       Object.keys(props.modelValue).forEach(l => {
         model.value.push(reactive({lang: l, val: props.modelValue[l]}))
       })
-    }
-
-    const setInputRef = el => {
-      if (el) {
-        inputRefs.value.push(el)
-      }
     }
 
     function validate() {

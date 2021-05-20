@@ -8,10 +8,10 @@ q-field.row(
   :error_message="errorMessage"
   @focus="onFocus"
   borderless)
-  q-list(dense).full-width.no-margin.q-pt-md
+  q-list(dense).full-width.no-padding.no-margin.q-pt-md
     q-separator(spaced v-if="model.length > 0")
-    q-item.full-width(v-for="(val,idx) in model" :key="idx")
-      q-item-section
+    q-item.full-width.no-margin.no-padding(v-for="(val,idx) in model" :key="idx")
+      q-item-section.no-padding.no-margin
         author-input(
           :label="`${itemLabel} #${idx + 1}`"
           v-model="model[idx]"

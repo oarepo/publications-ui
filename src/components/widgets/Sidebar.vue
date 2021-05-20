@@ -15,18 +15,18 @@ q-drawer.bg-grey-3.text-dark.scrolling-drawer(
           q-icon.q-pr-sm(name="groups" size="sm")
           span {{ $t('label.community') }}
       .col-auto.full-width.column
-        community-select
+        community-switcher
 </template>
 
 <script>
 import {defineComponent} from 'vue'
 import {facets} from '@/contexts/facets'
 import {useContext} from 'vue-context-composition'
-import CommunitySelect from '@/components/widgets/select/CommunitySelect'
+import CommunitySwitcher from '@/components/widgets/select/CommunitySwitcher'
 
 export default defineComponent({
   name: "Sidebar",
-  components: {CommunitySelect},
+  components: {CommunitySwitcher},
   setup () {
     const {facetsEnabled, facetsSidebarVisible} = useContext(facets)
 
