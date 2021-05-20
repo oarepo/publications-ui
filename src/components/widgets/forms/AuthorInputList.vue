@@ -1,5 +1,5 @@
 <template lang="pug">
-q-field.fit.row(
+q-field.row(
   :filled="isEmpty"
   ref="input"
   v-bind="$attrs"

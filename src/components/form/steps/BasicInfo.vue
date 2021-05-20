@@ -23,19 +23,46 @@
     empty
     v-model="basicInfo.additional_titles"
     :label="$t('label.forms.additionalTitles')")
-  stepper-nav(has-prev=false @next="onNext")
+  .row.col.q-pt-none.full-width
+    base-input.col-grow.q-mr-sm(
+      ref="publisher"
+      filled
+      v-model="basicInfo.publisher"
+      :label="$t('label.publisher')")
+    date-input.col-auto(
+      ref="publication_date"
+      filled
+      v-model="basicInfo.publication_date"
+      :hint="$t('hint.publicationDate')"
+      :label="$t('label.publicationDate')")
+  .row.col.justify-start.q-gutter-md
+    .col-auto
+      licenses-select(
+        filled
+        ref="rights"
+        v-model="basicInfo.rights"
+        :label="$t('label.license')")
+    .col-auto
+      languages-select(
+        filled
+        ref="languages"
+        v-model="basicInfo.languages"
+        :label="$t('label.languages')")
+  stepper-nav.q-mt-md(has-prev=false @next="onNext")
 </template>
 <script>
 import {defineComponent, reactive, ref, watch} from 'vue'
 import useValidation from '@/composables/useValidation'
 import useNotify from '@/composables/useNotify'
 import StepperNav from '@/components/navigation/StepperNav'
+import LanguagesSelect from '@/components/widgets/forms/LanguagesSelect'
+import LicensesSelect from '@/components/widgets/forms/LicensesSelect'
 
 export default defineComponent({
   name: 'BasicInfo',
-  components: {StepperNav},
+  components: {StepperNav, LanguagesSelect, LicensesSelect},
   emits: ['update:modelValue', 'next'],
-  dprops: {
+  props: {
     modelValue: Object
   },
   setup(props, ctx) {

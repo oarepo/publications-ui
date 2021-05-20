@@ -11,10 +11,12 @@ import SchemaSelect from '@/components/widgets/forms/SchemaSelect'
 import IdentifierInput from '@/components/widgets/forms/IdentifierInput'
 import IdentifierInputList from '@/components/widgets/forms/IdentifierInputList'
 import AuthorInput from '@/components/widgets/forms/AuthorInput'
+import DateInput from '@/components/widgets/forms/DateInput'
 
 export default {
     install (app) {
         app.component('base-input', BaseInput)
+        app.component('date-input', DateInput)
         app.component('identifier-input', IdentifierInput)
         app.component('author-input', AuthorInput)
         app.component('identifier-input-list', IdentifierInputList)

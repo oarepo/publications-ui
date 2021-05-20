@@ -10,37 +10,37 @@ export const STATE_PUBLISHED = 'published'
 export const STATE_PENDING_APPROVAL = 'pending-approval'
 
 export const AUTHOR_TYPES = Object.freeze({
-  PERSON: 'personal',
-  ORGANIZATION: 'organizational',
+    PERSON: 'personal',
+    ORGANIZATION: 'organizational',
 })
 
-export const RESOURCE_IDENTIFIER_SCHEMES =   [
-  "ark",
-  "arxiv",
-  "bibcode",
-  "doi",
-  "ean13",
-  "eissn",
-  "handle",
-  "igsn",
-  "isbn",
-  "issn",
-  "istc",
-  "lissn",
-  "lsid",
-  "pmid",
-  "purl",
-  "upc",
-  "url",
-  "urn",
-  "w3id"
+export const RESOURCE_IDENTIFIER_SCHEMES = [
+    "ark",
+    "arxiv",
+    "bibcode",
+    "doi",
+    "ean13",
+    "eissn",
+    "handle",
+    "igsn",
+    "isbn",
+    "issn",
+    "istc",
+    "lissn",
+    "lsid",
+    "pmid",
+    "purl",
+    "upc",
+    "url",
+    "urn",
+    "w3id"
 ]
 
 export const PERSON_IDENTIFIER_SCHEMES = ["orcid", "isni", "gnd", "ror"]
 
 // TODO: migrate to taxonomy terms
 export const CONTRIBUTOR_ROLES = [
-  'advisor',
+    'advisor',
     'artist',
     'collaborator',
     'contact-person',
@@ -67,16 +67,29 @@ export const CONTRIBUTOR_ROLES = [
 // TODO: migrate to taxonomy terms
 export const AFFILIATIONS = ['CESNET', 'VŠCHT', 'NTK', 'AVČR']
 
+// TODO: migrate to taxonomy terms
+export const LICENSES = [
+    'cc/1-0',
+    'cc/2-0',
+    'cc/2-5',
+    'cc/3-0',
+    'cc/4-0',
+    'cc/zero',
+    'cc',
+    'copyright'
+]
+
 export default {
-  DATASETS_COLLECTION_CODE,
-  DATASETS_DRAFT_COLLECTION_CODE,
-  ARTICLES_COLLECTION_CODE,
-  ARTICLES_DRAFT_COLLECTION_CODE,
-  STATE_EDITING,
-  STATE_PENDING_APPROVAL,
-  RESOURCE_IDENTIFIER_SCHEMES,
-  PERSON_IDENTIFIER_SCHEMES,
-  AUTHOR_TYPES,
-  AFFILIATIONS,
-  CONTRIBUTOR_ROLES
+    DATASETS_COLLECTION_CODE,
+    DATASETS_DRAFT_COLLECTION_CODE,
+    ARTICLES_COLLECTION_CODE,
+    ARTICLES_DRAFT_COLLECTION_CODE,
+    STATE_EDITING,
+    STATE_PENDING_APPROVAL,
+    RESOURCE_IDENTIFIER_SCHEMES,
+    PERSON_IDENTIFIER_SCHEMES,
+    AUTHOR_TYPES,
+    AFFILIATIONS,
+    LICENSES,
+    CONTRIBUTOR_ROLES,
 }

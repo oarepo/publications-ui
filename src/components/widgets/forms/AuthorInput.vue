@@ -71,7 +71,6 @@ import useInputRefs from '@/composables/useInputRefs'
 import AuthorTypeSelect from '@/components/widgets/forms/AuthorTypeSelect'
 import IdentifierInputList from '@/components/widgets/forms/IdentifierInputList'
 import {AUTHOR_TYPES, PERSON_IDENTIFIER_SCHEMES, AFFILIATIONS, CONTRIBUTOR_ROLES} from '@/constants'
-import {useI18n} from 'vue-i18n/index'
 
 export default {
   name: 'IdentifierInput',
@@ -101,7 +100,6 @@ export default {
   setup(props, ctx) {
     const {error, required} = useValidation()
     const {input} = useInputRefs()
-    const {t} = useI18n()
     const authorType = ref(null)
     const givenName = ref(null)
     const familyName = ref(null)
@@ -118,7 +116,7 @@ export default {
       if (model.person_or_org.name === '') {
         return props.label
       } else {
-        return `${t('label.author')} - ${model.person_or_org.name}`
+        return `${props.label} - ${model.person_or_org.name}`
       }
     })
 
@@ -129,6 +127,11 @@ export default {
       // TODO: migrate to taxonomy terms
       if (model.roles) {
         model.roles = model.roles.map((rol) => `${window.location.origin}/2.0/taxonomies/contributor-type/${rol}`)
+      }
+
+      // TODO: create affiliations input
+      if (model.affiliations) {
+        model.affiliations = model.affiliations.map(a => { return typeof a === 'string'? {name: a} : a})
       }
       ctx.emit('update:modelValue', model)
     }

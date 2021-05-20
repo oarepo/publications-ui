@@ -20,7 +20,8 @@ export default {
     detail: 'Detail'
   },
   hint: {
-    localeSwitcher: 'Zadejte kód jazyka ve formátu ISO 639-2'
+    publicationDate: 'Pokud byl váš upload již publikován jinde, použijte datum prvního zveřejnění. Formát: RRRR-MM-DD, RRRR-MM nebo RRRR. Pro intervaly použijte DATE / DATE, např. 1939/1945. ',
+    localeSwitcher: 'Zadejte kód jazyka ve formátu ISO 639-2/B',
   },
   action: {
     addItem: 'Přidat položku',
@@ -73,12 +74,17 @@ export default {
       basicInfo: 'Základní informace',
       identifiers: 'Identifikátory',
       identifiersCaption: 'Zadejte existující identifikátory spojené s tímto datasetem',
-      authors: 'Autoři',
+      authorsContributors: 'Autoři a přispěvatelé',
       uploadData: 'Upload dat',
       keywords: 'Klíčová slova',
       additionalTitles: 'Další názvy'
     },
+    contributors: 'Přispěvatelé',
+    contributor: 'Přispěvatel',
+    languages: 'Jazyky',
     roles: 'Role',
+    publisher: 'Vydavatel',
+    publicationDate: 'Datum vydání',
     affiliations: 'Afilace',
     name: 'Název',
     author: 'Autor',

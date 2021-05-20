@@ -39,8 +39,8 @@ q-splitter(v-model="spl")
       q-step(
         icon="groups"
         :name="steps.AUTHORS"
-        :title="$t('label.forms.authors')")
-        authors(
+        :title="$t('label.forms.authorsContributors')")
+        authors-contributors(
           v-model="formData"
           @prev="step = steps.IDENTIFIERS"
           @next="step = steps.UPLOAD")
@@ -55,7 +55,7 @@ import {defineComponent, ref} from 'vue'
 import UploadData from '@/components/form/steps/UploadData'
 import BasicInfo from '@/components/form/steps/BasicInfo'
 import Identifiers from '@/components/form/steps/Identifiers'
-import Authors from "@/components/form/steps/Authors";
+import AuthorsContributors from '@/components/form/steps/AuthorsContributors'
 
 export const steps = Object.freeze({
   BASIC: 1,
@@ -66,9 +66,12 @@ export const steps = Object.freeze({
 
 export default defineComponent({
   name: 'CreateDatasetForm',
-  components: {Authors, BasicInfo, UploadData, Identifiers},
+  components: {AuthorsContributors, BasicInfo, UploadData, Identifiers},
   setup () {
-    const formData = ref({})
+    const formData = ref({
+      // TODO: migrate to taxonomy terms
+      resource_type: `${window.location.origin}/2.0/taxonomies/resourceType/datasets`
+    })
     const spl = 70
     const step = ref(steps.BASIC)
 
