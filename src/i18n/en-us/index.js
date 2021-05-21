@@ -39,6 +39,8 @@ export default {
         publicationDate: 'In case your upload was already published elsewhere, please use the date of the first publication. Format: YYYY-MM-DD, YYYY-MM, or YYYY. For intervals use DATE/DATE, e.g. 1939/1945.'
     },
     action: {
+        navigateArticleList: 'Switch to articles',
+        navigateDatasetList: 'Switch to datasets',
         addItem: 'Add Item',
         rmItem: 'Remove Item',
         addLang: "Add language variant",

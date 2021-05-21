@@ -1,11 +1,7 @@
 <template lang="pug">
 .row.justify-between.items-center.q-col-gutter-x-lg.q-mt-md.q-mt-lg-xl.q-mb-md
   .col-auto
-    .column
-      .col.text-h3.gt-md {{ $t('section.datasetList') }}
-      .col.text-h4.lt-lg.gt-sm.q-mt-none.q-mb-lg {{ $t('section.datasetList') }}
-      .col.text-h6.lt-md.q-mt-none.q-mb-md {{ $t('section.datasetList') }}
-      .col.q-pl-xs.text-primary.text-subtitle2 {{ $tc('label.recordsFound', collection.recordsCount) }}
+    collection-list-title(:collection="collection")
   .col-auto.items-center
     .row.justify-end.no-wrap
       page-size-select.col-auto
@@ -16,10 +12,11 @@
 import {defineComponent} from 'vue'
 import SortSelect from '@/components/widgets/select/SortSelect'
 import PageSizeSelect from '@/components/widgets/select/PageSizeSelect'
+import CollectionListTitle from "@/components/list/CollectionListTitle";
 
 export default defineComponent({
   name: 'CollectionListHeader',
-  components: {PageSizeSelect, SortSelect},
+  components: {CollectionListTitle, PageSizeSelect, SortSelect},
   props: {
     collection: {
       type: Object,

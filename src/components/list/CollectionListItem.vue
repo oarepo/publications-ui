@@ -11,14 +11,13 @@ q-card(flat clickable)
       q-skeleton.q-mx-md.q-mb-sm.absolute-bottom.q-card__section--vert(type="text" :width="`${thumbnailSize}px`")
     q-card-section(v-else)
       .q-mr-xl.block.text-h5.q-mt-sm.q-mb-xs.gt-xs
-        mt(:text="m.title")
-        //search-highlight(:item="item" :text="m.title._")
+        search-highlight(:item="item" :text="$mt(m.title)")
       q-separator
       q-card-section
         .row.q-mb-md
           q-chip(v-for="(kw, idx) in m.keywords" :key="idx") {{ kw }}
         .text-subtitle1.ellipsis-3-lines
-          span(v-html="$sanitize(m.abstract._)")
+          span(v-html="$sanitize($mt(m.abstract))")
       q-card-section
         .text-subtitle2.text-grey-8 {{ $t('label.createdAt') }} {{ $d(new Date(dateCreated)) }}
     q-skeleton.absolute-bottom-right.q-px-sm.q-ma-md(
@@ -35,7 +34,7 @@ q-card(flat clickable)
 
 <script>
 import StatusRibbon from '@/components/widgets/StatusRibbon'
-// import SearchHighlight from 'components/search/SearchHighlight'
+import SearchHighlight from '@/components/search/SearchHighlight'
 
 import {computed, defineComponent} from 'vue'
 import {useQuasar} from 'quasar'
@@ -54,7 +53,7 @@ export default defineComponent({
   },
   emits: ['detail'],
   components: {
-    // SearchHighlight,
+    SearchHighlight,
     StatusRibbon
   },
   setup(props) {

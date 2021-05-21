@@ -23,11 +23,7 @@ q-header.row.z-top.no-wrap.navbar__header
     q-toolbar-title.q-py-md.text-uppercase.text-weight-bold {{ $t('app.productName') }}
     search-input(v-if="route.meta.useFacets").col-grow
     create-record-btn(color="white")
-      //q-tooltip {{ $t(collectionId === DATASETS_COLLECTION_CODE ? 'action.uploadDataset': 'action.uploadArticle') }}
-    //q-btn(stretch flat v-if="collectionId === DATASETS_COLLECTION_CODE" :to="{name: 'all-articles'}" icon="article")
-    //  q-tooltip {{ $t('section.articleList') }}
-    //q-btn(stretch flat v-if="collectionId === ARTICLES_COLLECTION_CODE" :to="{name: `all-datasets`}" icon="donut_small")
-    //  q-tooltip {{ $t('section.datasetList') }}
+    collection-toggle-btn
   q-toolbar.col-auto
     q-space.q-ml-xl
     account-dropdown(:authenticated="authenticated")
@@ -42,10 +38,12 @@ import SearchInput from '@/components/search/SearchInput'
 import {useContext} from 'vue-context-composition'
 import {facets} from '@/contexts/facets'
 import {useRoute} from 'vue-router'
+import CollectionToggleBtn from "@/components/widgets/button/CollectionToggleBtn";
 
 export default defineComponent({
   name: 'Navbar',
   components: {
+    CollectionToggleBtn,
     AccountDropdown,
     SearchInput
   },

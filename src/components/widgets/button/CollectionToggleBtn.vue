@@ -1,13 +1,6 @@
 <template lang="pug">
-q-btn.col-auto(
-  v-bind="$attrs"
-  stretch
-  flat
-  color="dark"
-  icon="cloud_upload"
-  :to="createRoute.to"
-  :label="$t('action.upload')")
-  q-tooltip {{ $t(createRoute.label) }}
+q-btn(stretch flat :to="target.to" :icon="target.icon")
+  q-tooltip {{ $t(target.label) }}
 </template>
 
 <script>
@@ -18,39 +11,40 @@ import {useContext} from 'vue-context-composition'
 import {community} from '@/contexts/community'
 
 export default defineComponent({
-  name: 'CreateRecordBtn',
-  setup() {
+  name: 'CollectionToggleBtn',
+  setup () {
     const {communityId} = useContext(community)
     const {isDatasets, isArticles} = useCollection()
 
-    const createRoute = computed(() => {
-      let routeName = 'create'
+    const target = computed(() => {
+      let routeName = 'list'
+      let routeParams = {state: 'all'}
+      let icon = ''
       let label = ''
-      let routeParams = {}
 
       if (communityId.value) {
-        routeName = 'community-create'
+        routeName = 'community-list'
         routeParams.communityId = communityId.value
       }
 
       if (isDatasets.value) {
-        routeParams.model = DATASETS_COLLECTION_CODE
-        label = 'action.uploadDataset'
-      } else if (isArticles.value) {
         routeParams.model = ARTICLES_COLLECTION_CODE
-        label = 'action.uploadArticle'
+        icon = 'article'
+        label = 'action.navigateArticleList'
+      } else if (isArticles.value) {
+        routeParams.model = DATASETS_COLLECTION_CODE
+        icon = 'donut_small'
+        label = 'action.navigateDatasetList'
       }
 
       return {
-        to: {
-          name: routeName,
-          params: {...routeParams}
-        },
+        to: {name: routeName, params:{...routeParams}},
+        icon: icon,
         label: label
       }
     })
 
-    return {createRoute}
+    return {target}
   }
 })
 </script>

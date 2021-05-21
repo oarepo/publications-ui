@@ -25,6 +25,8 @@ export default {
     primaryCommunity: 'Vyberte primární komunitu / skupinu do které bude záznam patřit'
   },
   action: {
+    navigateArticleList: 'Přejít na články',
+    navigateDatasetList: 'Přejít na datasety',
     addItem: 'Přidat položku',
     rmItem: 'Odebrat položku',
     addLang: "Přidat jazykovou variantu",

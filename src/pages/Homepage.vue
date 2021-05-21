@@ -16,7 +16,7 @@ q-page.hero.full-height.no-padding.row.overflow-hidden
             rounded
             icon="leaderboard"
             padding="lg"
-            :to="{name: 'list', params: {model: DATASETS_COLLECTION_CODE, state: 'all'}}"
+            :to="{name: 'community-list', params: {model: DATASETS_COLLECTION_CODE, state: 'all', communityId: 'cesnet'}}"
             :label="$t('section.datasetList')")
           q-btn.full-width.shadow-5(
             color="dark"

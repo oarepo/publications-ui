@@ -2,6 +2,7 @@
 // import articles from '@/router/articles'
 import collections from '@/router/collections'
 import forms from '@/router/forms'
+import records from '@/router/records'
 
 // Route map (route matched from top to bottom)
 //
@@ -35,6 +36,7 @@ const routes = [
         children: [
             forms,
             collections,
+            records,
             { /* Other routes */
                 path: 'logged-out',
                 name: 'logged-out',

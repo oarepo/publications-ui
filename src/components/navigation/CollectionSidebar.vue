@@ -25,7 +25,7 @@ import {useContext} from 'vue-context-composition'
 import CommunitySwitcher from '@/components/widgets/select/CommunitySwitcher'
 
 export default defineComponent({
-  name: "Sidebar",
+  name: "CollectionSidebar",
   components: {CommunitySwitcher},
   setup () {
     const {facetsEnabled, facetsSidebarVisible} = useContext(facets)

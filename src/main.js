@@ -40,7 +40,9 @@ app
     })
     .use(Vue3Sanitize)
 
-    const auth = usePopupLogin()
+app.provide('sanitize', app.config.globalProperties.$sanitize)
+
+const auth = usePopupLogin()
 
 // https://next.router.vuejs.org/guide/migration/#all-navigations-are-now-always-asynchronous
 router.isReady()
