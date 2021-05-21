@@ -22,12 +22,7 @@ q-header.row.z-top.no-wrap.navbar__header
         src="/logos/datacare_White.svg")
     q-toolbar-title.q-py-md.text-uppercase.text-weight-bold {{ $t('app.productName') }}
     search-input(v-if="route.meta.useFacets").col-grow
-    q-btn(
-      stretch
-      flat
-      icon="cloud_upload"
-      :bla="{ name: `cesnet/draft/upload`}"
-      :label="$t('action.upload')")
+    create-record-btn(color="white")
       //q-tooltip {{ $t(collectionId === DATASETS_COLLECTION_CODE ? 'action.uploadDataset': 'action.uploadArticle') }}
     //q-btn(stretch flat v-if="collectionId === DATASETS_COLLECTION_CODE" :to="{name: 'all-articles'}" icon="article")
     //  q-tooltip {{ $t('section.articleList') }}
@@ -57,6 +52,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const {authenticated} = useAuth()
+
     const toggleFacets = computed(() => {
       if (route.meta.useFacets) {
         const {toggleFacetsSidebar} = useContext(facets)
@@ -70,7 +66,7 @@ export default defineComponent({
       ARTICLES_COLLECTION_CODE,
       authenticated,
       route,
-      toggleFacetsSidebar: toggleFacets
+      toggleFacetsSidebar: toggleFacets,
     }
   }
 })

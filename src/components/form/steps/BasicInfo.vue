@@ -12,6 +12,7 @@
     :label="$t('label.primaryCommunity')"
     ref="primaryCommunity"
     v-model="basicInfo._primary_community"
+    input-class="text-h5"
     :rules="[required($t('error.validation.required'))]")
   multilingual-input.col(
     ref="title"

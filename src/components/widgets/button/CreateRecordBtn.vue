@@ -1,5 +1,6 @@
 <template lang="pug">
 q-btn.col-auto(
+  v-bind="$attrs"
   stretch
   flat
   color="dark"
@@ -13,25 +14,35 @@ q-btn.col-auto(
 import {computed, defineComponent} from 'vue'
 import useCollection from '@/composables/useCollection'
 import {ARTICLES_COLLECTION_CODE, DATASETS_COLLECTION_CODE} from '@/constants'
+import {useContext} from 'vue-context-composition'
+import {community} from '@/contexts/community'
 
 export default defineComponent({
   name: 'CreateRecordBtn',
   setup () {
+    const {communityId} = useContext(community)
     const {isDatasets, isArticles} = useCollection()
 
     const createRoute = computed(() => {
-      if (isDatasets) {
-        return {
-          name: 'create',
-          model: DATASETS_COLLECTION_CODE
-        }
-      } else if (isArticles) {
-        return {
-          name: 'create',
-          model: ARTICLES_COLLECTION_CODE
-        }
+      let routeName = 'create'
+      let routeArgs = {}
+
+      if (communityId.value) {
+        routeName = 'community-create'
+        routeArgs = {communityId: communityId.value}
       }
-      return {name: 'list'}
+
+      let model = ''
+      if (isDatasets) {
+        model = DATASETS_COLLECTION_CODE
+      } else if (isArticles) {
+        model = ARTICLES_COLLECTION_CODE
+      }
+      return {
+        name: routeName,
+        model: model,
+        ...routeArgs
+      }
     })
 
     return {createRoute}
