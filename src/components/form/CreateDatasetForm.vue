@@ -63,6 +63,7 @@ q-stepper(
     icon="cloud_upload"
     :name="steps.UPLOAD"
     :title="$t('label.forms.uploadData')")
+    upload-data
 </template>
 
 <script>

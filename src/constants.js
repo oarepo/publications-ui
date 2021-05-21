@@ -36,6 +36,9 @@ export const RESOURCE_IDENTIFIER_SCHEMES = [
     "w3id"
 ]
 
+// Refers to MULTILINGUAL_SUPPORTED_LANGUAGES config.py API option
+export const API_MULTILINGUAL_SUPPORTED_LANGUAGES = ['cs', 'en']
+
 export const PERSON_IDENTIFIER_SCHEMES = ["orcid", "isni", "gnd", "ror"]
 
 // TODO: migrate to taxonomy terms

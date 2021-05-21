@@ -18,7 +18,6 @@ q-field.row.fit(
       @update:model-value="onChange")
       template(v-slot:prepend)
         locale-select.fit.q-pt-sm(
-          use-input
           hide-bottom-space
           hide-hint
           v-model="model[idx].lang"
@@ -31,7 +30,6 @@ q-field.row.fit(
     q-btn(round dense flat icon="add" @click="addLang")
       q-tooltip {{ $t('action.addLang') }}
 </template>
-
 <script>
 import {computed, reactive, ref} from 'vue'
 import {useI18n} from 'vue-i18n/index'

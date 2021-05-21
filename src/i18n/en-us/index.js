@@ -190,7 +190,8 @@ export default {
         lang: {
             'cs': 'Czech',
             'cs-cz': 'Czech',
-            'en-us': 'English'
+            'en-us': 'English',
+            'en': 'English'
         }
     },
     route: {

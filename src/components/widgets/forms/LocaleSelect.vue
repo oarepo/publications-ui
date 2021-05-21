@@ -5,7 +5,7 @@ base-select.full-width(
   menu-anchor="bottom left"
   icon="flag"
   v-model="model"
-  :options="$i18n.availableLocales"
+  :options="API_MULTILINGUAL_SUPPORTED_LANGUAGES"
   :label="$t('label.localeSwitcher')"
   :option-label="opt => opt? $t(`value.lang.${opt}`) + ` (${opt})`: `${$t('label.chooseLocale')}…`"
   :hint="$t('hint.localeSwitcher')"
@@ -21,6 +21,7 @@ base-select.full-width(
 <script>
 import {defineComponent, ref} from 'vue'
 import ValidateMixin from '@/mixins/ValidateMixin'
+import {API_MULTILINGUAL_SUPPORTED_LANGUAGES} from '@/constants'
 
 export default defineComponent({
   name: 'LocaleSelect',
@@ -34,7 +35,7 @@ export default defineComponent({
   },
   setup (props) {
     const model = ref(props.modelValue)
-    return {model}
+    return {model, API_MULTILINGUAL_SUPPORTED_LANGUAGES}
   }
 })
 </script>

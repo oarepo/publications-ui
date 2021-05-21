@@ -11,7 +11,6 @@ q-field.row.fit(
     .row.full-width(v-for="(val, idx) in model" :key="idx")
       .row.col-12.no-wrap.justify-between
         locale-select.col.q-mt-md(
-          use-input
           v-model="model[idx].lang"
           new-value-mode="add-unique"
           :rules="[required($t('error.validation.required'))]"

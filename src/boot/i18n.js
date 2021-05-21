@@ -6,9 +6,9 @@ const defaultLocale = Quasar.lang.isoName
 let browserLocale = Quasar.lang.getLocale()
 
 if (browserLocale === 'cs') {
-    browserLocale = 'cs-cz'
+    browserLocale = 'cs-CZ'
 } if (browserLocale === 'en') {
-    browserLocale = 'en-us'
+    browserLocale = 'en-US'
 }
 
 const i18n = createI18n({

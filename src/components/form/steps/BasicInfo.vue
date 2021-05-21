@@ -2,7 +2,15 @@
 .column.q-col-gutter-md
   community-select.col(
     ref="primaryCommunity"
+    v-if="!communityId"
     filled
+    v-model="basicInfo._primary_community"
+    :rules="[required($t('error.validation.required'))]")
+  base-input(
+    v-else
+    readonly
+    :label="$t('label.primaryCommunity')"
+    ref="primaryCommunity"
     v-model="basicInfo._primary_community"
     :rules="[required($t('error.validation.required'))]")
   multilingual-input.col(
@@ -63,10 +71,13 @@ import StepperNav from '@/components/navigation/StepperNav'
 import LanguagesSelect from '@/components/widgets/forms/LanguagesSelect'
 import LicensesSelect from '@/components/widgets/forms/LicensesSelect'
 import CommunitySelect from '@/components/widgets/forms/CommunitySelect'
+import {useContext} from 'vue-context-composition'
+import {community} from '@/contexts/community'
+import BaseInput from "@/components/widgets/forms/BaseInput";
 
 export default defineComponent({
   name: 'BasicInfo',
-  components: {CommunitySelect, StepperNav, LanguagesSelect, LicensesSelect},
+  components: {BaseInput, CommunitySelect, StepperNav, LanguagesSelect, LicensesSelect},
   emits: ['update:modelValue', 'next'],
   props: {
     modelValue: Object
@@ -74,6 +85,7 @@ export default defineComponent({
   setup(props, ctx) {
     const {required} = useValidation()
     const {notifyError} = useNotify()
+    const {communityId} = useContext(community)
 
     const primaryCommunity = ref(null)
     const title = ref(null)
@@ -82,6 +94,9 @@ export default defineComponent({
     const additionalTitles = ref(null)
 
     const basicInfo = reactive({})
+    if (communityId) {
+      basicInfo['_primary_community'] = communityId
+    }
 
     watch(basicInfo, () => {
       ctx.emit('update:modelValue', basicInfo)
@@ -106,7 +121,7 @@ export default defineComponent({
       }
     }
 
-    return {basicInfo, required, primaryCommunity, title, abstract, keywords, additionalTitles, onNext}
+    return {basicInfo, required, primaryCommunity, title, abstract, keywords, additionalTitles, onNext, communityId}
   }
 })
 </script>
