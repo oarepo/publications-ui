@@ -88,6 +88,9 @@ export default {
             authorsContributors: 'Authors and Contributors',
             submission: 'DRAFT Record Submission',
         },
+        isApproved: 'Approved by curator',
+        actions: 'Actions',
+        sections: 'Sections',
         retry: 'Retry',
         primaryCommunity: 'Primary Community',
         submit: 'Submit',
@@ -175,6 +178,7 @@ export default {
         doYRlyWnt: 'Do you really want to',
         noArticles: 'No articles found',
         noDatasets: 'No datasets found',
+        noAuthors: 'No Authors',
         noData: 'No data',
         loading: 'Loading',
         loggedOut: 'You have been logged out',
@@ -198,6 +202,8 @@ export default {
     },
     route: {
         title: {
+            articleItem: 'Article',
+            datasetItem: 'Dataset',
             datasetList: 'Datasets',
             datasetEdit: 'Edit Dataset',
             datasetUpload: 'Upload dataset',

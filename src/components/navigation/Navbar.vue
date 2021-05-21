@@ -9,14 +9,7 @@ q-header.row.z-top.no-wrap.navbar__header
       icon="arrow_back"
       @click="$router.back()"
     )
-    q-btn.q-mx-md(
-      v-if="$route.meta.useFacets"
-      flat
-      @click="toggleFacetsSidebar"
-      round
-      dense
-      icon="menu")
-    .col-1(v-else)
+    sidebar-toggle-btn(:toggle="sidebarToggle")
     q-btn(stretch flat :to="{ name: 'homepage' }")
       img.navbar__logo.col-auto(
         src="/logos/datacare_White.svg")
@@ -36,13 +29,14 @@ import {computed, defineComponent} from 'vue'
 import useAuth from '@/composables/useAuth'
 import SearchInput from '@/components/search/SearchInput'
 import {useContext} from 'vue-context-composition'
-import {facets} from '@/contexts/facets'
 import {useRoute} from 'vue-router'
-import CollectionToggleBtn from "@/components/widgets/button/CollectionToggleBtn";
+import CollectionToggleBtn from '@/components/widgets/button/CollectionToggleBtn'
+import SidebarToggleBtn from '@/components/widgets/button/SidebarToggleBtn'
 
 export default defineComponent({
   name: 'Navbar',
   components: {
+    SidebarToggleBtn,
     CollectionToggleBtn,
     AccountDropdown,
     SearchInput
@@ -51,10 +45,15 @@ export default defineComponent({
     const route = useRoute()
     const {authenticated} = useAuth()
 
-    const toggleFacets = computed(() => {
+    const sidebarToggle = computed(() => {
       if (route.meta.useFacets) {
+        const {facets} = require('@/contexts/facets')
         const {toggleFacetsSidebar} = useContext(facets)
         return toggleFacetsSidebar
+      } else if (route.meta.useRecordActions) {
+        const {record} = require('@/contexts/record')
+        const {toggleRecordSidebar} = useContext(record)
+        return toggleRecordSidebar
       }
       return null
     })
@@ -64,7 +63,7 @@ export default defineComponent({
       ARTICLES_COLLECTION_CODE,
       authenticated,
       route,
-      toggleFacetsSidebar: toggleFacets,
+      sidebarToggle,
     }
   }
 })

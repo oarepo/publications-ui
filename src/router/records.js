@@ -12,6 +12,7 @@ export default {
         }, {
             meta: {
                 useFacets: false,
+                useRecordActions: true
             }
         })
     ]

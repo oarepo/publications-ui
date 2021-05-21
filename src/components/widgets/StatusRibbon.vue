@@ -18,7 +18,7 @@ q-chip.absolute
     :class="dense ? 'q-pa-xs' : 'q-pa-sm'"
     :size="dense ? 'sm' : 'md'"
     name="verified" v-if="isApproved")
-  q-tooltip {{ $t('label.isApproved') }}
+    q-tooltip {{ $t('label.isApproved') }}
 </template>
 <script>
 import {defineComponent} from 'vue'

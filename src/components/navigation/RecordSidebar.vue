@@ -1,30 +1,29 @@
 <template lang="pug">
 q-drawer.bg-grey-3.text-dark.scrolling-drawer(
-  v-model="visible"
+  v-model="recordSidebarVisible"
   :width="320"
   :breakpoint="700")
   .column.no-wrap.q-gutter-y-md.q-py-xl.q-px-lg.justify-start.full-height
-      .col-auto.full-width
-        .text-h7.text-grey-7.text-bold.text-uppercase
-          q-icon.q-pr-sm(name="filter_alt" size="sm")
-          span {{ $t('label.sections') }}
+    .col-auto.full-width
+      sidebar-section-header(label="label.sections" icon="toc")
+    .col-auto.full-width
+      sidebar-section-header(label="label.actions" icon="published_with_changes")
+      .col-auto.full-width.column#record-actions-drawer
 </template>
 
 <script>
 import {defineComponent} from 'vue'
-import CommunitySwitcher from '@/components/widgets/select/CommunitySwitcher'
+import {record} from '@/contexts/record'
+import {useContext} from 'vue-context-composition'
+import SidebarSectionHeader from "@/components/widgets/text/SidebarSectionHeader";
+import RecordActions from '@/components/detail/RecordActions'
 
 export default defineComponent({
   name: "RecordSidebar",
-  components: {CommunitySwitcher},
-  props: {
-    visible: {
-      type: Boolean,
-      default: true
-    }
-  },
+  components: {RecordActions, SidebarSectionHeader},
   setup () {
-
+    const {recordSidebarVisible} = useContext(record)
+    return {recordSidebarVisible}
   }
 })
 </script>

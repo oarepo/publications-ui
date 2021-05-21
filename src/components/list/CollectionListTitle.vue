@@ -20,8 +20,6 @@ export default defineComponent({
   setup () {
     const {isDatasets, isArticles} = useCollection()
 
-    console.log(isDatasets.value, isArticles.value)
-
     const title = computed(() => {
       if (isDatasets.value) {
         return 'section.datasetList'

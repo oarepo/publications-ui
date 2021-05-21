@@ -74,6 +74,8 @@ export default {
   },
   accessibility: {},
   label: {
+    actions: 'Akce',
+    sections: 'Sekce',
     forms: {
       basicInfo: 'Základní informace',
       identifiers: 'Identifikátory',
@@ -84,6 +86,7 @@ export default {
       additionalTitles: 'Další názvy',
       submission: 'Vytvoření draftového záznamu',
     },
+    isApproved: 'Schváleno kurátorem',
     retry: 'Zkusit znovu',
     primaryCommunity: 'Primární komunita',
     submit: 'Vytvořit záznam',
@@ -172,6 +175,7 @@ export default {
     resolveDOIError: 'K zadanému DOI se nepodařilo získat metadata článku',
     noArticles: 'Žádné články nenalezeny',
     noDatasets: 'Žádné datasety nenalezeny',
+    noAuthors: 'Žádní autoři',
     draftDeleted: 'Záznam byl smazán',
     completeSuccess: 'Úspěšně dokončeno',
     doYRlyWnt: 'Opravdu chcete',
@@ -198,6 +202,8 @@ export default {
   },
   route: {
     title: {
+      datasetItem: 'Dataset',
+      articleItem: 'Článek',
       datasetList: 'Datasety',
       datasetEdit: 'Editace datasetu',
       datasetUpload: 'Nový dataset',

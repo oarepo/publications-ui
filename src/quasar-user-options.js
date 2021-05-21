@@ -29,7 +29,7 @@ export default {
         brand: {
             primary: '#0068a2',
             secondary: '#5a5a5a',
-            accent: '#5a5a5a',
+            accent: '#a70057',
 
             dark: '#1D1D1D',
 

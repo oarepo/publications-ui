@@ -13,7 +13,6 @@ q-btn.col-auto(
 <script>
 import {computed, defineComponent} from 'vue'
 import useCollection from '@/composables/useCollection'
-import {ARTICLES_COLLECTION_CODE, DATASETS_COLLECTION_CODE} from '@/constants'
 import {useContext} from 'vue-context-composition'
 import {community} from '@/contexts/community'
 
@@ -21,12 +20,14 @@ export default defineComponent({
   name: 'CreateRecordBtn',
   setup() {
     const {communityId} = useContext(community)
-    const {isDatasets, isArticles} = useCollection()
+    const {isDatasets, isArticles, model} = useCollection()
 
     const createRoute = computed(() => {
       let routeName = 'create'
       let label = ''
       let routeParams = {}
+
+      routeParams.model = model.value
 
       if (communityId.value) {
         routeName = 'community-create'
@@ -34,10 +35,8 @@ export default defineComponent({
       }
 
       if (isDatasets.value) {
-        routeParams.model = DATASETS_COLLECTION_CODE
         label = 'action.uploadDataset'
       } else if (isArticles.value) {
-        routeParams.model = ARTICLES_COLLECTION_CODE
         label = 'action.uploadArticle'
       }
 
