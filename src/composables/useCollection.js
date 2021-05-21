@@ -1,4 +1,4 @@
-import {computed} from 'vue'
+import {computed, ref} from 'vue'
 import {useRoute} from 'vue-router'
 import {ARTICLES_COLLECTION_CODE, DATASETS_COLLECTION_CODE} from '@/constants'
 
@@ -13,5 +13,5 @@ export default function useCollection() {
         return route.params.model === ARTICLES_COLLECTION_CODE
     })
 
-    return {isDatasets, isArticles, model: route.params.model}
+    return {isDatasets, isArticles, model: ref(route.params.model)}
 }

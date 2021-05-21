@@ -39,6 +39,7 @@ export default {
         publicationDate: 'In case your upload was already published elsewhere, please use the date of the first publication. Format: YYYY-MM-DD, YYYY-MM, or YYYY. For intervals use DATE/DATE, e.g. 1939/1945.'
     },
     action: {
+        navigateDetail: 'Show record detail',
         navigateArticleList: 'Switch to articles',
         navigateDatasetList: 'Switch to datasets',
         addItem: 'Add Item',
@@ -102,6 +103,7 @@ export default {
         roles: 'Roles',
         affiliations: 'Affiliations',
         name: 'Name',
+        or: 'Or',
         givenName: 'Given Name',
         familyName: 'Family Name',
         authorType: 'Author Type',
@@ -179,6 +181,8 @@ export default {
         noArticles: 'No articles found',
         noDatasets: 'No datasets found',
         noAuthors: 'No Authors',
+        noContributors: 'No Contributors',
+        noKeywords: 'No Keywords',
         noData: 'No data',
         loading: 'Loading',
         loggedOut: 'You have been logged out',

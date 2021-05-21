@@ -44,7 +44,7 @@ q-field.fit(
           ref="roles"
           options-dense
           :label="$t('label.roles')"
-          v-model="model.roles"
+          v-model="model.role"
           :options="CONTRIBUTOR_ROLES"
           @update:model-value="onChange")
       .col-grow
@@ -72,7 +72,7 @@ import useValidation from '@/composables/useValidation'
 import useInputRefs from '@/composables/useInputRefs'
 import AuthorTypeSelect from '@/components/widgets/forms/AuthorTypeSelect'
 import IdentifierInputList from '@/components/widgets/forms/IdentifierInputList'
-import {AUTHOR_TYPES, PERSON_IDENTIFIER_SCHEMES, AFFILIATIONS, CONTRIBUTOR_ROLES} from '@/constants'
+import {AFFILIATIONS, AUTHOR_TYPES, CONTRIBUTOR_ROLES, PERSON_IDENTIFIER_SCHEMES} from '@/constants'
 
 export default {
   name: 'IdentifierInput',
@@ -127,13 +127,15 @@ export default {
         model.person_or_org.name = personName.value
       }
       // TODO: migrate to taxonomy terms
-      if (model.roles) {
-        model.roles = model.roles.map((rol) => `${window.location.origin}/2.0/taxonomies/contributor-type/${rol}`)
+      if (model.role) {
+        model.role = model.role.map((rol) => typeof rol === 'string' ? `${window.location.origin}/2.0/taxonomies/contributor-type/${rol}` : rol)
       }
 
       // TODO: create affiliations input
       if (model.affiliations) {
-        model.affiliations = model.affiliations.map(a => { return typeof a === 'string'? {name: a} : a})
+        model.affiliations = model.affiliations.map(a => {
+          return typeof a === 'string' ? {name: a} : a
+        })
       }
       ctx.emit('update:modelValue', model)
     }

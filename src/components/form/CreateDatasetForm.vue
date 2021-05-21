@@ -63,7 +63,18 @@ q-stepper(
     icon="cloud_upload"
     :name="steps.UPLOAD"
     :title="$t('label.forms.uploadData')")
+    .column.justify-center.items-center
+      .col.text-h2
+        q-icon.flex-center(color="positive" name="check_circle")
+      .col.text-h5 {{ $t('message.submissionSuccess') }}
+    q-separator(spaced)
+    .column.justify-center.items-center
+      .col.text-subtitle1 {{ $t('label.forms.uploadData') }}
     upload-data
+    .column.justify-center.items-center
+      .col.text-subtitle1.q-my-md ~ {{ $t('label.or') }} ~
+      .col
+        q-btn(color="primary" :label="$t('action.navigateDetail')" :to="pathFromUrl(created?.links?.self)")
 </template>
 
 <script>
@@ -115,15 +126,18 @@ export default defineComponent({
       step.value = steps.UPLOAD
     }
 
+    function pathFromUrl(url) {
+      return new URL(url).pathname
+    }
+
     function submit() {
-      console.log('submit')
       submitting.value = true
 
       // Set internal metadata fields
       // TODO: migrate to taxonomy terms
       formData.value['resource_type'] = {type: `${window.location.origin}/2.0/taxonomies/resourceType/datasets`}
 
-      const submitUrl = `/${formData.value._primary_community}/${model}/draft/`
+      const submitUrl = `/${formData.value._primary_community}/${model.value}/draft/`
 
       // TODO: change this upon createRecord implementation in invenio-vue library
       axios.post(submitUrl, JSON.stringify(formData.value), {
@@ -143,7 +157,7 @@ export default defineComponent({
       })
     }
 
-    return {formData, step, steps, created, failed, submit, retry, submitting}
+    return {formData, step, steps, created, failed, submit, retry, submitting, pathFromUrl}
   }
 })
 </script>

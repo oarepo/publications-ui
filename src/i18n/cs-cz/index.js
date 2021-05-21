@@ -25,6 +25,7 @@ export default {
     primaryCommunity: 'Vyberte primární komunitu / skupinu do které bude záznam patřit'
   },
   action: {
+    navigateDetail: 'Přejít na detail',
     navigateArticleList: 'Přejít na články',
     navigateDatasetList: 'Přejít na datasety',
     addItem: 'Přidat položku',
@@ -95,6 +96,7 @@ export default {
     languages: 'Jazyky',
     roles: 'Role',
     publisher: 'Vydavatel',
+    or: 'nebo',
     publicationDate: 'Datum vydání',
     affiliations: 'Afilace',
     name: 'Název',
@@ -176,6 +178,8 @@ export default {
     noArticles: 'Žádné články nenalezeny',
     noDatasets: 'Žádné datasety nenalezeny',
     noAuthors: 'Žádní autoři',
+    noContributors: 'Žádní přispěvatelé',
+    noKeywords: 'Žádná klíčová slova',
     draftDeleted: 'Záznam byl smazán',
     completeSuccess: 'Úspěšně dokončeno',
     doYRlyWnt: 'Opravdu chcete',

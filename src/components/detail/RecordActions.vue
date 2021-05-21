@@ -32,7 +32,6 @@ export default defineComponent({
     const {recordSidebarEnabled} = useContext(record)
     const {transitions, makeTransition} = useFSM(props.record)
 
-    console.log(props.record, transitions.value)
     function attachArticle () {}
 
     return {attachArticle, transitions, makeTransition, recordSidebarEnabled}
