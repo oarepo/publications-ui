@@ -1,6 +1,6 @@
 <template lang="pug">
 q-page(padding)
-  q-card.bg-grey-3(bordered flat)
+  q-card.bg-grey-3(flat)
     q-card-section
       .text-h5.no-wrap.row.q-gutter-md
         .col-auto

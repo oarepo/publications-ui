@@ -3,6 +3,11 @@ teleport(to="#record-actions-drawer" v-if="recordSidebarEnabled")
   q-list(padding separator)
     q-item(clickable v-ripple @click="attachArticle")
       q-item-section(avatar)
+        q-icon(name="edit")
+      q-item-section
+        q-item-label.text-uppercase.text-caption {{ $t('action.edit') }}
+    q-item(clickable v-ripple @click="attachArticle")
+      q-item-section(avatar)
         q-icon(name="link")
       q-item-section
         q-item-label.text-uppercase.text-caption {{ $t('action.attachArticle') }}
