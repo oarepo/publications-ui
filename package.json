@@ -1,13 +1,13 @@
 {
   "name": "publications-ui",
-  "version": "0.1.0",
+  "version": "0.1.1a1",
   "description": "CESNET Digital Repository of scientific publications and associated datasets",
   "productName": "Digital Repository",
   "author": "Miroslav Bauer <bauer@cesnet.cz>",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --dest dist/spa",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
