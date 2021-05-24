@@ -17,6 +17,13 @@ q-stepper-navigation
       color="positive"
       :label="$t('label.submit')"
       @click="$emit('submit')")
+    q-btn.col-auto.q-px-lg(
+      padding="md"
+      icon="save"
+      v-if="hasSave"
+      color="positive"
+      :label="$t('label.forms.saveChanges')"
+      @click="$emit('submit')")
 </template>
 
 <script>
@@ -34,6 +41,10 @@ export default defineComponent({
       default: false
     },
     hasRetry: {
+      type: Boolean,
+      default: false
+    },
+    hasSave: {
       type: Boolean,
       default: false
     },

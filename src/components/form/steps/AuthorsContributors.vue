@@ -28,7 +28,7 @@ export default defineComponent({
   setup(props, ctx) {
     const {notifyError} = useNotify()
 
-    const model = reactive({...props.modelValue, creators: [], contributors: []})
+    const model = reactive(props.modelValue || {creators: [], contributors: []})
     const creators = ref(null)
     const contributors = ref(null)
 

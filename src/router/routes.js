@@ -34,9 +34,20 @@ const routes = [
         path: '/',
         component: () => import(/* webpackChunkName: 'layouts' */ '@/layouts/WrapperLayout'),
         children: [
+            {
+                path: '',
+                component: () => import(/* webpackChunkName: 'layouts' */ '@/layouts/FormLayout'),
+                children: [{
+                    // Record Edit route
+                    path: ':communityId/:model/draft/:recordId/edit',
+                    name: 'edit',
+                    component: () => import(/* webpackChunkName: 'forms' */ '@/pages/forms/EditForm'),
+                    meta: {useFacets: false}
+                }]
+            },
+            records,
             forms,
             collections,
-            records,
             { /* Other routes */
                 path: 'logged-out',
                 name: 'logged-out',

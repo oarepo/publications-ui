@@ -25,7 +25,7 @@ export default defineComponent({
   setup (props, ctx) {
     const {notifyError} = useNotify()
 
-    const model = reactive({...props.modelValue, identifiers: []})
+    const model = reactive(props.modelValue || {identifiers: []})
     const input = ref(null)
 
     watch (model, () => {

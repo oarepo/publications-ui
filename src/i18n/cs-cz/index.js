@@ -25,6 +25,7 @@ export default {
     primaryCommunity: 'Vyberte primární komunitu / skupinu do které bude záznam patřit'
   },
   action: {
+    edit: 'Editovat',
     navigateDetail: 'Přejít na detail',
     navigateArticleList: 'Přejít na články',
     navigateDatasetList: 'Přejít na datasety',
@@ -68,6 +69,7 @@ export default {
     stateChangeMessage: 'Při změně stavu došlo k následující neočekávané chybě',
     popupLoginFail: 'Nebylo možno se přihlásit, prosím povolte v prohlížeči vyskakovací okna pro tento web',
     validationFail: 'Prosím opravte chyby a zkuste to znovu',
+    saveChangesFail: 'Nepodařilo se uložit změny',
     validation: {
       required: 'Toto pole je vyžadováno',
       minLength: 'Toto pole musí obsahovat alespoň {min} znaků'
@@ -86,9 +88,11 @@ export default {
       keywords: 'Klíčová slova',
       additionalTitles: 'Další názvy',
       submission: 'Vytvoření draftového záznamu',
+      saveChanges: 'Uložit změny'
     },
     isApproved: 'Schváleno kurátorem',
     retry: 'Zkusit znovu',
+    backToCollection: 'Zpět na výpis',
     primaryCommunity: 'Primární komunita',
     submit: 'Vytvořit záznam',
     contributors: 'Přispěvatelé',
@@ -178,6 +182,7 @@ export default {
     noArticles: 'Žádné články nenalezeny',
     noDatasets: 'Žádné datasety nenalezeny',
     noAuthors: 'Žádní autoři',
+    noFiles: 'Žádné soubory',
     noContributors: 'Žádní přispěvatelé',
     noKeywords: 'Žádná klíčová slova',
     draftDeleted: 'Záznam byl smazán',
@@ -185,6 +190,7 @@ export default {
     doYRlyWnt: 'Opravdu chcete',
     noData: 'Žádná data',
     loading: 'Načítám',
+    savingChanges: 'Ukládám změny',
     loggedOut: 'Byli jste odhlášeni',
     recordNotValid: 'V záznamu jsou chyby',
     gdprPrompt: 'Kliknutím na "Souhlasím", vyjadřujete souhlas s našimi pravidly využití služeb a podmínkami zpracování osobních údajů.',

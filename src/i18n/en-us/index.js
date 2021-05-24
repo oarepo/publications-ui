@@ -28,6 +28,7 @@ export default {
         stateChangeMessage: 'There was a following error when trying to change the record state',
         popupLoginFail: 'We were unable to log you in, please allow pop-ups for this website.',
         validationFail: 'Please correct the errors and try again',
+        saveChangesFail: 'Failed to save changes',
         validation: {
             required: 'This field is required',
             minLength: 'Must be at least {min} characters long'
@@ -39,6 +40,7 @@ export default {
         publicationDate: 'In case your upload was already published elsewhere, please use the date of the first publication. Format: YYYY-MM-DD, YYYY-MM, or YYYY. For intervals use DATE/DATE, e.g. 1939/1945.'
     },
     action: {
+        edit: 'Edit',
         navigateDetail: 'Show record detail',
         navigateArticleList: 'Switch to articles',
         navigateDatasetList: 'Switch to datasets',
@@ -88,7 +90,9 @@ export default {
             uploadData: 'Data Upload',
             authorsContributors: 'Authors and Contributors',
             submission: 'DRAFT Record Submission',
+            saveChanges: 'Save Changes'
         },
+        backToCollection: 'Back to collection',
         isApproved: 'Approved by curator',
         actions: 'Actions',
         sections: 'Sections',
@@ -181,10 +185,13 @@ export default {
         noArticles: 'No articles found',
         noDatasets: 'No datasets found',
         noAuthors: 'No Authors',
+        noFiles: 'No files attached',
         noContributors: 'No Contributors',
         noKeywords: 'No Keywords',
         noData: 'No data',
         loading: 'Loading',
+        savingChanges: 'Saving Changes',
+
         loggedOut: 'You have been logged out',
         recordNotValid: 'Record is not valid',
         gdprPrompt: 'By clicking on "Accept", you give your consent with our Terms of Service and Privacy Policy for this service.',

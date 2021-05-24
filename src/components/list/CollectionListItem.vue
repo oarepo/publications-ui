@@ -64,9 +64,9 @@ export default defineComponent({
     })
 
     const dateCreated = computed(() => {
-      return m.value.dates.find((dat) => {
+      return m.value.dates?.find((dat) => {
         return dat.type === 'created'
-      }).date
+      }).date || m.value.created
     })
 
     const thumbnailSize = computed(() => {

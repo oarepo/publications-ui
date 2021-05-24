@@ -87,14 +87,14 @@ export default defineComponent({
     const {required} = useValidation()
     const {notifyError} = useNotify()
     const {communityId} = useContext(community)
-
     const primaryCommunity = ref(null)
     const title = ref(null)
     const abstract = ref(null)
     const keywords = ref(null)
     const additionalTitles = ref(null)
 
-    const basicInfo = reactive({})
+    const basicInfo = reactive(props.modelValue || {})
+
     if (communityId) {
       basicInfo['_primary_community'] = communityId
     }

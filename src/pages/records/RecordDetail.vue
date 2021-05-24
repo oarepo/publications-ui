@@ -9,7 +9,6 @@ q-page(padding)
         .col-auto
           span {{ $mt(md.title) }}
         .col-auto
-          span {{ md.state }}
           status-ribbon(v-if="!record.loading" :metadata="md" dense)
     q-separator
     q-card-section.q-px-lg.bg-grey-4
@@ -34,7 +33,7 @@ q-page(padding)
       p(v-html="$sanitize($mt(md.abstract))")
       .text-overline.text-uppercase.text-accent {{ $t('label.identifiers') }}
       .row
-        q-chip(v-for="i in md.identifiers" :key="i.identifier")
+        q-chip(v-for="i in md.identifiers" :key="i.identifier" clickable @click="copy2clip(i.identifier)")
           q-avatar.q-mx-md(color="primary" font-size="1rem" size="xl")
             strong.text-caption.text-white.text-bold {{ i.scheme }}
           span {{ i.identifier }}
@@ -42,8 +41,8 @@ q-page(padding)
       .row
         q-chip(v-for="r in md.rights || []" :key="r.links.self" )
           span(v-if="!r.is_ancestor") {{ $mt(r.title) }}
-      .text-overline.text-uppercase.text-accent.q-mt-md {{ $t('label.files') }}
-      upload-data
+      .text-overline.text-uppercase.text-accent.q-mt-md(v-if="isDatasets") {{ $t('label.files') }}
+        dataset-files(:dataset="record")
     metadata-dropdown(:metadata="md")
   record-actions(:record="record")
 </template>
@@ -60,10 +59,21 @@ import MetadataDropdown from '@/components/detail/MetadataDropdown'
 import KeywordChips from '@/components/detail/KeywordChips'
 import ContributorBadge from '@/components/widgets/badge/ContributorBadge'
 import UploadData from '@/components/form/steps/UploadData'
+import DatasetFiles from '@/components/detail/DatasetFiles'
+import useClipboard from '@/composables/useClipboard'
 
 export default defineComponent({
   name: 'RecordDetail',
-  components: {ContributorBadge, KeywordChips, MetadataDropdown, CreatorChips, RecordActions, StatusRibbon, UploadData},
+  components: {
+    ContributorBadge,
+    KeywordChips,
+    MetadataDropdown,
+    CreatorChips,
+    RecordActions,
+    StatusRibbon,
+    UploadData,
+    DatasetFiles
+  },
   emits: ['reload'],
   props: {
     record: {
@@ -71,8 +81,9 @@ export default defineComponent({
       required: true
     }
   },
-  setup (props) {
+  setup(props) {
     const {t} = useI18n()
+    const {copy2clip} = useClipboard(t)
     const {mt} = useTranslated()
     const {isDatasets, isArticles} = useCollection()
 
@@ -87,10 +98,10 @@ export default defineComponent({
       } else if (isArticles) {
         titlePath = 'route.title.articleItem'
       }
-      return {title: `${mt(props.record.metadata.title)} - ${t(titlePath)}` }
+      return {title: `${mt(props.record.metadata.title)} - ${t(titlePath)}`}
     })
 
-    return {md}
+    return {md, copy2clip, isDatasets}
   }
 })
 </script>
