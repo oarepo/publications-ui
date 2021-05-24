@@ -1,13 +1,26 @@
 const
     API_DEV = 'https://127.0.0.1:8080/'
-    // API_STAGING = 'https://repozitar-test.cesnet.cz/',
-    // API_PROD = 'https://repozitar.cesnet.cz/'
+// API_STAGING = 'https://repozitar-test.cesnet.cz/',
+// API_PROD = 'https://repozitar.cesnet.cz/'
 
+const path = require('path')
 // const fs = require('fs')
 // const packageJson = fs.readFileSync('./package.json')
 // const version = JSON.parse(packageJson).version || '0'
 
 module.exports = {
+    // chainWebpack: config => {
+    //     config.module
+    //         .rule('vue-i18n-loader')
+    //         .include(path.resolve(__dirname, 'src/i18n'))
+    //         .test(/\.(json5?|ya?ml)$/)
+    //         .type('javascript/auto')
+    //         .use('@intlify/vue-i18n-loader')
+    //         .loader('@intlify/vue-i18n-loader')
+    //         .tap(() => {
+    //         })
+    //         .end()
+    // },
     devServer: {
         http2: true,
         port: 5000,
@@ -26,7 +39,7 @@ module.exports = {
                 changeOrigin: false,
                 secure: false,
                 debug: true,
-                bypass: function (req, res, proxyOptions) {
+                bypass: function (req) {
                     if (req.headers.accept.indexOf('html') !== -1 &&
                         !req.path.startsWith('/oauth') &&
                         !req.path.startsWith('/2.0') &&
@@ -41,10 +54,19 @@ module.exports = {
     pluginOptions: {
         quasar: {
             framework: {
-                cssAddon: true,
+                cssAddon: true
             },
             importStrategy: 'kebab',
             rtlSupport: false
+        },
+        i18n: {
+            locale: 'cs-cz',
+            fallbackLocale: 'en-us',
+            localeDir: 'locales',
+            enableLegacy: false,
+            runtimeOnly: true,
+            compositionOnly: false,
+            fullInstall: true
         }
     },
     transpileDependencies: [

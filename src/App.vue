@@ -6,7 +6,7 @@ router-view(v-slot="{ Component }")
 
 <script>
 import {useMeta, useQuasar} from 'quasar'
-import {useI18n} from 'vue-i18n/index'
+import {useI18n} from 'vue-i18n'
 import {defineComponent} from 'vue'
 import {provideContext} from 'vue-context-composition'
 import {community} from '@/contexts/community'

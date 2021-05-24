@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import {Quasar} from 'quasar'
 import quasarUserOptions from './quasar-user-options'
-import {i18n} from '@/boot/i18n'
+import i18n from '@/boot/i18n'
 import addressbarColor from '@/boot/addressbar-color'
 import '@/boot/axios'
 import VueQuerySynchronizer from "@oarepo/vue-query-synchronizer";

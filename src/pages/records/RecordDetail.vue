@@ -13,7 +13,7 @@ q-page(padding)
     q-separator
     q-card-section.q-px-lg.bg-grey-4
       .row
-        .col-auto.self-center.text-overline.text-uppercase.text-dark {{ $t('label.authors') }}:
+        .col-auto.self-center.text-overline.text-uppercase.text-dark.q-mx-md {{ $t('label.authors') }}:
         contributor-badge.col-auto(
           v-if="md.creators"
           v-for="c in md.creators || []" :key="c.person_or_org.name"
@@ -50,7 +50,7 @@ q-page(padding)
 import {computed, defineComponent} from 'vue'
 import {useMeta} from 'quasar'
 import useCollection from '@/composables/useCollection'
-import {useI18n} from 'vue-i18n/index'
+import {useI18n} from 'vue-i18n'
 import {useTranslated} from '@/i18n/multilingual'
 import RecordActions from '@/components/detail/RecordActions'
 import StatusRibbon from '@/components/widgets/StatusRibbon'

@@ -26,7 +26,7 @@ q-field.row(
 
 <script>
 import {reactive, ref} from 'vue'
-import {useI18n} from 'vue-i18n/index'
+import {useI18n} from 'vue-i18n'
 import useValidation from '@/composables/useValidation'
 import useInputRefs from '@/composables/useInputRefs'
 import ListInputButtons from '@/components/widgets/forms/ListInputButtons'
