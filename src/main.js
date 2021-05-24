@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import {Quasar} from 'quasar'
 import quasarUserOptions from './quasar-user-options'
-import {i18n} from '@/boot/i18n'
+import i18n from '@/boot/i18n'
 import addressbarColor from '@/boot/addressbar-color'
 import '@/boot/axios'
 import VueQuerySynchronizer from "@oarepo/vue-query-synchronizer";
@@ -14,7 +14,7 @@ import PopupLogin, {usePopupLogin} from '@oarepo/vue-popup-login'
 import Vue3Sanitize from 'vue-3-sanitize/dist/vue-3-sanitize'
 import components from '@/boot/components'
 
-const app = createApp(App)
+const app = createApp(App).use(i18n)
 
 // Use extensions & boot files
 app

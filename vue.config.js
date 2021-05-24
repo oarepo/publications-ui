@@ -26,7 +26,7 @@ module.exports = {
                 changeOrigin: false,
                 secure: false,
                 debug: true,
-                bypass: function (req, res, proxyOptions) {
+                bypass: function (req) {
                     if (req.headers.accept.indexOf('html') !== -1 &&
                         !req.path.startsWith('/oauth') &&
                         !req.path.startsWith('/2.0') &&
@@ -39,13 +39,22 @@ module.exports = {
         }
     },
     pluginOptions: {
-        quasar: {
-            framework: {
-                cssAddon: true,
-            },
-            importStrategy: 'kebab',
-            rtlSupport: false
-        }
+      quasar: {
+        framework: {
+          cssAddon: true
+        },
+        importStrategy: 'kebab',
+        rtlSupport: false
+      },
+      i18n: {
+        locale: 'cs',
+        fallbackLocale: 'en',
+        localeDir: 'i18n',
+        enableLegacy: false,
+        runtimeOnly: false,
+        compositionOnly: false,
+        fullInstall: true
+      }
     },
     transpileDependencies: [
         'quasar'

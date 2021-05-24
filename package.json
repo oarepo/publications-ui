@@ -1,14 +1,14 @@
 {
   "name": "publications-ui",
   "version": "0.1.1a1",
-  "description": "CESNET Digital Repository of scientific publications and associated datasets",
-  "productName": "Digital Repository",
-  "author": "Miroslav Bauer <bauer@cesnet.cz>",
   "private": true,
+  "description": "CESNET Digital Repository of scientific publications and associated datasets",
+  "author": "Miroslav Bauer <bauer@cesnet.cz>",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --dest dist/spa",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/i18n/**/*.json\""
   },
   "dependencies": {
     "@oarepo/invenio-vue": "^1.0.0-a9",
@@ -16,9 +16,9 @@
     "@oarepo/vue-popup-login": "^3.0.0-a3",
     "@oarepo/vue-query-synchronizer": "^3.0.0-a5",
     "@quasar/extras": "^1.0.0",
+    "@uppy/aws-s3-multipart": "^1.8.15",
     "@uppy/core": "^1.18.1",
     "@uppy/locales": "^1.19.0",
-    "@uppy/aws-s3-multipart": "^1.8.15",
     "@uppy/vue": "^0.2.2",
     "animate.css": "^4.1.1",
     "core-js": "^3.6.5",
@@ -33,6 +33,7 @@
     "vue-router": "^4.0.0-0"
   },
   "devDependencies": {
+    "@intlify/vue-i18n-loader": "^2.1.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
@@ -43,7 +44,9 @@
     "eslint-plugin-vue": "^7.0.0",
     "sass": "^1.29.0",
     "sass-loader": "^10.1.0",
+    "vue-cli-plugin-i18n": "~2.1.1",
     "vue-cli-plugin-pug": "~2.0.0",
     "vue-cli-plugin-quasar": "^4.0.0-beta.1"
-  }
+  },
+  "productName": "Digital Repository"
 }
