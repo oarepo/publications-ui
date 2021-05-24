@@ -10,7 +10,7 @@
         q-avatar.cursor-pointer(icon="file_download" @click="download(f)")
   .text-grey-7.text-caption.col-auto.self-center(v-else) {{ $t('message.noFiles') }}
 .row.q-mt-md(v-if="canUpload")
-  upload-data
+  upload-data(:record="dataset")
 </template>
 
 <script>

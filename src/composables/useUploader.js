@@ -7,9 +7,8 @@ import {onBeforeUnmount, ref} from 'vue'
 import {useI18n} from 'vue-i18n/index'
 import {axios} from '@/boot/axios'
 
-export default function useUploader() {
+export default function useUploader(record) {
     const {locale} = useI18n()
-
     let langPack = null
     if (locale.value === 'cs' || locale.value === 'cs-CZ') {
         langPack = require('@uppy/locales/lib/cs_CZ')
@@ -21,7 +20,7 @@ export default function useUploader() {
     function createMultipartUpload(file) {
         console.log('file', file)
         // TODO: test only
-        const url = 'https://127.0.0.1:5000/cesnet/datasets/draft/dat-7hvfv-51836/files/?multipart=true'
+        const url = record.http.data.links.files
         const metadata = {}
 
         Object.keys(file.meta).map(key => {
@@ -30,11 +29,9 @@ export default function useUploader() {
             }
         })
         console.log('metadata', metadata)
-
-        return axios.post(url, {
+        return axios.post(`${url}?multipart=true`, {
             key: file.name,
             multipart_content_type: file.type,
-            size: file.size,
             ...metadata
         }).then((res) => {
             if (res && res.error) {
@@ -52,8 +49,7 @@ export default function useUploader() {
     }))
     uppy.value.use(AwsS3Multipart, {
         limit: 4,
-        companionUrl: 'http://localhost:3020'
-        // createMultipartUpload: createMultipartUpload
+        createMultipartUpload: createMultipartUpload
     })
 
     onBeforeUnmount(() => {

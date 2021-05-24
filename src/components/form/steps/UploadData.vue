@@ -10,8 +10,15 @@ import useUploader from '@/composables/useUploader'
 export default defineComponent({
   name: 'UploadData',
   components: {Dashboard},
-  setup () {
-    const {uppy} = useUploader()
+  props: {
+    record: {
+      type: Object,
+      required: true
+    }
+  },
+  setup (props) {
+    console.log(props.record)
+    const {uppy} = useUploader(props.record)
     return {uppy}
   }
 })

@@ -13,7 +13,7 @@ q-page(padding)
     q-separator
     q-card-section.q-px-lg.bg-grey-4
       .row
-        .col-auto.self-center.text-overline.text-uppercase.text-dark {{ $t('label.authors') }}:
+        .col-auto.self-center.text-overline.text-uppercase.text-dark.q-mx-md {{ $t('label.authors') }}:
         contributor-badge.col-auto(
           v-if="md.creators"
           v-for="c in md.creators || []" :key="c.person_or_org.name"
