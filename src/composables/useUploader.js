@@ -4,7 +4,7 @@ import '@uppy/dashboard/dist/style.css'
 import Uppy from '@uppy/core'
 import AwsS3Multipart from '@uppy/aws-s3-multipart'
 import {onBeforeUnmount, ref} from 'vue'
-import {useI18n} from 'vue-i18n/index'
+import {useI18n} from 'vue-i18n'
 import {axios} from '@/boot/axios'
 
 export default function useUploader(record) {

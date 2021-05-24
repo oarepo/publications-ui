@@ -50,7 +50,7 @@ q-page(padding)
 import {computed, defineComponent} from 'vue'
 import {useMeta} from 'quasar'
 import useCollection from '@/composables/useCollection'
-import {useI18n} from 'vue-i18n/index'
+import {useI18n} from 'vue-i18n'
 import {useTranslated} from '@/i18n/multilingual'
 import RecordActions from '@/components/detail/RecordActions'
 import StatusRibbon from '@/components/widgets/StatusRibbon'

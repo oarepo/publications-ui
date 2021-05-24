@@ -11,7 +11,7 @@ q-input(v-model="doi"
 import {defineComponent, ref, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {useQuasar} from "quasar";
-import {useI18n} from "vue-i18n/index";
+import {useI18n} from "vue-i18n";
 import {axios} from "@/boot/axios";
 import {ARTICLES_COLLECTION_CODE} from "@/constants";
 

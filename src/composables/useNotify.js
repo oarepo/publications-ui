@@ -1,5 +1,5 @@
 import {useQuasar} from 'quasar'
-import {useI18n} from 'vue-i18n/index'
+import {useI18n} from 'vue-i18n'
 
 export default function useNotify() {
     const {t} = useI18n()

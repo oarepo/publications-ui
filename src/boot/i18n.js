@@ -1,7 +1,7 @@
 import { Quasar } from 'quasar'
 import { createI18n } from 'vue-i18n'
 
-const defaultLocale = Quasar.lang.isoName
+const defaultLocale = 'cs-cz'
 let browserLocale = Quasar.lang.getLocale()
 
 if (browserLocale === 'cs') {
@@ -17,13 +17,13 @@ if (browserLocale === 'cs') {
  * See: https://github.com/intlify/vue-i18n-loader#rocket-i18n-resource-pre-compilation
  */
 function loadLocaleMessages() {
-    const locales = require.context('../i18n', true, /[A-Za-z0-9-_,\s]+\.json$/i)
+    const locales = require.context('../locales', true, /[A-Za-z0-9-_,\s]+\.json$/i)
     const messages = {}
     locales.keys().forEach(key => {
         const matched = key.match(/([A-Za-z0-9-_]+)\./i)
         if (matched && matched.length > 1) {
             const locale = matched[1]
-            messages[locale] = locales(key)
+            messages[locale] = locales(key).default
         }
     })
     return messages
@@ -34,5 +34,5 @@ export default createI18n({
     globalInjection: true,
     locale: browserLocale,
     fallbackLocale: defaultLocale,
-    messages: loadLocaleMessages()
+    messages:  loadLocaleMessages()
 })

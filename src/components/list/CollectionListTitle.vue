@@ -3,7 +3,7 @@
   .col.text-h3.gt-md {{ $t(title) }}
   .col.text-h4.lt-lg.gt-sm.q-mt-none.q-mb-lg {{ $t(title) }}
   .col.text-h6.lt-md.q-mt-none.q-mb-md {{ $t(title) }}
-  .col.q-pl-xs.text-primary.text-subtitle2 {{ $tc('label.recordsFound', collection.recordsCount) }}
+  .col.q-pl-xs.text-primary.text-subtitle2 {{ $t('label.recordsFound', collection.recordsCount) }}
 </template>
 <script>
 import {computed, defineComponent} from 'vue'

@@ -14,7 +14,7 @@ import PopupLogin, {usePopupLogin} from '@oarepo/vue-popup-login'
 import Vue3Sanitize from 'vue-3-sanitize/dist/vue-3-sanitize'
 import components from '@/boot/components'
 
-const app = createApp(App).use(i18n)
+const app = createApp(App)
 
 // Use extensions & boot files
 app

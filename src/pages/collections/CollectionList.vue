@@ -29,7 +29,7 @@ import {useContext} from 'vue-context-composition'
 import {facets} from '@/contexts/facets'
 import ScrollTopFab from '@/components/widgets/button/ScrollTopFab'
 import {useMeta} from 'quasar'
-import {useI18n} from 'vue-i18n/index'
+import {useI18n} from 'vue-i18n'
 import useCollection from '@/composables/useCollection'
 
 export default defineComponent({

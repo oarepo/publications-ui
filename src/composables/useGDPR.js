@@ -1,6 +1,6 @@
 import {Cookies, openURL, useQuasar} from 'quasar'
 import {computed} from 'vue'
-import {useI18n} from 'vue-i18n/index'
+import {useI18n} from 'vue-i18n'
 
 const
     TOS = 'https://du.cesnet.cz/en/provozni_pravidla/start',

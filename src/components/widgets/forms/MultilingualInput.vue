@@ -32,7 +32,7 @@ q-field.row.fit(
 </template>
 <script>
 import {computed, reactive, ref} from 'vue'
-import {useI18n} from 'vue-i18n/index'
+import {useI18n} from 'vue-i18n'
 import LocaleSelect from '@/components/widgets/forms/LocaleSelect'
 import useModel from '@/composables/useModel'
 import useValidation from '@/composables/useValidation'
