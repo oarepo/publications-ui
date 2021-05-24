@@ -7,9 +7,7 @@ export default {
             path: `:model/create`,
             name: 'create',
             component: () => import(/* webpackChunkName: 'forms' */ '@/pages/forms/CreateForm'),
-            meta: {
-                useFacets: false,
-            }
+            meta: { useFacets: false }
         },
         {
             // CREATE record in CURRENT community

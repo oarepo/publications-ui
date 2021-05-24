@@ -1,13 +1,19 @@
-import {computed, nextTick, ref} from 'vue'
+import {computed, ref} from 'vue'
 import {useI18n} from 'vue-i18n/index'
 import {useQuasar} from 'quasar'
 import {axios} from '@/boot/axios'
 import {useRouter} from 'vue-router'
+import useCollection from '@/composables/useCollection'
+import {useContext} from 'vue-context-composition'
+import {community} from '@/contexts/community'
 
 export default function useFSM(record) {
     const {t} = useI18n()
     const $q = useQuasar()
     const router = useRouter()
+    const {model} = useCollection()
+    const {communityId} = useContext(community)
+
     const changingState = ref(false)
 
     const transitions = computed(() => {
@@ -51,8 +57,10 @@ export default function useFSM(record) {
             })
             if (transition.code === 'approve') {
                 await router.replace({
-                    name: `${this.communityId}/dataset/record`,
+                    name: 'published-detail',
                     params: {
+                        communityId: communityId.value,
+                        model: model.value,
                         recordId: this.record.id
                     }
                 })
@@ -60,8 +68,11 @@ export default function useFSM(record) {
             }
             if (transition.code === 'revert_approval') {
                 await router.replace({
-                    name: `${this.communityId}/draft-dataset/record`,
+                    name: 'detail',
                     params: {
+                        communityId: communityId.value,
+                        model: model.value,
+                        state: 'draft',
                         recordId: this.record.id
                     }
                 })
@@ -69,7 +80,11 @@ export default function useFSM(record) {
             }
             if (transition.code === 'delete_draft') {
                 await router.replace({
-                    name: `${this.communityId}/all-datasets`
+                    name: 'list',
+                    params: {
+                        communityId: communityId,
+                        model: model
+                    }
                 })
                 $q.notify({
                     message: t('message.draftDeleted'),
@@ -78,9 +93,6 @@ export default function useFSM(record) {
                 })
                 return
             }
-            await nextTick(() => {
-                record.reload()
-            })
             $q.notify({
                 message: t('message.completeSuccess'),
                 color: 'positive',
@@ -96,7 +108,7 @@ export default function useFSM(record) {
                 icon: 'error'
             })
         }
-        this.changingState = false
+        changingState.value = false
     }
     return {changingState, makeTransition, transitions}
 }
