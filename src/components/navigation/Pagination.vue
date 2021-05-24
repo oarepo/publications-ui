@@ -1,21 +1,27 @@
 <template lang="pug">
 q-pagination.q-mt-lg(
-  :input="true" v-model="query.page" :max="pages" :max-pages="9" color="grey-5"
+  v-if="collection.pages > 1"
+  :input="true" v-model="query.page" :max="collection.pages" :max-pages="10" color="grey-5"
   direction-links boundary-numbers size="lg")
 </template>
 
 <script>
-import { Component, Vue } from 'vue-property-decorator'
+import {defineComponent} from 'vue'
+import {useQuery} from '@oarepo/vue-query-synchronizer'
 
-export default @Component({
+export default defineComponent({
   name: 'Pagination',
   props: {
-    query: Object,
-    pages: Number
+    collection: {
+      type: Object,
+      required: true
+    }
+  },
+  setup () {
+    const query = useQuery()
+    return {query}
   }
 })
-class Pagination extends Vue {
-}
 </script>
 
 <style lang="sass" scoped>

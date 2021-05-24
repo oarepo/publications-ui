@@ -15,10 +15,27 @@ export default {
     approve: 'verified'
   },
   nav: {
+    intro: '',
     admin: 'Administrace',
     detail: 'Detail'
   },
+  hint: {
+    publicationDate: 'Pokud byl váš upload již publikován jinde, použijte datum prvního zveřejnění. Formát: RRRR-MM-DD, RRRR-MM nebo RRRR. Pro intervaly použijte DATE / DATE, např. 1939/1945. ',
+    localeSwitcher: 'Zadejte kód jazyka ve formátu ISO 639-2/B',
+    primaryCommunity: 'Vyberte primární komunitu / skupinu do které bude záznam patřit'
+  },
   action: {
+    edit: 'Editovat',
+    navigateDetail: 'Přejít na detail',
+    navigateArticleList: 'Přejít na články',
+    navigateDatasetList: 'Přejít na datasety',
+    addItem: 'Přidat položku',
+    rmItem: 'Odebrat položku',
+    addLang: "Přidat jazykovou variantu",
+    rmLang: "Odebrat jazykovou variantu",
+    choose: 'Vybrat',
+    filterByCommunity: 'Procházet záznamy ve vybrané komunitě',
+    sort: 'Seřadit výsledky',
     delete_draft: 'smazat rozpracovaný záznam',
     make_private: 'skrýt záznam',
     make_public: 'zveřejnit záznam',
@@ -43,13 +60,16 @@ export default {
     decline: 'Nesouhlasím',
     upload: 'Nahrát',
     uploadDataset: 'Nahrát nový dataset',
-    uploadArticle: 'Nahrát nový článek'
+    uploadArticle: 'Nahrát nový článek',
+    scrollToTop: 'Zpět nahoru'
   },
   error: {
+    submissionFail: 'Při vytváření záznamu došlo k chybě',
     stateChangeFail: 'Chyba při změně stavu',
     stateChangeMessage: 'Při změně stavu došlo k následující neočekávané chybě',
     popupLoginFail: 'Nebylo možno se přihlásit, prosím povolte v prohlížeči vyskakovací okna pro tento web',
     validationFail: 'Prosím opravte chyby a zkuste to znovu',
+    saveChangesFail: 'Nepodařilo se uložit změny',
     validation: {
       required: 'Toto pole je vyžadováno',
       minLength: 'Toto pole musí obsahovat alespoň {min} znaků'
@@ -57,7 +77,45 @@ export default {
   },
   accessibility: {},
   label: {
+    actions: 'Akce',
+    sections: 'Sekce',
+    forms: {
+      basicInfo: 'Základní informace',
+      identifiers: 'Identifikátory',
+      identifiersCaption: 'Zadejte existující identifikátory spojené s tímto datasetem',
+      authorsContributors: 'Autoři a přispěvatelé',
+      uploadData: 'Upload dat',
+      keywords: 'Klíčová slova',
+      additionalTitles: 'Další názvy',
+      submission: 'Vytvoření draftového záznamu',
+      saveChanges: 'Uložit změny'
+    },
+    isApproved: 'Schváleno kurátorem',
+    retry: 'Zkusit znovu',
+    backToCollection: 'Zpět na výpis',
+    primaryCommunity: 'Primární komunita',
+    submit: 'Vytvořit záznam',
+    contributors: 'Přispěvatelé',
+    contributor: 'Přispěvatel',
+    languages: 'Jazyky',
+    roles: 'Role',
+    publisher: 'Vydavatel',
+    or: 'nebo',
+    publicationDate: 'Datum vydání',
+    affiliations: 'Afilace',
+    name: 'Název',
+    author: 'Autor',
+    authorType: 'Typ autora',
+    givenName: 'Křestní jméno',
+    familyName: 'Příjmení',
+    identifier: 'Identifikátor',
+    chooseLocale: 'Vyberte prosím jazyk',
+    scheme: 'Schema',
+    pageSize: 'Počet na stránku',
+    recordsFound: 'Nalezen {count} výsledek | Nalezeno {count} výsledků',
+    goHome: 'Zpět na úvodní stránku',
     back: 'Zpět',
+    continue: 'Dále',
     authors: 'Autoři',
     isPublic: 'Záznam je veřejný',
     isPendingApproval: 'Záznam čeká na schválení kurátorem',
@@ -79,6 +137,7 @@ export default {
     identifierScheme: 'Schema',
     files: 'Soubory',
     filters: 'Filtry',
+    noCommunitySelected: 'Nevybrána žádná komunita',
     community: 'Komunita',
     size: 'Velikost',
     license: 'Licence',
@@ -89,10 +148,15 @@ export default {
     contact: 'Kontaktujte nás',
     privacy: 'Ochrana osobních údajů',
     docs: 'Uživatelská dokumentace',
+    sort: {
+      alphabetical: 'Abecedně'
+    },
     role: {
       'system administrator': 'Administrátor',
       admin: 'admin',
-      curator: 'kurátor'
+      curator: 'kurátor',
+      member: 'člen',
+      publisher: 'editor'
     }
   },
   section: {
@@ -107,6 +171,8 @@ export default {
     roles: 'Role'
   },
   message: {
+    submissionSuccess: 'Záznam s ID {pid} úspěšně vytvořen',
+    notFound: 'Stránka nenalezena',
     articleExistsError: 'Článek se zadaným DOI je již v repozitáři. Přejete si provázat dataset s tímto článkem?',
     creatingArticle: 'Vytvářím článek',
     errorCreatingArticle: 'Nepodařilo se vytvořit článek',
@@ -115,23 +181,39 @@ export default {
     resolveDOIError: 'K zadanému DOI se nepodařilo získat metadata článku',
     noArticles: 'Žádné články nenalezeny',
     noDatasets: 'Žádné datasety nenalezeny',
+    noAuthors: 'Žádní autoři',
+    noFiles: 'Žádné soubory',
+    noContributors: 'Žádní přispěvatelé',
+    noKeywords: 'Žádná klíčová slova',
     draftDeleted: 'Záznam byl smazán',
     completeSuccess: 'Úspěšně dokončeno',
     doYRlyWnt: 'Opravdu chcete',
     noData: 'Žádná data',
     loading: 'Načítám',
+    savingChanges: 'Ukládám změny',
+    loggedOut: 'Byli jste odhlášeni',
     recordNotValid: 'V záznamu jsou chyby',
     gdprPrompt: 'Kliknutím na "Souhlasím", vyjadřujete souhlas s našimi pravidly využití služeb a podmínkami zpracování osobních údajů.',
-    authRequired: 'Tato stránka vyžaduje autentizaci. Kliknutím na tlačítko níže se přihlásíte.'
+    authRequired: 'Tato stránka vyžaduje autentizaci. Kliknutím na tlačítko níže se přihlásíte.',
+    submissionInfo: 'Pokračováním dojde k vytvoření draftového záznamu s přiděleným unikátním perzistentním identifikátorem.',
+    submitting: 'Vytvářím záznam'
   },
   value: {
+    authorType: {
+      personal: 'Osoba',
+      organizational: 'Organizace'
+    },
     lang: {
-      csCZ: 'Česky',
-      enUS: 'Anglicky'
+      'cs': 'Česky',
+      'cs-cz': 'Česky',
+      'en-us': 'Anglicky',
+      'en': 'Anglicky'
     }
   },
   route: {
     title: {
+      datasetItem: 'Dataset',
+      articleItem: 'Článek',
       datasetList: 'Datasety',
       datasetEdit: 'Editace datasetu',
       datasetUpload: 'Nový dataset',

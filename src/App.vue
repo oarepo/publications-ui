@@ -1,85 +1,42 @@
 <template lang="pug">
-  #q-app
-    router-view
+router-view(v-slot="{ Component }")
+  transition(leave-from-class="fadeOut" enter-from-class="fadeIn")
+    component(:is="Component")
 </template>
-<script>
-import { i18n } from 'boot/i18n'
-import { BottomSheet } from 'quasar'
-import { REDIRECT_LOGIN, usePopupLogin } from '@oarepo/vue-popup-login'
 
-export default {
+<script>
+import {useMeta, useQuasar} from 'quasar'
+import {useI18n} from 'vue-i18n/index'
+import {defineComponent} from 'vue'
+import {provideContext} from 'vue-context-composition'
+import {community} from '@/contexts/community'
+
+export default defineComponent({
   name: 'App',
-  meta () {
-    return {
-      title: this.appTitle,
-      titleTemplate: title => this.fullAppTitle,
-      meta: {
-        twitterTitle: {
-          name: 'twitter:title',
-          content: this.fullAppTitle
-        },
-        ogTitle: {
-          name: 'og:title',
-          content: this.fullAppTitle
+  setup() {
+    provideContext(community)
+
+    const {t, locale} = useI18n({useScope: 'global'})
+    const q = useQuasar()
+    locale.value = 'cs'
+    try {
+      import('quasar/lang/cs')
+          .then(lang => {
+            q.lang.set(lang.default)
+          })
+    } catch (err) {
+      console.log(err)
+    }
+
+    useMeta(() => {
+      return {
+        title: t('nav.intro') || ' ',
+        titleTemplate: title => `${title !== ' ' ? title + ' - ' : ' '}${t('app.productName')}`,
+        meta: {
+          description: {name: 'description', content: t('app.description')},
         }
       }
-    }
-  },
-  setup () {
-    const login = usePopupLogin({})
-    login.check(false)
-    login.registerPopupFailedHandler(() => {
-      return new Promise((resolve) => {
-        BottomSheet.create({
-          dark: true,
-          title: i18n.t('section.error'),
-          message: i18n.t('error.popupLoginFail'),
-          actions: [
-            {
-              label: i18n.t('action.retry'),
-              icon: 'vpn_key',
-              id: 'retry'
-            },
-            {
-              label: i18n.t('action.altLogin'),
-              icon: 'login',
-              id: 'redirect'
-            }]
-        }).onOk(action => {
-          if (action.id === 'retry') {
-            resolve(login.login())
-          } else {
-            resolve(REDIRECT_LOGIN)
-          }
-        })
-      })
     })
-
-    login.registerLoginRequiredHandler(() => {
-      return new Promise((resolve) => {
-        BottomSheet.create({
-          class: 'z-top',
-          dark: true,
-          title: i18n.t('section.loginRequired'),
-          message: i18n.t('message.authRequired'),
-          actions: [{
-            label: i18n.t('action.login'),
-            icon: 'vpn_key',
-            id: 'log-in'
-          }]
-        }).onOk(() => {
-          resolve(login.login())
-        })
-      })
-    })
-  },
-  computed: {
-    appTitle () {
-      return this.$i18n.t('app.productName')
-    },
-    fullAppTitle () {
-      return `${this.appTitle}${this.$route.meta.title ? ' - ' : ''}${this.$t(this.$route.meta.title) || ''}`
-    }
   }
-}
+})
 </script>

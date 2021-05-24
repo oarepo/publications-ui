@@ -4,30 +4,35 @@ span(v-else) {{ text }}
 </template>
 
 <script>
-import { Component, Vue } from 'vue-property-decorator'
 
-export default @Component({
+import {computed, defineComponent, inject} from 'vue'
+
+export default defineComponent({
   name: 'SearchHighlight',
   props: {
     item: Object,
     text: String
+  },
+  setup (props) {
+    const sanitize = inject('sanitize')
+
+    const highlight = computed(() => {
+      return sanitize(Object.values(props.item.highlight || {}).flat().join(' ... '), {
+        allowedTags: ['em']
+      })
+    })
+
+    const hasHighlight = computed(() => {
+      return props.item.highlight && Object.keys(props.item.highlight).length
+    })
+
+    return {hasHighlight, highlight}
   }
 })
-class SearchHighlight extends Vue {
-  get highlight () {
-    return this.$sanitize(Object.values(this.item.highlight || {}).flat().join(' ... '), {
-      allowedTags: ['em']
-    })
-  }
-
-  get hasHighlight () {
-    return this.item.highlight && Object.keys(this.item.highlight).length
-  }
-}
 </script>
 
 <style lang="sass">
 .highlight em
   font-weight: bolder
-  color: $accent !important
+  color: var(--q-accent-dark) !important
 </style>
