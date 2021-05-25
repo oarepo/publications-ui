@@ -16,27 +16,36 @@ q-page.hero.full-height.no-padding.row.overflow-hidden
             rounded
             icon="leaderboard"
             padding="lg"
-            :to="{name: 'community-list', params: {model: DATASETS_COLLECTION_CODE, state: 'all', communityId: 'cesnet'}}"
+            :to="datasetsRoute"
             :label="$t('section.datasetList')")
           q-btn.full-width.shadow-5(
             color="dark"
             rounded
             icon-right="article"
             padding="lg"
-            :bla="{name: 'cesnet/all-articles'}"
+            :to="articlesRoute"
             :label="$t('section.articleList')")
   .col-0.hero-tiles.gt-xs.q-pt-xl
   .col-5.right-graphic.gt-sm
   .col-0.right-tiles.gt-sm
 </template>
 <script>
-import {DATASETS_COLLECTION_CODE} from '@/constants'
+import {ARTICLES_COLLECTION_CODE, DATASETS_COLLECTION_CODE} from '@/constants'
 import {defineComponent} from "vue";
 
 export default defineComponent({
   name: 'Homepage',
-  setup () {
-    return {DATASETS_COLLECTION_CODE}
+  setup() {
+    const articlesRoute = {
+      name: 'community-list',
+      params: {model: ARTICLES_COLLECTION_CODE, state: 'all', communityId: 'cesnet'}
+    }
+    const datasetsRoute = {
+      name: 'community-list',
+      params: {model: DATASETS_COLLECTION_CODE, state: 'all', communityId: 'cesnet'}
+    }
+
+    return {articlesRoute, datasetsRoute}
   }
 })
 </script>
@@ -96,6 +105,7 @@ export default defineComponent({
     background: url('../assets/landing/right-tiles.png') no-repeat
     background-size: contain
     transform: translateX(-50%) translateY(-15%)
+
   .right-tiles
     position: relative
     background-color: transparent
