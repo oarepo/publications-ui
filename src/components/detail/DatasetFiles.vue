@@ -10,7 +10,7 @@
         q-btn(rounded color="primary" flat icon="file_download" @click="download(f)")
   .text-grey-7.text-caption.col-auto.self-center(v-else) {{ $t('message.noFiles') }}
 .row.q-mt-md(v-if="canUpload")
-  upload-data(:record="dataset")
+  upload-data(:files="dataset.http.data.links.files")
 </template>
 
 <script>
