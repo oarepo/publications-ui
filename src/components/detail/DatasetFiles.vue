@@ -2,12 +2,12 @@
 .row.q-gutter-lg
   q-card.q-pa-sm.bg-grey-3(v-if="files.length > 0" v-for="f in files" :key="f.file_id")
     q-card-section(horizontal)
-      .column.justify-start
-        .col-auto.text-subtitle {{ f.key }}
-        p.col-auto.no-margin.text-overline.text-uppercase.text-accent {{ $t('label.size') }}
+      .column.justify-start.text-dark
+        .col-auto.text-subtitle1.q-btn--no-uppercase {{ f.key }}
+        p.col-auto.no-margin.text-overline.text-uppercase.text-dark-primary {{ $t('label.size') }}
         p.col-grow.text-caption {{ Math.round(f.size/1024) }} kb
       q-card-actions(vertical)
-        q-avatar.cursor-pointer(icon="file_download" @click="download(f)")
+        q-btn(rounded color="primary" flat icon="file_download" @click="download(f)")
   .text-grey-7.text-caption.col-auto.self-center(v-else) {{ $t('message.noFiles') }}
 .row.q-mt-md(v-if="canUpload")
   upload-data(:record="dataset")

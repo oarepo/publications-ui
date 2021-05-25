@@ -41,4 +41,6 @@ export default defineComponent({
 </script>
 
 <style lang="sass" scoped>
+.text-code
+  cursor: text
 </style>

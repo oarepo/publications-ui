@@ -23,7 +23,12 @@ function loadLocaleMessages() {
         const matched = key.match(/([A-Za-z0-9-_]+)\./i)
         if (matched && matched.length > 1) {
             const locale = matched[1]
-            messages[locale] = locales(key).default
+            const loc = locales(key).default
+
+            if (locale.length === 5) {
+                messages[locale.slice(0,2)] = loc
+            }
+            messages[locale] = loc
         }
     })
     return messages
