@@ -17,10 +17,9 @@ export default function useUploader(record) {
         langPack = require('@uppy/locales/lib/en_US')
     }
 
+    const url = record.http.data.links.files
+
     function createMultipartUpload(file) {
-        console.log('file', file)
-        // TODO: test only
-        const url = record.http.data.links.files
         const metadata = {}
 
         Object.keys(file.meta).map(key => {
@@ -28,9 +27,10 @@ export default function useUploader(record) {
                 metadata[key] = file.meta[key].toString()
             }
         })
-        console.log('metadata', metadata)
+
         return axios.post(`${url}?multipart=true`, {
             key: file.name,
+            size: file.size,
             multipart_content_type: file.type,
             ...metadata
         }).then((res) => {
@@ -39,9 +39,68 @@ export default function useUploader(record) {
                 Object.assign(error, res.error)
                 throw error
             }
-            console.log(res.data.multipart_upload.uploadId, res.data.key)
-            return {uploadId: res.data.multipart_upload.upload_id, key: res.data.key}
+            return {uploadId: res.data.uploadId, key: res.data.key}
         })
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    function prepareUploadPart(file, {key, uploadId, number}) {
+        const filename = encodeURIComponent(file.name)
+        return axios.get(`${url}/${filename}/${uploadId}/${number}/presigned`)
+            .then((res) => {
+                if (res && res.error) {
+                    const error = new Error(res.message)
+                    Object.assign(error, res.error)
+                    throw error
+                }
+                return {url: res.data.url}
+            })
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    function completeMultipartUpload(file, {key, uploadId, parts}) {
+        const filename = encodeURIComponent(file.name)
+        const uploadIdEnc = encodeURIComponent(uploadId)
+        return axios.post(`${url}/${filename}/${uploadIdEnc}/complete`, {parts})
+            .then((res) => {
+                if (res && res.error) {
+                    const error = new Error(res.message)
+                    Object.assign(error, res.error)
+                    throw error
+                }
+                return {location: `${res.data.location}?download`}
+            })
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    function abortMultipartUpload (file, { key, uploadId }) {
+        const filename = encodeURIComponent(file.name)
+        const uploadIdEnc = encodeURIComponent(uploadId)
+        return axios.delete(`${url}/${filename}/${uploadIdEnc}/abort`)
+            .then((res) => {
+                if (res && res.error) {
+                    const error = new Error(res.message)
+                    Object.assign(error, res.error)
+                    throw error
+                }
+                return res.data
+            })
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    function listParts (file, { key, uploadId }) {
+        const filename = encodeURIComponent(file.name)
+        const uploadIdEnc = encodeURIComponent(uploadId)
+        return axios.get(`${url}/${filename}/${uploadIdEnc}/parts`)
+            .then((res) => {
+                console.log(res)
+                if (res && res.error) {
+                    const error = new Error(res.message)
+                    Object.assign(error, res.error)
+                    throw error
+                }
+                return res.data
+            })
     }
 
     const uppy = ref(new Uppy({
@@ -49,12 +108,16 @@ export default function useUploader(record) {
     }))
     uppy.value.use(AwsS3Multipart, {
         limit: 4,
-        createMultipartUpload: createMultipartUpload
+        createMultipartUpload: createMultipartUpload,
+        prepareUploadPart: prepareUploadPart,
+        abortMultipartUpload: abortMultipartUpload,
+        completeMultipartUpload: completeMultipartUpload,
+        listParts: listParts
     })
 
     onBeforeUnmount(() => {
         uppy.value.close()
     })
 
-    return {uppy, createMultipartUpload}
+    return {uppy}
 }
