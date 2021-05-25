@@ -1,5 +1,5 @@
 <template lang="pug">
-span(v-if="term") {{ $mt(term.title) || term.slug }} {{ term }}
+span(v-if="term") {{ $mt(term.title) || term.slug }}
 div(v-else)
   slot(name="empty")
 </template>

@@ -69,6 +69,7 @@ export default defineComponent({
       } else {
         query.q = model.value
       }
+      query.page = 1
       ctx.emit('update:modelValue', model.value)
     }
 
