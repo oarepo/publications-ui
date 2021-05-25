@@ -7,7 +7,7 @@ import {onBeforeUnmount, ref} from 'vue'
 import {useI18n} from 'vue-i18n'
 import {axios} from '@/boot/axios'
 
-export default function useUploader(record) {
+export default function useUploader(url) {
     const {locale} = useI18n()
     let langPack = null
     if (locale.value === 'cs' || locale.value === 'cs-CZ') {
@@ -16,8 +16,6 @@ export default function useUploader(record) {
     if (locale.value === 'en' || locale.value === 'en-US') {
         langPack = require('@uppy/locales/lib/en_US')
     }
-
-    const url = record.http.data.links.files
 
     function createMultipartUpload(file) {
         const metadata = {}

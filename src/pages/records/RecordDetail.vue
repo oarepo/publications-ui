@@ -39,8 +39,9 @@ q-page(padding)
           span {{ i.identifier }}
       .text-overline.text-uppercase.text-accent.q-mt-md {{ $t('label.license') }}
       .row
-        q-chip(v-for="r in md.rights || []" :key="r.links.self" )
-          span(v-if="!r.is_ancestor") {{ $mt(r.title) }}
+        q-chip(v-for="r in childrenOnly(md.rights|| [])" :key="r.links.self" )
+          term-input(code="licenses" :term="r")
+          //span(v-if="!r.is_ancestor") {{ $mt(r.title) }}
       .text-overline.text-uppercase.text-accent.q-mt-md(v-if="isDatasets") {{ $t('label.files') }}
         dataset-files(:dataset="record")
     metadata-dropdown(:metadata="md")
@@ -58,20 +59,21 @@ import CreatorChips from '@/components/detail/CreatorChips'
 import MetadataDropdown from '@/components/detail/MetadataDropdown'
 import KeywordChips from '@/components/detail/KeywordChips'
 import ContributorBadge from '@/components/widgets/badge/ContributorBadge'
-import UploadData from '@/components/form/steps/UploadData'
 import DatasetFiles from '@/components/detail/DatasetFiles'
 import useClipboard from '@/composables/useClipboard'
+import TermInput from '@/components/widgets/taxonomy/TermInput'
+import useTaxonomy from '@/composables/useTaxonomy'
 
 export default defineComponent({
   name: 'RecordDetail',
   components: {
+    TermInput,
     ContributorBadge,
     KeywordChips,
     MetadataDropdown,
     CreatorChips,
     RecordActions,
     StatusRibbon,
-    UploadData,
     DatasetFiles
   },
   emits: ['reload'],
@@ -86,6 +88,7 @@ export default defineComponent({
     const {copy2clip} = useClipboard(t)
     const {mt} = useTranslated()
     const {isDatasets, isArticles} = useCollection()
+    const {childrenOnly} = useTaxonomy()
 
     const md = computed(() => {
       return props.record.metadata
@@ -101,7 +104,7 @@ export default defineComponent({
       return {title: `${mt(props.record.metadata.title)} - ${t(titlePath)}`}
     })
 
-    return {md, copy2clip, isDatasets}
+    return {md, copy2clip, isDatasets, childrenOnly}
   }
 })
 </script>

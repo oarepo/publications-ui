@@ -1,7 +1,6 @@
 import {useI18n} from 'vue-i18n'
 
 export function useTranslated() {
-
     const mt = (multilang) => {
         const {locale} = useI18n()
 

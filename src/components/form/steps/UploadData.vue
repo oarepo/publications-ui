@@ -11,14 +11,13 @@ export default defineComponent({
   name: 'UploadData',
   components: {Dashboard},
   props: {
-    record: {
-      type: Object,
+    files: {
+      type: String,
       required: true
     }
   },
   setup (props) {
-    console.log(props.record)
-    const {uppy} = useUploader(props.record)
+    const {uppy} = useUploader(props.files)
 
     const dashboardProps = ref({
       metaFields: [{
