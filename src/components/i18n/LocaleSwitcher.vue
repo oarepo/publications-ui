@@ -4,8 +4,7 @@ locale-select.full-width(
   filled
   square
   icon="flag"
-  v-model="$i18n.locale"
-)
+  v-model="$i18n.locale")
 </template>
 <script>
 import {defineComponent} from 'vue'

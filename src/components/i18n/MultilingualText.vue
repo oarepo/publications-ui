@@ -11,7 +11,8 @@ span
 </template>
 <script>
 import {computed, defineComponent, ref} from 'vue'
-import {useTranslated} from "@/i18n/multilingual";
+import {useTranslated} from '@/composables/useTranslated'
+import {useI18n} from 'vue-i18n'
 
 export default defineComponent({
   name: 'mt',
@@ -30,7 +31,8 @@ export default defineComponent({
     }
   },
   setup (props) {
-    const {mt} = useTranslated()
+    const {locale} = useI18n()
+    const {mt} = useTranslated(locale)
     const shortened = ref(true)
 
     const t = computed(() => {

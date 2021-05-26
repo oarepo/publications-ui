@@ -8,9 +8,18 @@
 
 <script>
 import GoHomeBtn from '@/components/widgets/button/GoHomeBtn'
+import {defineComponent} from 'vue'
+import {useI18n} from 'vue-i18n'
+import {useMeta} from "quasar";
 
-export default {
+export default defineComponent({
   name: 'Error404',
-  components: {GoHomeBtn}
-}
+  components: {GoHomeBtn},
+  setup () {
+    const {t} = useI18n()
+    useMeta(() => {
+      return {title: t('message.notFound')}
+    })
+  }
+})
 </script>

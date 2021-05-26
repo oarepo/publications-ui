@@ -1,9 +1,5 @@
-import {useI18n} from 'vue-i18n'
-
-export function useTranslated() {
+export function useTranslated(locale) {
     const mt = (multilang) => {
-        const {locale} = useI18n()
-
         if (!multilang) {
             return undefined
         }
@@ -21,10 +17,4 @@ export function useTranslated() {
     }
 
     return {mt}
-}
-
-export default {
-    install(app) {
-        app.config.globalProperties.$mt = useTranslated().mt
-    }
 }

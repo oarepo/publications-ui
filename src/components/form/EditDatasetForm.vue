@@ -103,7 +103,6 @@ export default defineComponent({
   components: {DatasetFiles, AuthorsContributors, BasicInfo, UploadData, Identifiers, StepperNav},
   setup (props) {
     const {notifySuccess, notifyError} = useNotify()
-    console.log(props.record.metadata)
     let formData = ref(props.record.metadata)
     const step = ref(steps.BASIC)
     const submitting = ref(false)

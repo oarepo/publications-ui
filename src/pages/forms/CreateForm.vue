@@ -18,26 +18,33 @@ q-page.q-mt-lg.q-mx-lg-xl.full-height(padding)
 import {computed, defineComponent} from 'vue'
 import CreateDatasetForm from '@/components/form/CreateDatasetForm'
 import useCollection from '@/composables/useCollection'
+import {useMeta} from 'quasar'
+import {useI18n} from 'vue-i18n'
 
 export default defineComponent({
   name: 'CreateForm',
   components: {CreateDatasetForm},
   setup () {
+    const {t} = useI18n()
     const {isDatasets, isArticles} = useCollection()
 
     const header = computed(() => {
-      if (isDatasets) {
+      if (isDatasets.value) {
         return {
           title: 'route.title.datasetUpload',
           icon: 'addchart'
         }
-      } else if (isArticles) {
+      } else if (isArticles.value) {
         return {
           title: 'route.title.articleUpload',
           icon: 'post_add'
         }
       }
       return null
+    })
+
+    useMeta(() => {
+      return {title: t(header.value.title)}
     })
 
     return {header}

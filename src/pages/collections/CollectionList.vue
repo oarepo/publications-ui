@@ -57,9 +57,9 @@ export default defineComponent({
 
     useMeta(() => {
       let titlePath = ''
-      if (isDatasets) {
+      if (isDatasets.value) {
         titlePath = 'route.title.datasetList'
-      } else if (isArticles) {
+      } else if (isArticles.value) {
         titlePath = 'route.title.articleList'
       }
       return {title: t(titlePath)}
