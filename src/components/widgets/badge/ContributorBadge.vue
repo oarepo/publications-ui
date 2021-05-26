@@ -6,7 +6,7 @@ q-chip.text-white(
     q-tooltip
       .text-caption {{ identifiersString }}
   span {{ contributor.person_or_org.name }} {{ affiliationsString? `@ ${affiliationsString}`: '' }}
-    q-tooltip(v-if="contributor.affiliations || contributor.role")
+    q-tooltip(v-if="contributor.role.length")
       span {{ rolesString }}
 </template>
 
@@ -29,15 +29,15 @@ export default defineComponent({
 
     const identifiersString = computed(() => {
       return props.contributor.person_or_org.identifiers
-          .map(i => `${i.scheme.toUpperCase()}:${i.identifier}`).join(', ')
+          .map(i => `${i.scheme.toUpperCase()}:${i.identifier}`).join(', ') || ''
     })
 
     const rolesString = computed (() => {
-      return props.contributor.role.map((r => mt(r.title))).join(', ')
+      return props.contributor.role.map((r => mt(r.title))).join(', ') || ''
     })
 
     const affiliationsString = computed (() => {
-      return props.contributor.affiliations.map((a => a.name)).join(', ')
+      return props.contributor.affiliations.map((a => a.name)).join(', ') || ''
     })
 
     return {mt, identifiersString, rolesString, affiliationsString}
