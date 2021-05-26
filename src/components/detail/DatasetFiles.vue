@@ -40,7 +40,7 @@ export default defineComponent({
         required: true,
         label: t('label.name'),
         align: 'left',
-        field: row => row.name,
+        field: row => row.key,
         sortable: true
       },
       {
@@ -57,7 +57,7 @@ export default defineComponent({
         required: true,
         label: t('label.type'),
         align: 'left',
-        field: row => row.type,
+        field: row => row.mime_type,
         sortable: true
       },
       {

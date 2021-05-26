@@ -134,7 +134,6 @@ export default defineComponent({
       submitting.value = true
       const submitUrl = props.record.http.data.links.self
 
-
       // TODO: change this upon createRecord implementation in invenio-vue library
       axios.put(submitUrl, JSON.stringify(formData.value), {
         headers: {
