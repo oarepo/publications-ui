@@ -83,7 +83,8 @@ import AuthorsContributors from '@/components/form/steps/AuthorsContributors'
 import StepperNav from '@/components/navigation/StepperNav'
 import {axios} from '@/boot/axios'
 import useNotify from '@/composables/useNotify'
-import DatasetFiles from "@/components/detail/DatasetFiles";
+import DatasetFiles from '@/components/detail/DatasetFiles'
+import {useRouter} from 'vue-router'
 
 export const steps = Object.freeze({
   BASIC: 1,
@@ -104,6 +105,8 @@ export default defineComponent({
   components: {DatasetFiles, AuthorsContributors, BasicInfo, UploadData, Identifiers, StepperNav},
   setup (props) {
     const {notifySuccess, notifyError} = useNotify()
+    const router = useRouter()
+
     let formData = ref(props.record.metadata)
     const step = ref(steps.BASIC)
     const submitting = ref(false)
@@ -124,6 +127,7 @@ export default defineComponent({
     function _submissionSuccess (response) {
       saved.value = response.data
       notifySuccess('message.saveChangesSuccess', {pid: saved.value.metadata.id})
+      router.push(pathFromUrl(saved.value.links.self))
     }
 
     function pathFromUrl(url) {
