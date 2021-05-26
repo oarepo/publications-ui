@@ -47,11 +47,11 @@ export default defineComponent({
           icon: 'edit'
         }
       }
-      return {}
+      return null
     })
 
     useMeta(() => {
-      return {title: header.value.title}
+      return {title: header.value? header.value.title : ''}
     })
 
     return {header, record}

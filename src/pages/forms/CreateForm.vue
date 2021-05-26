@@ -44,7 +44,7 @@ export default defineComponent({
     })
 
     useMeta(() => {
-      return {title: t(header.value.title)}
+      return {title: header.value? t(header.value.title) : ''}
     })
 
     return {header}
