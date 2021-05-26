@@ -72,6 +72,8 @@
     "revert_approval": "assignment_return"
   },
   "label": {
+    "type": "Typ",
+    "download": "Stáhnout",
     "abstract": "Abstrakt",
     "actionApprove": "Odsouhlasení akce",
     "actions": "Akce",
@@ -155,6 +157,7 @@
     "titles": "Název záznamu"
   },
   "message": {
+    "saveChangesSuccess": "Změny uloženy",
     "articleExistsError": "Článek se zadaným DOI je již v repozitáři. Přejete si provázat dataset s tímto článkem?",
     "authRequired": "Tato stránka vyžaduje autentizaci. Kliknutím na tlačítko níže se přihlásíte.",
     "completeSuccess": "Úspěšně dokončeno",
