@@ -7,7 +7,7 @@ q-page(padding)
           span.text-accent {{ md.id }}
         q-separator(color="primary" vertical)
         .col-auto
-          span {{ $mt(md.title) }}
+          span {{ mt(md.title) }}
         .col-auto
           status-ribbon(v-if="!record.loading" :metadata="md" dense)
     q-separator
@@ -30,7 +30,7 @@ q-page(padding)
         keyword-chips.items-center.q-px-md(:keywords="md.keywords || []")
     q-card-section.q-pa-lg.bg-white
       .text-overline.text-uppercase.text-accent {{ $t('label.abstract') }}
-      p(v-html="$sanitize($mt(md.abstract))")
+      p(v-html="$sanitize(mt(md.abstract))")
       .text-overline.text-uppercase.text-accent {{ $t('label.identifiers') }}
       .row
         q-chip(v-for="i in md.identifiers" :key="i.identifier" clickable @click="copy2clip(i.identifier)")
@@ -41,7 +41,7 @@ q-page(padding)
       .row
         q-chip(v-for="r in childrenOnly(md.rights|| [])" :key="r.links.self" )
           term-input(code="licenses" :term="r")
-          //span(v-if="!r.is_ancestor") {{ $mt(r.title) }}
+          //span(v-if="!r.is_ancestor") {{ mt(r.title) }}
       .text-overline.text-uppercase.text-accent.q-mt-md(v-if="isDatasets") {{ $t('label.files') }}
         dataset-files(:dataset="record")
     metadata-dropdown(:metadata="md")
@@ -52,7 +52,7 @@ import {computed, defineComponent} from 'vue'
 import {useMeta} from 'quasar'
 import useCollection from '@/composables/useCollection'
 import {useI18n} from 'vue-i18n'
-import {useTranslated} from '@/i18n/multilingual'
+import {useTranslated} from '@/composables/useTranslated'
 import RecordActions from '@/components/detail/RecordActions'
 import StatusRibbon from '@/components/widgets/StatusRibbon'
 import CreatorChips from '@/components/detail/CreatorChips'
@@ -84,9 +84,9 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const {t} = useI18n()
+    const {t, locale} = useI18n()
     const {copy2clip} = useClipboard(t)
-    const {mt} = useTranslated()
+    const {mt} = useTranslated(locale)
     const {isDatasets, isArticles} = useCollection()
     const {childrenOnly} = useTaxonomy()
 
@@ -96,15 +96,15 @@ export default defineComponent({
 
     useMeta(() => {
       let titlePath = ''
-      if (isDatasets) {
+      if (isDatasets.value) {
         titlePath = 'route.title.datasetItem'
-      } else if (isArticles) {
+      } else if (isArticles.value) {
         titlePath = 'route.title.articleItem'
       }
       return {title: `${mt(props.record.metadata.title)} - ${t(titlePath)}`}
     })
 
-    return {md, copy2clip, isDatasets, childrenOnly}
+    return {md, mt, copy2clip, isDatasets, childrenOnly}
   }
 })
 </script>
