@@ -2,11 +2,11 @@
 q-chip.text-white(
   color="primary"
   v-bind="$attrs")
-  q-avatar(v-if="contributor.person_or_org.identifiers.length" icon="badge" size="lg")
+  q-avatar(v-if="contributor.person_or_org.identifiers?.length" icon="badge" size="lg")
     q-tooltip
       .text-caption {{ identifiersString }}
   span {{ contributor.person_or_org.name }} {{ affiliationsString? `@ ${affiliationsString}`: '' }}
-    q-tooltip(v-if="contributor.role.length")
+    q-tooltip(v-if="contributor.role?.length")
       span {{ rolesString }}
 </template>
 
