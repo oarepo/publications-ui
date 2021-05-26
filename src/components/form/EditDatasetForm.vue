@@ -1,6 +1,7 @@
 <template lang="pug">
 q-stepper(
   flat
+  header-nav
   keep-alive
   v-model="step"
   doneIcon="done"

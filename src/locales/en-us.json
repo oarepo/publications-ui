@@ -73,6 +73,8 @@
     "revert_approval": "assignment_return"
   },
   "label": {
+    "type": "Type",
+    "download": "Download",
     "actionApprove": "Are you sure?",
     "actions": "Actions",
     "affiliations": "Affiliations",
@@ -148,6 +150,7 @@
     "titles": "Titles"
   },
   "message": {
+    "saveChangesSuccess": "Changes successfully saved",
     "articleExistsError": "An article record with this DOI already exists in this repository. Would you like to attach the dataset to this article?",
     "authRequired": "This page requires authentication.",
     "copiedToClip": "Copied to clipboard",
