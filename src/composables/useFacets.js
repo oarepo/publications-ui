@@ -28,6 +28,14 @@ export default function useFacets(collection) {
     })
 
     const definitions = ref({
+        contributors: {
+            type: 'nested',
+            aggs: {
+                inner_facet: {
+                    label: "contributors"
+                }
+            }
+        },
         resourceType: {
             type: 'nested',
             aggs: {
@@ -36,11 +44,11 @@ export default function useFacets(collection) {
                 }
             }
         },
-        language: {
+        languages: {
             type: 'nested',
             aggs: {
                 inner_facet: {
-                    label: "language"
+                    label: "languages"
                 }
             }
         },
