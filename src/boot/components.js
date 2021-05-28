@@ -14,14 +14,12 @@ import AuthorInput from '@/components/widgets/forms/AuthorInput'
 import DateInput from '@/components/widgets/forms/DateInput'
 import CircularSpinner from '@/components/widgets/progress/CircularSpinner'
 import CreateRecordBtn from '@/components/widgets/button/CreateRecordBtn'
-import TermInput from '@/components/widgets/taxonomy/TermInput'
 import NestedFacet from '@/components/search/facets/NestedFacet'
 
 export default {
     install (app) {
         app.component('create-record-btn', CreateRecordBtn)
         app.component('base-input', BaseInput)
-        app.component('term-input', TermInput)
         app.component('date-input', DateInput)
         app.component('identifier-input', IdentifierInput)
         app.component('author-input', AuthorInput)

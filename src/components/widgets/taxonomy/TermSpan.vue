@@ -12,7 +12,7 @@ import {useI18n} from "vue-i18n";
 import {useTranslated} from '@/composables/useTranslated'
 
 export default defineComponent({
-  name: 'TermInput',
+  name: 'TermSpan',
   props: {
     code: String,
     term: Object,
