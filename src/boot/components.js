@@ -15,7 +15,7 @@ import DateInput from '@/components/widgets/forms/DateInput'
 import CircularSpinner from '@/components/widgets/progress/CircularSpinner'
 import CreateRecordBtn from '@/components/widgets/button/CreateRecordBtn'
 import TermInput from '@/components/widgets/taxonomy/TermInput'
-import NestedFacet from "@/components/search/facets/NestedFacet";
+import NestedFacet from '@/components/search/facets/NestedFacet'
 
 export default {
     install (app) {

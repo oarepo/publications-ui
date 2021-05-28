@@ -39,6 +39,27 @@ export default function useTaxonomy(options) {
         })
     }
 
+    function treeToRoot(termArray) {
+        let map = {}, trees = [], i
+
+        for (i = 0; i < termArray.length; i += 1) {
+            map[termArray[i].links.self] = i
+            termArray[i].parent = null
+        }
+
+        console.log(map, termArray)
+
+        for (i = 0; i < termArray.length; i += 1) {
+            const node = termArray[i]
+            if (node.links.parent !== undefined) {
+                termArray[map[node.links.parent]].parent = node
+            } else {
+                trees.push(node)
+            }
+        }
+        return trees
+    }
+
     function addTaxonomy(code, title, url) {
         taxonomies.value[code] = {
             code,
@@ -166,6 +187,7 @@ export default function useTaxonomy(options) {
         defaultTaxonomyViewer,
         defaultTermEditor,
         defaultTermViewer,
-        childrenOnly
+        childrenOnly,
+        treeToRoot
     }
 }

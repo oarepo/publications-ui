@@ -1,6 +1,6 @@
 {
   "name": "publications-ui",
-  "version": "1.0.5a9",
+  "version": "1.0.5a10",
   "private": true,
   "description": "CESNET Digital Repository of scientific publications and associated datasets",
   "author": "Miroslav Bauer <bauer@cesnet.cz>",
@@ -13,7 +13,7 @@
   "dependencies": {
     "@oarepo/invenio-vue": "^1.0.0-a9",
     "@oarepo/quasar-es-facets": "^1.0.0-a18",
-    "@oarepo/vue-popup-login": "^3.0.0-a3",
+    "@oarepo/vue-popup-login": "^3.0.0-a6",
     "@oarepo/vue-query-synchronizer": "^3.0.0-a5",
     "@quasar/extras": "^1.0.0",
     "@uppy/aws-s3-multipart": "^1.8.15",

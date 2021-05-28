@@ -39,9 +39,8 @@ q-page(padding)
           span {{ i.identifier }}
       .text-overline.text-uppercase.text-accent.q-mt-md {{ $t('label.license') }}
       .row
-        q-chip(v-for="r in childrenOnly(md.rights|| [])" :key="r.links.self" )
+        q-chip(v-for="r in (md.rights?.length? treeToRoot(md.rights) : [])" :key="r.links.self" )
           term-input(code="licenses" :term="r")
-          //span(v-if="!r.is_ancestor") {{ mt(r.title) }}
       .text-overline.text-uppercase.text-accent.q-mt-md(v-if="isDatasets") {{ $t('label.files') }}
         dataset-files(:dataset="record")
     metadata-dropdown(:metadata="md")
@@ -62,7 +61,7 @@ import ContributorBadge from '@/components/widgets/badge/ContributorBadge'
 import DatasetFiles from '@/components/detail/DatasetFiles'
 import useClipboard from '@/composables/useClipboard'
 import TermInput from '@/components/widgets/taxonomy/TermInput'
-import useTaxonomy from '@/composables/useTaxonomy'
+import useTaxonomy from "@/composables/useTaxonomy";
 
 export default defineComponent({
   name: 'RecordDetail',
@@ -88,7 +87,7 @@ export default defineComponent({
     const {copy2clip} = useClipboard(t)
     const {mt} = useTranslated(locale)
     const {isDatasets, isArticles} = useCollection()
-    const {childrenOnly} = useTaxonomy()
+    const {treeToRoot} = useTaxonomy()
 
     const md = computed(() => {
       return props.record.metadata
@@ -104,7 +103,7 @@ export default defineComponent({
       return {title: `${mt(props.record.metadata.title)} - ${t(titlePath)}`}
     })
 
-    return {md, mt, copy2clip, isDatasets, childrenOnly}
+    return {md, mt, copy2clip, isDatasets, treeToRoot}
   }
 })
 </script>
