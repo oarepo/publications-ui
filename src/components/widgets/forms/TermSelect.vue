@@ -24,7 +24,7 @@ q-select(
         div(v-if="searchValue") {{ $t('message.noResults') }}
         div(v-else) {{ $t('message.typeAFewLetters') }}
   template(v-slot:after)
-    q-btn(round flat color="primary" dense @click="showTaxonomy" :title="$t('label.showTaxonomyTree')")
+    q-btn(round icon="edit" flat color="primary" dense @click="showTaxonomy" :label="$t('label.showTaxonomyTree')")
   template(v-slot:option="{opt, selected, focused, itemProps, itemEvents}")
     q-item(v-bind="itemProps" v-on="itemEvents")
       term-span(:term="opt" :taxonomy="taxonomy")
@@ -110,7 +110,7 @@ export default defineComponent({
       return (arrayValue.value || []).filter(x => x.is_ancestor !== true)
     })
 
-    function valueChanged () {
+    function valueChanged() {
       if (termOrArrayChanged(this.model, leafValue.value)) {
         model.value = copyValue(leafValue.value)
       }
@@ -126,7 +126,7 @@ export default defineComponent({
       }
     })
 
-    watch(model, async () =>{
+    watch(model, async () => {
       if (termOrArrayChanged(model.value, leafValue.value)) {
         if (props.elasticsearch) {
           ctx.emit('update:modelValue', await convertToElasticsearch(model.value))
@@ -152,7 +152,8 @@ export default defineComponent({
       })
     }
 
-    function abortFilterFn() {}
+    function abortFilterFn() {
+    }
 
     function showTaxonomy() {
       $q.dialog({
@@ -167,14 +168,17 @@ export default defineComponent({
         model.value = value
       })
     }
+
     function onKeyDown() {
       if (!this.multiple && this.model) {
         this.model = null
       }
     }
+
     function clearText() {
       select.value.updateInputValue('')
     }
+
     function openSelector() {
       showTaxonomy()
     }
@@ -183,11 +187,10 @@ export default defineComponent({
       if (props.placeholder !== DEFAULT) {
         return props.placeholder
       }
-      return t('taxonomy.startWriting')
+      return t('label.startWriting')
     })
 
-    async function convertToElasticsearch(model)
-    {
+    async function convertToElasticsearch(model) {
       if (!model.value) {
         return []
       }
@@ -205,7 +208,19 @@ export default defineComponent({
       return [...Object.values(modelBySelf)]
     }
 
-    return {select, filterFn, onKeyDown, clearText, openSelector, translatedPlaceholder, abortFilterFn, emptyModel}
+    return {
+      select,
+      filterFn,
+      onKeyDown,
+      clearText,
+      openSelector,
+      options,
+      translatedPlaceholder,
+      showTaxonomy,
+      abortFilterFn,
+      emptyModel,
+      model
+    }
   }
 })
 </script>

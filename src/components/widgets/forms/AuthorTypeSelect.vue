@@ -16,7 +16,7 @@ import ValidateMixin from '@/mixins/ValidateMixin'
 import {AUTHOR_TYPES} from '@/constants'
 
 export default {
-  name: 'SchemaSelect',
+  name: 'AuthorTypeSelect',
   mixins: [ValidateMixin],
   emits: ['update:modelValue'],
   props: {

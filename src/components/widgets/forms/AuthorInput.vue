@@ -40,12 +40,14 @@ q-field.fit(
         @update:model-value="onChange")
     .row.full-width.q-mb-sm
       .col-4.q-mr-sm
-        chips-select(
-          ref="roles"
-          options-dense
-          :label="$t('label.roles')"
-          v-model="model.role"
-          :options="CONTRIBUTOR_ROLES"
+        term-select(
+          ref="input"
+          v-bind="$attrs"
+          :value="model.role"
+          taxonomy-code="contributor-type"
+          multiple
+          :elasticsearch="true"
+          :label="$t('label.authorType')"
           @update:model-value="onChange")
       .col-grow
         chips-select(
@@ -73,12 +75,13 @@ import useInputRefs from '@/composables/useInputRefs'
 import AuthorTypeSelect from '@/components/widgets/forms/AuthorTypeSelect'
 import IdentifierInputList from '@/components/widgets/forms/IdentifierInputList'
 import {AFFILIATIONS, AUTHOR_TYPES, CONTRIBUTOR_ROLES, PERSON_IDENTIFIER_SCHEMES} from '@/constants'
+import TermSelect from '@/components/widgets/forms/TermSelect'
 
 export default {
   name: 'IdentifierInput',
   emits: ['update:modelValue'],
   mixins: [ValidateMixin],
-  components: {IdentifierInputList, AuthorTypeSelect},
+  components: {IdentifierInputList, AuthorTypeSelect, TermSelect},
   props: {
     label: {
       type: String,
