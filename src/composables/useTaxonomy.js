@@ -186,6 +186,7 @@ export default function useTaxonomy(options) {
         defaultTermEditor,
         defaultTermViewer,
         childrenOnly,
-        treeToRoot
+        treeToRoot,
+        taxonomyUrl
     }
 }
