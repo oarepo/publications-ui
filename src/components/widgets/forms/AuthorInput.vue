@@ -44,7 +44,7 @@ q-field.fit(
           ref="input"
           v-bind="$attrs"
           :value="model.role"
-          taxonomy-code="contributor-type"
+          taxonomy="contributor-type"
           multiple
           :elasticsearch="true"
           :label="$t('label.authorType')"
