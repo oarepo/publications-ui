@@ -5,9 +5,10 @@ div.q-pa-md.q-gutter-sm
     v-if="dataReady"
     :nodes="data"
     tick-strategy="leaf"
-    :ticked.sync="selected"
+    :ticked="selected"
     :default-expand-all="startExpanded"
-    node-key="slug"
+    node-key="self"
+    @update:model-value="valueChanged"
     @update:ticked="onTicked($event)"
     accordion)
 </template>
@@ -16,8 +17,6 @@ import {computed, defineComponent, nextTick, onMounted, ref, watch} from 'vue'
 import useTaxonomy from '@/composables/useTaxonomy'
 import {useTranslated} from '@/composables/useTranslated'
 import {useI18n} from 'vue-i18n'
-import {arraysDiffer} from "@/utils";
-// import {arraysDiffer} from "@/utils";
 
 export default defineComponent({
   name: 'TaxonomyTree',
@@ -59,13 +58,14 @@ export default defineComponent({
     const size = ref(0)
     const total = ref(0)
     const singleLevel = ref(false)
-    const selected = ref([])
+    const selected = ref(props.modelValue || [])
     // const checkRunning = ref(false)
     const deleted = ref(false)
 
     onMounted(() => {
       size.value = props.initialSize
       loadTaxonomy()
+      valueChanged()
     })
 
     watch(props.modelValue, () => {
@@ -73,21 +73,7 @@ export default defineComponent({
     })
 
     function valueChanged() {
-      if (props.modelValue === null || props.modelValue === undefined) {
-        if (selected.value.length) {
-          selected.value = []
-        }
-      } else if (Array.isArray(props.modelValue)) {
-        const val = props.modelValue.map(term => term.slug)
-        if (arraysDiffer(val, selected.value)) {
-          selected.value = [...val]
-        }
-      } else {
-        const val = props.modelValue.slug
-        if (selected.value.length !== 1 || selected.value[0] !== val) {
-          selected.value = [val]
-        }
-      }
+      selected.value = props.modelValue.map(t => t.links.self) || []
     }
 
     function processData(data) {
@@ -97,6 +83,7 @@ export default defineComponent({
         }
         x.data = {...x}
         delete x.data.children
+        x.self = x.links.self
         x.label = mt(x.title)
         return x
       })
@@ -281,16 +268,14 @@ export default defineComponent({
     //   }
     // }
 
-    function onTicked(slug) {
-      selected.value = slug
+    function onTicked(term) {
+      selected.value = term
       const val = selected.value.map(v => {
         return data.value.find(t => {
-          return t.slug === v
+          return t.links.self === v
         })
       })
-      if (val.length) {
-        ctx.emit('update:modelValue', val)
-      }
+      ctx.emit('update:modelValue', val)
     }
 
     return {
@@ -310,6 +295,7 @@ export default defineComponent({
       maxPage,
       // parentUrl,
       selected,
+      valueChanged,
       onTicked
     }
   }

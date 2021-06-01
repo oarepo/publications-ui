@@ -12,7 +12,6 @@ q-dialog.taxonomy(ref="dialog" @hide="onDialogHide")
         v-model="selected"
         :multiple="multiple"
         :initial-size="10")
-      pre {{ selected }}
     q-card-section(v-if="multiple")
       .row.items-end.q-gutter-md
         q-field.col(:label="$t('label.selectedTerm')" stack-label)
@@ -21,7 +20,7 @@ q-dialog.taxonomy(ref="dialog" @hide="onDialogHide")
               q-chip(
                 removable
                 v-for="term in selected"
-                :key="term.slug"
+                :key="term.links.self"
                 color="primary"
                 outline
                 @remove="valueUnselected(term)")
@@ -71,7 +70,9 @@ export default defineComponent({
     }
 
     function valueUnselected(value) {
-      selected.value = selected.value.filter(x => x !== value)
+      selected.value = selected.value.filter(x => {
+        return (x.slug !== value.slug)
+      })
     }
 
     function show() {

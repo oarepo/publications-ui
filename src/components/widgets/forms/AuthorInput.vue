@@ -43,7 +43,7 @@ q-field.fit(
         term-select(
           ref="input"
           v-bind="$attrs"
-          :value="model.role"
+          v-model="model.role"
           taxonomy="contributor-type"
           multiple
           :elasticsearch="true"

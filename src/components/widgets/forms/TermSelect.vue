@@ -16,15 +16,14 @@ q-select(
   :placeholder="emptyModel ? translatedPlaceholder: ''"
   @keydown="onKeyDown()"
   @input="clearText()"
-  ref="select"
-  @update:model-value="onChange($event)")
+  ref="select")
   template(v-slot:no-option)
     q-item
       q-item-section.text-secondary
         div(v-if="searchValue") {{ $t('message.noResults') }}
         div(v-else) {{ $t('message.typeAFewLetters') }}
-  template(v-slot:after)
-    q-btn(round icon="edit" flat color="primary" dense @click="showTaxonomy" :label="$t('label.showTaxonomyTree')")
+  template(v-slot:append)
+    q-btn(icon="unfold_more" flat color="primary" dense @click="showTaxonomy" :label="$t('label.showTaxonomyTree')")
   template(v-slot:option="{opt, selected, focused, itemProps, itemEvents}")
     q-item(v-bind="itemProps" v-on="itemEvents")
       term-span(:term="opt" :taxonomy="taxonomy")
@@ -111,9 +110,10 @@ export default defineComponent({
     })
 
     function valueChanged() {
-      if (termOrArrayChanged(this.model, leafValue.value)) {
+      if (termOrArrayChanged(model.value, leafValue.value)) {
         model.value = copyValue(leafValue.value)
       }
+      console.log(model.value)
     }
 
     watch(leafValue, () => {
@@ -129,6 +129,7 @@ export default defineComponent({
     watch(model, async () => {
       if (termOrArrayChanged(model.value, leafValue.value)) {
         if (props.elasticsearch) {
+          console.log('es')
           ctx.emit('update:modelValue', await convertToElasticsearch(model.value))
         } else {
           ctx.emit('update:modelValue', model.value)
@@ -170,8 +171,8 @@ export default defineComponent({
     }
 
     function onKeyDown() {
-      if (!this.multiple && this.model) {
-        this.model = null
+      if (!props.multiple && model.value) {
+        model.value = null
       }
     }
 
@@ -191,10 +192,10 @@ export default defineComponent({
     })
 
     async function convertToElasticsearch(model) {
-      if (!model.value) {
+      if (!model) {
         return []
       }
-      if (!this.multiple) {
+      if (!props.multiple) {
         model.value = [model.value]
       }
       // convert each value to array
@@ -219,7 +220,7 @@ export default defineComponent({
       showTaxonomy,
       abortFilterFn,
       emptyModel,
-      model
+      model,
     }
   }
 })
