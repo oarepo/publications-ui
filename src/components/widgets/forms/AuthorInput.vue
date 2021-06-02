@@ -74,7 +74,7 @@ import useValidation from '@/composables/useValidation'
 import useInputRefs from '@/composables/useInputRefs'
 import AuthorTypeSelect from '@/components/widgets/forms/AuthorTypeSelect'
 import IdentifierInputList from '@/components/widgets/forms/IdentifierInputList'
-import {AFFILIATIONS, AUTHOR_TYPES, CONTRIBUTOR_ROLES, PERSON_IDENTIFIER_SCHEMES} from '@/constants'
+import {AFFILIATIONS, AUTHOR_TYPES, PERSON_IDENTIFIER_SCHEMES} from '@/constants'
 import TermSelect from '@/components/widgets/forms/TermSelect'
 
 export default {
@@ -184,8 +184,7 @@ export default {
       required,
       PERSON_IDENTIFIER_SCHEMES,
       AUTHOR_TYPES,
-      AFFILIATIONS,
-      CONTRIBUTOR_ROLES
+      AFFILIATIONS
     }
   }
 }
