@@ -1,6 +1,7 @@
 <template lang="pug">
 span.row
-  template(v-for="(t, idx) in termPath")
+  q-icon(v-if="term.icon" :name="term.icon")
+  template(v-else v-for="(t, idx) in termPath")
     .text-primary(v-if="idx>0")
       q-icon(size="sm" name="chevron_left")
     mt.self-center(:text="t.title")
@@ -39,7 +40,14 @@ export default defineComponent({
       return terms
     })
 
-    return {mt, termPath}
+    function termIcon(term) {
+      if (term.icon && term.icon.startsWith('img:')) {
+        return term.icon
+      }
+      return undefined
+    }
+
+    return {mt, termPath, termIcon}
   }
 })
 </script>

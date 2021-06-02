@@ -37,18 +37,6 @@
     empty
     v-model="basicInfo.additional_titles"
     :label="$t('label.forms.additionalTitles')")
-  .row.col.q-pt-none.full-width
-    base-input.col-grow.q-mr-sm(
-      ref="publisher"
-      filled
-      v-model="basicInfo.publisher"
-      :label="$t('label.publisher')")
-    date-input.col-auto(
-      ref="publication_date"
-      filled
-      v-model="basicInfo.publication_date"
-      :hint="$t('hint.publicationDate')"
-      :label="$t('label.publicationDate')")
   .row.col.justify-start.q-gutter-md
     .col-auto
       licenses-select(
@@ -62,6 +50,20 @@
         ref="languages"
         v-model="basicInfo.languages"
         :label="$t('label.languages')")
+  .row.col.q-pt-none.q-my-md.full-width
+    base-input.col-grow.q-mr-sm(
+      ref="publisher"
+      filled
+      dense
+      v-model="basicInfo.publisher"
+      :label="$t('label.publisher')")
+    date-input.col-auto(
+      ref="publication_date"
+      filled
+      dense
+      v-model="basicInfo.publication_date"
+      :hint="$t('hint.publicationDate')"
+      :label="$t('label.publicationDate')")
   stepper-nav.q-mt-md(has-prev=false @next="onNext")
 </template>
 <script>

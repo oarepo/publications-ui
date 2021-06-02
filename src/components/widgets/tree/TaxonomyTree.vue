@@ -83,6 +83,11 @@ export default defineComponent({
         }
         x.data = {...x}
         delete x.data.children
+
+        if (x.icon && x.icon.startsWith('http')) {
+          x.icon = `img:${x.icon}`
+        }
+
         x.self = x.links.self
         x.label = mt(x.title)
         return x
@@ -302,5 +307,9 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style lang="sass">
+.q-tree__icon
+  object-fit: contain !important
+  width: 3em !important
+  max-height: 2rem !important
 </style>

@@ -46,7 +46,7 @@ q-field.fit(
           v-model="model.role"
           taxonomy="contributor-type"
           multiple
-          :elasticsearch="true"
+          :elasticsearch="false"
           :label="$t('label.authorType')"
           @update:model-value="onChange")
       .col-grow
@@ -103,7 +103,7 @@ export default {
     }
   },
   setup(props, ctx) {
-    const {error, required} = useValidation()
+    const {error, required, resetValidation} = useValidation()
     const {input} = useInputRefs()
     const authorType = ref(null)
     const givenName = ref(null)
@@ -129,10 +129,6 @@ export default {
       if (model.person_or_org.type === AUTHOR_TYPES.PERSON) {
         model.person_or_org.name = personName.value
       }
-      // TODO: migrate to taxonomy terms
-      if (model.role) {
-        model.role = model.role.map((rol) => typeof rol === 'string' ? `${window.location.origin}/2.0/taxonomies/contributor-type/${rol}` : rol)
-      }
 
       // TODO: create affiliations input
       if (model.affiliations) {
@@ -140,6 +136,8 @@ export default {
           return typeof a === 'string' ? {name: a} : a
         })
       }
+
+      resetValidation()
       ctx.emit('update:modelValue', model)
     }
 
@@ -154,6 +152,7 @@ export default {
             gnr !== true ||
             fnr !== true ||
             idr !== true) {
+          console.log('name ', gnr, fnr, idr)
           error.value = true
         }
       } else if (model.person_or_org.type === AUTHOR_TYPES.ORGANIZATION) {
@@ -164,6 +163,7 @@ export default {
           error.value = true
         }
       }
+      console.log(error.value)
 
       return error.value ? 'error.validationFail' : true
     }

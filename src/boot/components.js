@@ -15,6 +15,7 @@ import DateInput from '@/components/widgets/forms/DateInput'
 import CircularSpinner from '@/components/widgets/progress/CircularSpinner'
 import CreateRecordBtn from '@/components/widgets/button/CreateRecordBtn'
 import NestedFacet from '@/components/search/facets/NestedFacet'
+import TermSelect from '@/components/widgets/forms/TermSelect'
 
 export default {
     install (app) {
@@ -30,6 +31,7 @@ export default {
         app.component('locale-select', LocaleSelect)
         app.component('chips-select', ChipsSelect)
         app.component('base-select', BaseSelect)
+        app.component('term-select', TermSelect)
         app.component('schema-select', SchemaSelect)
         app.component('facet-container', FacetContainer)
         app.component('nested-facet', NestedFacet)

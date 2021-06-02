@@ -82,7 +82,7 @@ export default defineComponent({
     }
   },
   setup(props, ctx) {
-    const {suggest, loadTaxonomyTermElasticsearch} = useTaxonomy()
+    const {suggest} = useTaxonomy()
     const {t} = useI18n()
     const $q = useQuasar()
 
@@ -113,7 +113,6 @@ export default defineComponent({
       if (termOrArrayChanged(model.value, leafValue.value)) {
         model.value = copyValue(leafValue.value)
       }
-      console.log(model.value)
     }
 
     watch(leafValue, () => {
@@ -129,7 +128,6 @@ export default defineComponent({
     watch(model, async () => {
       if (termOrArrayChanged(model.value, leafValue.value)) {
         if (props.elasticsearch) {
-          console.log('es')
           ctx.emit('update:modelValue', await convertToElasticsearch(model.value))
         } else {
           ctx.emit('update:modelValue', model.value)
@@ -191,22 +189,14 @@ export default defineComponent({
       return t('label.startWriting')
     })
 
-    async function convertToElasticsearch(model) {
+    function convertToElasticsearch(model) {
       if (!model) {
         return []
       }
       if (!props.multiple) {
         model.value = [model.value]
       }
-      // convert each value to array
-      const modelBySelf = {}
-      for (const m of model.value) {
-        const loadedTerm = await loadTaxonomyTermElasticsearch(m.links.self)
-        loadedTerm.forEach(x => {
-          modelBySelf[x.links.self] = x
-        })
-      }
-      return [...Object.values(modelBySelf)]
+      return [...Object.values(model.value)]
     }
 
     return {
