@@ -70,18 +70,6 @@ export const CONTRIBUTOR_ROLES = [
 // TODO: migrate to taxonomy terms
 export const AFFILIATIONS = ['CESNET', 'VŠCHT', 'NTK', 'AVČR']
 
-// TODO: migrate to taxonomy terms
-export const LICENSES = [
-    'cc/1-0',
-    'cc/2-0',
-    'cc/2-5',
-    'cc/3-0',
-    'cc/4-0',
-    'cc/zero',
-    'cc',
-    'copyright'
-]
-
 export default {
     DATASETS_COLLECTION_CODE,
     DATASETS_DRAFT_COLLECTION_CODE,
@@ -93,6 +81,5 @@ export default {
     PERSON_IDENTIFIER_SCHEMES,
     AUTHOR_TYPES,
     AFFILIATIONS,
-    LICENSES,
     CONTRIBUTOR_ROLES,
 }

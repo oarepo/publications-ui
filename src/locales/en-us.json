@@ -73,6 +73,8 @@
     "revert_approval": "assignment_return"
   },
   "label": {
+    "startWriting": "Start writing",
+    "showTaxonomyTree": "Choose a term",
     "type": "Type",
     "download": "Download",
     "actionApprove": "Are you sure?",

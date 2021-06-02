@@ -1,6 +1,9 @@
 export default {
     path: 'form',
     component: () => import(/* webpackChunkName: 'layouts' */ '@/layouts/FormLayout'),
+    meta: {
+        authorization: {}
+    },
     children: [
         {
             // CREATE record in ANY community (user can choose in component)

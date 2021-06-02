@@ -40,12 +40,14 @@ q-field.fit(
         @update:model-value="onChange")
     .row.full-width.q-mb-sm
       .col-4.q-mr-sm
-        chips-select(
-          ref="roles"
-          options-dense
-          :label="$t('label.roles')"
+        term-select(
+          ref="input"
+          v-bind="$attrs"
           v-model="model.role"
-          :options="CONTRIBUTOR_ROLES"
+          taxonomy="contributor-type"
+          multiple
+          :elasticsearch="false"
+          :label="$t('label.authorType')"
           @update:model-value="onChange")
       .col-grow
         chips-select(
@@ -72,13 +74,14 @@ import useValidation from '@/composables/useValidation'
 import useInputRefs from '@/composables/useInputRefs'
 import AuthorTypeSelect from '@/components/widgets/forms/AuthorTypeSelect'
 import IdentifierInputList from '@/components/widgets/forms/IdentifierInputList'
-import {AFFILIATIONS, AUTHOR_TYPES, CONTRIBUTOR_ROLES, PERSON_IDENTIFIER_SCHEMES} from '@/constants'
+import {AFFILIATIONS, AUTHOR_TYPES, PERSON_IDENTIFIER_SCHEMES} from '@/constants'
+import TermSelect from '@/components/widgets/forms/TermSelect'
 
 export default {
   name: 'IdentifierInput',
   emits: ['update:modelValue'],
   mixins: [ValidateMixin],
-  components: {IdentifierInputList, AuthorTypeSelect},
+  components: {IdentifierInputList, AuthorTypeSelect, TermSelect},
   props: {
     label: {
       type: String,
@@ -100,7 +103,7 @@ export default {
     }
   },
   setup(props, ctx) {
-    const {error, required} = useValidation()
+    const {error, required, resetValidation} = useValidation()
     const {input} = useInputRefs()
     const authorType = ref(null)
     const givenName = ref(null)
@@ -126,10 +129,6 @@ export default {
       if (model.person_or_org.type === AUTHOR_TYPES.PERSON) {
         model.person_or_org.name = personName.value
       }
-      // TODO: migrate to taxonomy terms
-      if (model.role) {
-        model.role = model.role.map((rol) => typeof rol === 'string' ? `${window.location.origin}/2.0/taxonomies/contributor-type/${rol}` : rol)
-      }
 
       // TODO: create affiliations input
       if (model.affiliations) {
@@ -137,6 +136,8 @@ export default {
           return typeof a === 'string' ? {name: a} : a
         })
       }
+
+      resetValidation()
       ctx.emit('update:modelValue', model)
     }
 
@@ -151,6 +152,7 @@ export default {
             gnr !== true ||
             fnr !== true ||
             idr !== true) {
+          console.log('name ', gnr, fnr, idr)
           error.value = true
         }
       } else if (model.person_or_org.type === AUTHOR_TYPES.ORGANIZATION) {
@@ -161,6 +163,7 @@ export default {
           error.value = true
         }
       }
+      console.log(error.value)
 
       return error.value ? 'error.validationFail' : true
     }
@@ -181,8 +184,7 @@ export default {
       required,
       PERSON_IDENTIFIER_SCHEMES,
       AUTHOR_TYPES,
-      AFFILIATIONS,
-      CONTRIBUTOR_ROLES
+      AFFILIATIONS
     }
   }
 }

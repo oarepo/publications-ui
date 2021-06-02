@@ -1,16 +1,13 @@
 <template lang="pug">
-chips-select(
+term-select(
   v-bind="$attrs"
-  icon="flag"
   v-model="model"
-  :options="[]"
   :label="$t('label.localeSwitcher')"
   :hint="$t('hint.localeSwitcher')"
   dense
-  options-cover
-  emit-value
-  map-options
-  options-dense
+  taxonomy="languages"
+  multiple
+  :elasticsearch="false"
   :rules="rules"
   @update:model-value="onChange($event)")
 </template>
@@ -31,10 +28,7 @@ export default defineComponent({
   setup (props, ctx) {
     const model = ref(props.modelValue)
 
-    // TODO: migrate to taxonomy terms
     function onChange(event) {
-      event = event.map(l => `${window.location.origin}/2.0/taxonomies/languages/${l}`)
-
       ctx.emit('update:modelValue', event)
     }
 

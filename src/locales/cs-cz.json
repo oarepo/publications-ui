@@ -72,6 +72,8 @@
     "revert_approval": "assignment_return"
   },
   "label": {
+    "startWriting": "Začněte psát",
+    "showTaxonomyTree": "Vybrat pojem",
     "type": "Typ",
     "download": "Stáhnout",
     "abstract": "Abstrakt",

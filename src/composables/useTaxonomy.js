@@ -47,8 +47,6 @@ export default function useTaxonomy(options) {
             termArray[i].parent = null
         }
 
-        console.log(map, termArray)
-
         for (i = 0; i < termArray.length; i += 1) {
             const node = termArray[i]
             if (node.links.parent !== undefined) {
@@ -188,6 +186,7 @@ export default function useTaxonomy(options) {
         defaultTermEditor,
         defaultTermViewer,
         childrenOnly,
-        treeToRoot
+        treeToRoot,
+        taxonomyUrl
     }
 }
