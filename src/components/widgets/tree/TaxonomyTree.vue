@@ -1,7 +1,11 @@
 <template lang="pug">
 div.q-pa-md.q-gutter-sm
-  .row.q-mb-md.q-ml-lg
-    q-pagination.col-grow.paginator.order.order-md-last(
+  .row.justify-between.q-mb-md.q-ml-lg
+    q-input.col-auto(v-model="filter" dense class="q-mr-lg print-hide" @keyup.enter="search()")
+      template(v-slot:append)
+        q-icon(v-if="filter !== ''" name="close" @click="filter = ''; search()" class="cursor-pointer")
+        q-icon(name="search")
+    q-pagination.col-auto.paginator.order.order-md-last(
       v-model="page" :max="maxPage" :direction-links="true" :max-pages="6"
       v-if="maxPage > 1" color="secondary")
   .row
@@ -52,7 +56,7 @@ export default defineComponent({
     const {mt} = useTranslated(locale)
 
     const tree = ref(null)
-    // const filter = ref('')
+    const filter = ref('')
     const activatedFilter = ref('')
     const data = ref([])
     const dataReady = ref(false)
@@ -173,14 +177,15 @@ export default defineComponent({
     //   return taxonomyUrlStack.value.length
     // })
     //
-    // function search() {
-    //   activatedFilter.value = filter.value
-    //   if (page.value !== 1) {
-    //     page.value = 1
-    //   } else {
-    //     loadTaxonomy()
-    //   }
-    // }
+
+    function search() {
+      activatedFilter.value = filter.value
+      if (page.value !== 1) {
+        page.value = 1
+      } else {
+        loadTaxonomy()
+      }
+    }
 
     const maxPage = computed(() => {
       return Math.ceil(total.value / (size.value || 1))
@@ -301,7 +306,8 @@ export default defineComponent({
       // parentListTerm,
       // expand,
       // hasParent,
-      // search,
+      filter,
+      search,
       page,
       maxPage,
       size,
