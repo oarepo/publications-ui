@@ -1,16 +1,21 @@
 <template lang="pug">
 div.q-pa-md.q-gutter-sm
-  q-tree(
-    ref="tree"
-    v-if="dataReady"
-    :nodes="data"
-    tick-strategy="leaf"
-    :ticked="selected"
-    :default-expand-all="startExpanded"
-    node-key="self"
-    @update:model-value="valueChanged"
-    @update:ticked="onTicked($event)"
-    accordion)
+  .row.q-mb-md.q-ml-lg
+    q-pagination.col-grow.paginator.order.order-md-last(
+      v-model="page" :max="maxPage" :direction-links="true" :max-pages="6"
+      v-if="maxPage > 1" color="secondary")
+  .row
+    q-tree.col-grow(
+      ref="tree"
+      v-if="dataReady"
+      :nodes="data"
+      tick-strategy="leaf"
+      :ticked="selected"
+      :default-expand-all="startExpanded"
+      node-key="self"
+      @update:model-value="valueChanged"
+      @update:ticked="onTicked($event)"
+      accordion)
 </template>
 <script>
 import {computed, defineComponent, nextTick, onMounted, ref, watch} from 'vue'
@@ -297,7 +302,10 @@ export default defineComponent({
       // expand,
       // hasParent,
       // search,
+      page,
       maxPage,
+      size,
+      total,
       // parentUrl,
       selected,
       valueChanged,
