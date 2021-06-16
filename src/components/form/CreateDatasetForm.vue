@@ -1,5 +1,5 @@
 <template lang="pug">
-q-stepper(
+q-stepper.full-width(
   flat
   keep-alive
   v-model="step"
