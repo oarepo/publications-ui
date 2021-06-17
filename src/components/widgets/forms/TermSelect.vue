@@ -26,30 +26,25 @@ q-select(
     q-btn(icon="unfold_more" flat color="primary" dense @click="showTaxonomy" :label="$t('label.showTaxonomyTree')")
   template(v-slot:option="{opt, selected, focused, itemProps, itemEvents}")
     q-item(v-bind="itemProps" v-on="itemEvents")
-      term-span(:term="opt" :taxonomy="taxonomy")
+      term-chip(:term="opt" :taxonomy="taxonomy" color="primary")
   template(v-slot:selected-item="{opt, index, removeAtIndex}")
-    q-chip.q-pa-md(removable @remove="removeAtIndex(index)" v-if="multiple" color="primary" outline)
-      term-span(:term="opt" :taxonomy="taxonomy" usage="inplace")
-    q-chip.q-pa-md(color="primary" outline v-else-if="opt && (!Array.isArray(opt) || opt.length>0)")
-      term-span(:term="opt" :taxonomy="taxonomy" usage="inplace" v-if="!Array.isArray(opt)")
-      term-span(:term="optp" v-for="(optp, idx) in opt" :key="idx" :taxonomy="taxonomy" usage="inplace"
-        v-else)
+    term-chip(@remove="removeAtIndex(index)" :term="opt" :taxonomy="taxonomy" v-if="multiple" color="primary" removable)
 </template>
 
 <script>
-import {computed, defineComponent, onMounted, ref, watch} from 'vue'
+import {computed, defineComponent, onMounted, ref, toRefs, watch} from 'vue'
 import useTaxonomy from '@/composables/useTaxonomy'
 import {useI18n} from 'vue-i18n'
 import {copyValue, termOrArrayChanged} from '@/utils'
 import {useQuasar} from 'quasar'
 import TaxonomyInputDialog from "@/components/widgets/dialogs/TaxonomyInputDialog";
-import TermSpan from "@/components/widgets/taxonomy/TermSpan";
+import TermChip from "@/components/widgets/taxonomy/TermChip";
 
 const DEFAULT = {}
 
 export default defineComponent({
   name: 'TermSelect',
-  components: {TermSpan},
+  components: {TermChip},
   emits: ['update:modelValue'],
   props: {
     taxonomy: String,
@@ -86,6 +81,7 @@ export default defineComponent({
     const {t} = useI18n()
     const $q = useQuasar()
 
+    const { modelValue } = toRefs(props)
     const model = ref(null)
     const options = ref([])
     const searchValue = ref(null)
@@ -96,13 +92,13 @@ export default defineComponent({
     })
 
     const arrayValue = computed(() => {
-      if (!props.modelValue) {
+      if (!modelValue.value) {
         return []
       }
-      if (Array.isArray(props.modelValue)) {
-        return props.modelValue
+      if (Array.isArray(modelValue.value)) {
+        return modelValue.value
       }
-      return [props.modelValue]
+      return [modelValue.value]
     })
 
     const leafValue = computed(() => {
@@ -120,7 +116,7 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      if (props.modelValue) {
+      if (modelValue.value) {
         valueChanged()
       }
     })

@@ -1,6 +1,8 @@
 {
   "accessibility": {},
   "action": {
+    "ok": "OK",
+    "cancel": "Zrušit",
     "accept": "Souhlasím",
     "addAuthor": "Přidat autora",
     "addItem": "Přidat položku",
@@ -72,6 +74,7 @@
     "revert_approval": "assignment_return"
   },
   "label": {
+    "selectedTerms": "Vybrané pojmy",
     "startWriting": "Začněte psát",
     "showTaxonomyTree": "Vybrat pojem",
     "type": "Typ",
