@@ -101,11 +101,17 @@ export default function useUploader(url) {
             })
     }
 
+    function getChunkSize (file) {
+        // Produces a chunk size between 5-15 MB
+        return Math.min(Math.max(1024*1024*5, Math.ceil(file.size / 1000000)), 1024*1024*15)
+    }
+
     const uppy = ref(new Uppy({
         locale: langPack
     }))
     uppy.value.use(AwsS3Multipart, {
         limit: 4,
+        getChunkSize: getChunkSize,
         createMultipartUpload: createMultipartUpload,
         prepareUploadPart: prepareUploadPart,
         abortMultipartUpload: abortMultipartUpload,

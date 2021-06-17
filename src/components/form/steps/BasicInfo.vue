@@ -50,20 +50,22 @@
         ref="languages"
         v-model="basicInfo.languages"
         :label="$t('label.languages')")
-  .row.col.q-pt-none.q-my-md.full-width
-    base-input.col-grow.q-mr-sm(
-      ref="publisher"
-      filled
-      dense
-      v-model="basicInfo.publisher"
-      :label="$t('label.publisher')")
-    date-input.col-auto(
-      ref="publication_date"
-      filled
-      dense
-      v-model="basicInfo.publication_date"
-      :hint="$t('hint.publicationDate')"
-      :label="$t('label.publicationDate')")
+    .col-auto
+      date-input(
+        ref="publication_date"
+        filled
+        dense
+        v-model="basicInfo.publication_date"
+        :hint="$t('hint.publicationDate')"
+        :label="$t('label.publicationDate')")
+    .col-grow
+      base-input.q-mr-sm(
+        ref="publisher"
+        filled
+        dense
+        v-model="basicInfo.publisher"
+        :label="$t('label.publisher')")
+
   stepper-nav.q-mt-md(has-prev=false @next="onNext")
 </template>
 <script>

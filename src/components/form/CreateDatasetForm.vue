@@ -1,5 +1,5 @@
 <template lang="pug">
-q-stepper(
+q-stepper.full-width(
   flat
   keep-alive
   v-model="step"
@@ -70,7 +70,7 @@ q-stepper(
     q-separator(spaced)
     .column.justify-center.items-center
       .col.text-subtitle1 {{ $t('label.forms.uploadData') }}
-    upload-data(v-if="created" :files="created.links.files")
+      upload-data(v-if="created" :files="created.links.files")
     .column.justify-center.items-center
       .col.text-subtitle1.q-my-md ~ {{ $t('label.or') }} ~
       .col

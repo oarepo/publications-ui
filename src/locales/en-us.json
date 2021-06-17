@@ -1,6 +1,8 @@
 {
   "accessibility": {},
   "action": {
+    "ok": "OK",
+    "cancel": "Cancel",
     "accept": "Accept",
     "addAuthor": "Add author",
     "addIdentifier": "Přidat identifikátor",
@@ -73,6 +75,7 @@
     "revert_approval": "assignment_return"
   },
   "label": {
+    "selectedTerms": "Selected terms",
     "startWriting": "Start writing",
     "showTaxonomyTree": "Choose a term",
     "type": "Type",

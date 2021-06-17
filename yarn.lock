@@ -1096,7 +1096,7 @@
     "@quasar/extras" "^1.0.0"
     quasar "^2.0.0-beta.1"
 
-"@oarepo/vue-popup-login@^3.0.0-a6":
+"@oarepo/vue-popup-login@^3.0.0-a5":
   version "3.0.0-a5"
   resolved "https://registry.yarnpkg.com/@oarepo/vue-popup-login/-/vue-popup-login-3.0.0-a5.tgz#96da742c81e9ff8b41445231415c42aa06c3f439"
   integrity sha512-JoFUu31tpDmbPfn5PKbikUI4tpNLGzw2Uk/UqCi7NsImI10cN1pdcyU89jInih+A+klZMeWK9CCcSFJGA2thnA==

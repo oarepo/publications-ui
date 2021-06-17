@@ -102,7 +102,7 @@ export default function useTaxonomy(options) {
         const ret = await axios.get(url)
         return {
             terms: ret.data,
-            total: ret.headers['x-total']
+            count: ret.headers['x-total']
         }
     }
 

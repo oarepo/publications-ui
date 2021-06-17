@@ -1,7 +1,6 @@
 <template lang="pug">
 span.row
-  q-icon(v-if="term.icon" :name="term.icon")
-  template(v-else v-for="(t, idx) in termPath")
+  template(v-if="!term.icon" v-for="(t, idx) in termPath")
     .text-primary(v-if="idx>0")
       q-icon(size="sm" name="chevron_left")
     mt.self-center(:text="t.title")

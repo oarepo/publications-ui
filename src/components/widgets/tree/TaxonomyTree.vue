@@ -1,19 +1,29 @@
 <template lang="pug">
 div.q-pa-md.q-gutter-sm
-  q-tree(
-    ref="tree"
-    v-if="dataReady"
-    :nodes="data"
-    tick-strategy="leaf"
-    :ticked="selected"
-    :default-expand-all="startExpanded"
-    node-key="self"
-    @update:model-value="valueChanged"
-    @update:ticked="onTicked($event)"
-    accordion)
+  .row.justify-end.q-mb-md
+    q-input.col-grow.q-mr-lg.print-hide(v-model="filter" dense @keyup.enter="search()")
+      template(v-slot:append)
+        q-icon(v-if="filter !== ''" name="close" @click="filter = ''; search()" class="cursor-pointer")
+        q-icon(name="search")
+  .row
+    q-tree.col-grow(
+      ref="tree"
+      v-if="dataReady"
+      :nodes="data"
+      tick-strategy="leaf"
+      :ticked="selectedValues"
+      :default-expand-all="startExpanded"
+      node-key="self"
+      @update:model-value="valueChanged"
+      @update:ticked="onTicked($event)"
+      accordion)
+  .row.justify-center
+    q-pagination.col-auto.paginator.order.order-md-last(
+      v-model="page" :max="maxPage" :direction-links="true" :max-pages="6"
+      v-if="maxPage > 1" color="secondary")
 </template>
 <script>
-import {computed, defineComponent, nextTick, onMounted, ref, watch} from 'vue'
+import {computed, defineComponent, nextTick, onMounted, ref, watch, toRefs} from 'vue'
 import useTaxonomy from '@/composables/useTaxonomy'
 import {useTranslated} from '@/composables/useTranslated'
 import {useI18n} from 'vue-i18n'
@@ -42,12 +52,14 @@ export default defineComponent({
     modelValue: [Object, Array]
   },
   setup(props, ctx) {
+    const { modelValue } = toRefs(props)
+
     const {locale} = useI18n()
     const {loadTaxonomyPage} = useTaxonomy()
     const {mt} = useTranslated(locale)
 
     const tree = ref(null)
-    // const filter = ref('')
+    const filter = ref('')
     const activatedFilter = ref('')
     const data = ref([])
     const dataReady = ref(false)
@@ -58,7 +70,7 @@ export default defineComponent({
     const size = ref(0)
     const total = ref(0)
     const singleLevel = ref(false)
-    const selected = ref(props.modelValue || [])
+    const selected = ref(modelValue.value || [])
     // const checkRunning = ref(false)
     const deleted = ref(false)
 
@@ -68,12 +80,12 @@ export default defineComponent({
       valueChanged()
     })
 
-    watch(props.modelValue, () => {
+    watch(modelValue, () => {
       valueChanged()
     })
 
     function valueChanged() {
-      selected.value = props.modelValue.map(t => t.links.self) || []
+      selected.value = props.modelValue || []
     }
 
     function processData(data) {
@@ -168,14 +180,20 @@ export default defineComponent({
     //   return taxonomyUrlStack.value.length
     // })
     //
-    // function search() {
-    //   activatedFilter.value = filter.value
-    //   if (page.value !== 1) {
-    //     page.value = 1
-    //   } else {
-    //     loadTaxonomy()
-    //   }
-    // }
+
+    function search() {
+      activatedFilter.value = filter.value
+      if (page.value !== 1) {
+        page.value = 1
+      } else {
+        loadTaxonomy()
+      }
+    }
+
+    const selectedValues = computed(() => {
+      const res = selected.value.map(s => s?.links?.self)
+      return res
+    })
 
     const maxPage = computed(() => {
       return Math.ceil(total.value / (size.value || 1))
@@ -274,13 +292,37 @@ export default defineComponent({
     // }
 
     function onTicked(term) {
-      selected.value = term
-      const val = selected.value.map(v => {
-        return data.value.find(t => {
-          return t.links.self === v
+      const addedVal = term.filter(x => !selectedValues.value.includes(x))
+      const removedVal = selected.value.filter(x => !term.includes(x.links.self))
+
+      const _findTermByLink = (termTree, link) => {
+        if (termTree.links?.self === link) {
+          return termTree
+        }
+
+        if (termTree.children?.length) {
+          return termTree.children.map(t => {
+            return _findTermByLink(t, link)
+          }).filter(t => t)[0]
+        }
+      }
+
+      if (addedVal.length > 0) {
+        const added = addedVal.map(val => {
+          const terms = data.value.map(dat => {
+              return _findTermByLink(dat, val)
+          })
+          return terms.filter(el => el)
         })
-      })
-      ctx.emit('update:modelValue', val)
+        selected.value.push.apply(selected.value, ...added)
+      }
+
+      if (removedVal.length > 0) {
+        selected.value = selected.value.filter(v => {
+          return !removedVal.map(r => r.links.self).includes(v.links.self)
+        })
+      }
+      ctx.emit('update:modelValue', selected.value)
     }
 
     return {
@@ -296,10 +338,15 @@ export default defineComponent({
       // parentListTerm,
       // expand,
       // hasParent,
-      // search,
+      filter,
+      search,
+      page,
       maxPage,
+      size,
+      total,
       // parentUrl,
       selected,
+      selectedValues,
       valueChanged,
       onTicked
     }

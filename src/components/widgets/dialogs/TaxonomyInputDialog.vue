@@ -14,19 +14,16 @@ q-dialog.taxonomy(ref="dialog" @hide="onDialogHide")
         :initial-size="10")
     q-card-section(v-if="multiple")
       .row.items-end.q-gutter-md
-        q-field.col(:label="$t('label.selectedTerm')" stack-label)
+        q-field.col(:label="$t('label.selectedTerms')" stack-label)
           template(v-slot:control)
             .row.items-end.q-gutter-sm
-              q-chip(
-                removable
-                v-for="term in selected"
+              term-chip.q-mt-md(
+                v-for="term in (selected || [])"
                 :key="term.links.self"
-                color="primary"
-                outline
+                :term="term"
+                :taxonomy="taxonomy"
+                removable
                 @remove="valueUnselected(term)")
-                term-span(
-                  :term="term"
-                  :taxonomy="taxonomy")
     q-card-actions(align="right")
       q-btn(@click="hide" flat color="grey") {{ $t('action.cancel') }}
       q-btn(@click="onOKClick" flat color="positive" icon="done" v-if="multiple")
@@ -35,12 +32,12 @@ q-dialog.taxonomy(ref="dialog" @hide="onDialogHide")
 
 <script>
 import {defineComponent, reactive, ref} from 'vue'
-import TermSpan from '@/components/widgets/taxonomy/TermSpan'
 import TaxonomyTree from '@/components/widgets/tree/TaxonomyTree'
+import TermChip from "@/components/widgets/taxonomy/TermChip";
 
 export default defineComponent({
   name: 'TaxonomyInputDialog',
-  components: {TermSpan, TaxonomyTree},
+  components: {TermChip, TaxonomyTree},
   emits: ['ok', 'hide'],
   props: {
     multiple: {
@@ -118,6 +115,5 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
+<style lang="sass">
 </style>
