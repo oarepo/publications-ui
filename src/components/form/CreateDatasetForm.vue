@@ -70,7 +70,7 @@ q-stepper.full-width(
     q-separator(spaced)
     .column.justify-center.items-center
       .col.text-subtitle1 {{ $t('label.forms.uploadData') }}
-    upload-data(v-if="created" :files="created.links.files")
+      upload-data(v-if="created" :files="created.links.files")
     .column.justify-center.items-center
       .col.text-subtitle1.q-my-md ~ {{ $t('label.or') }} ~
       .col

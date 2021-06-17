@@ -49,7 +49,7 @@ export default {
     }
   },
   setup (props, ctx) {
-    const {error, required} = useValidation()
+    const {error, required, resetValidation} = useValidation()
     const {input} = useInputRefs()
 
     const scheme = ref(null)
@@ -58,6 +58,7 @@ export default {
 
     function onChange () {
       ctx.emit('update:modelValue', model)
+      resetValidation()
     }
 
     function validate () {
