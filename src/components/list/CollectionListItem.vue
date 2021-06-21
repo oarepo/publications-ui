@@ -1,7 +1,5 @@
 <template lang="pug">
 q-card.item-card(flat)
-  q-toolbar.absolute.q-pt-md.q-pb-sm.justify-end
-    status-ribbon(v-if="!loading" :metadata="m" dense)
   q-card-section(horizontal)
     q-card-section
       q-skeleton(v-if="loading" :width="`${thumbnailSize}px`" :height="`${thumbnailSize}px`")
@@ -9,41 +7,47 @@ q-card.item-card(flat)
       q-skeleton(type="rect" width="400px" height="40px")
       q-skeleton.q-mt-sm(type="text" width="300px")
       q-skeleton.q-mx-md.q-mb-sm.absolute-bottom.q-card__section--vert(type="text" :width="`${thumbnailSize}px`")
-    q-card-section(v-else)
-      .row.full-width.q-mt-sm.q-mb-xs
-        .col-auto.q-mr-xl.block.text-h5.self-center
-          search-highlight.self-center(:item="item" :text="mt(m.title)")
-        q-separator.gt-xs.header-separator(vertical spaced inset color="accent" v-if="m.creators?.length")
-        .gt-xs.col-auto.block.text-subtitle1.self-center(v-if="m.creators?.length") {{ m.creators.map(c => c.person_or_org.name).join(' · ') }}
-          q-tooltip {{ $t('label.author') }}
-        q-separator.gt-sm.header-separator(vertical spaced inset color="accent" v-if="m.languages?.length")
-        .gt-sm.col-auto.block.text-subtitle2.self-center(v-if="m.languages?.length")
-          span {{ m.languages.map(l => mt(l.title)).join(' · ') }}
-          q-tooltip {{ $t('label.language') }}
-        q-separator.gt-sm.header-separator(vertical spaced inset color="accent" v-if="m._files?.length")
-        .gt-sm.col-auto.block.text-subtitle2.self-center(v-if="m._files?.length")
-          span.q-px-xs {{ m._files?.length }}
-          q-icon(name="attachment")
-          q-tooltip {{ $t('label.filesCount') }}
+    q-card-section.full-width(v-else)
+      .row.no-wrap.justify-between
+        .row.col-fit
+          .col-auto.q-mr-xl.block.text-h5.self-center
+            search-highlight.self-center(:item="item" :text="mt(m.title)")
+          q-separator.gt-xs.header-separator(vertical spaced inset color="accent" v-if="m.creators?.length")
+          .gt-xs.col-auto.block.text-subtitle1.self-center(v-if="m.creators?.length") {{ m.creators.map(c => c.person_or_org.name).join(' · ') }}
+            q-tooltip {{ $t('label.author') }}
+          q-separator.gt-sm.header-separator(vertical spaced inset color="accent" v-if="m.languages?.length")
+          .gt-sm.col-auto.block.text-subtitle2.self-center(v-if="m.languages?.length")
+            span {{ m.languages.map(l => mt(l.title)).join(' · ') }}
+            q-tooltip {{ $t('label.language') }}
+          q-separator.gt-sm.header-separator(vertical spaced inset color="accent" v-if="m._files?.length")
+          .gt-sm.col-auto.block.text-subtitle2.self-center(v-if="m._files?.length")
+            span.q-px-xs {{ m._files?.length }}
+            q-icon(name="attachment")
+            q-tooltip {{ $t('label.filesCount') }}
+        .row.col-auto.justify-end
+          q-toolbar
+            status-ribbon(v-if="!loading" :metadata="m" dense)
       q-separator
-      q-card-section
-        .row.q-mb-md
-          q-chip(v-for="(kw, idx) in m.keywords" :key="idx") {{ kw }}
-        .text-subtitle1.ellipsis-3-lines
-          span(v-html="$sanitize(mt(m.abstract))")
-      q-card-section
-        .text-subtitle2.text-grey-8 {{ $t('label.createdAt') }} {{ $d(new Date(dateCreated)) }}
-    q-skeleton.absolute-bottom-right.q-px-sm.q-ma-md(
-      v-if="loading"
-      animation="pulse"
-      type="QBtn")
-    .row.absolute-bottom-right.q-pa-md(v-else)
-      share-menu(:record="item")
-      q-btn(
-        padding="sm md"
-        color="primary"
-        :label="$t('nav.detail')"
-        @click.stop="$emit('detail')")
+      q-card-section.q-pl-none
+        .row.full-width.q-mb-md
+          q-chip.col-auto(v-for="(kw, idx) in m.keywords" :key="idx") {{ kw }}
+        .row.full-width.text-subtitle1.ellipsis-3-lines
+          .col-auto(v-html="$sanitize(mt(m.abstract))")
+      q-card-section.q-pl-none
+        .row.full-width
+          .col-auto.text-subtitle2.text-grey-8.self-center {{ $t('label.createdAt') }} {{ $d(new Date(dateCreated)) }}
+          q-space
+          share-menu.col-auto(:record="item")
+          q-skeleton.col-2.self-end(
+            v-if="loading"
+            animation="pulse"
+            type="QBtn")
+          q-btn.col-auto(
+            v-else
+            padding="sm md"
+            color="primary"
+            :label="$t('nav.detail')"
+            @click.stop="$emit('detail')")
 </template>
 
 <script>

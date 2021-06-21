@@ -2,12 +2,12 @@
 q-page(padding)
   q-card.bg-grey-3(flat)
     q-card-section
-      .text-h5.no-wrap.row.q-gutter-md
+      .text-h5.no-wrap.row.full-width.q-gutter-md
         .col-auto
           span.text-accent {{ md.id }}
         q-separator(color="primary" vertical)
-        .col-auto
-          span {{ mt(md.title) }}
+        .col-fit {{ mt(md.title) }}
+        q-space
         .col-auto
           status-ribbon(v-if="!record.loading" :metadata="md" dense)
     q-separator

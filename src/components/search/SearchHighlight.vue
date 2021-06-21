@@ -1,6 +1,6 @@
 <template lang="pug">
 .text-grey-7.highlight(v-html="highlight" v-if="hasHighlight")
-span(v-else) {{ text }}
+strong(v-else) {{ text }}
 </template>
 
 <script>
