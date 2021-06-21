@@ -1,5 +1,5 @@
 <template lang="pug">
-q-card(flat clickable)
+q-card(flat)
   q-toolbar.absolute.q-pt-md.q-pb-sm.justify-end
     status-ribbon(v-if="!loading" :metadata="m" dense)
   q-card-section(horizontal)
@@ -24,12 +24,13 @@ q-card(flat clickable)
       v-if="loading"
       animation="pulse"
       type="QBtn")
-    q-btn.absolute-bottom-right.q-px-sm.q-ma-md(
-      v-else
-      color="primary"
-      rounded
-      :label="$t('nav.detail')"
-      @click.stop="$emit('detail')")
+    .row.absolute-bottom-right.q-pa-md(v-else)
+      share-menu(:record="item")
+      q-btn(
+        padding="sm md"
+        color="primary"
+        :label="$t('nav.detail')"
+        @click.stop="$emit('detail')")
 </template>
 
 <script>
@@ -40,6 +41,8 @@ import {computed, defineComponent} from 'vue'
 import {useQuasar} from 'quasar'
 import {useI18n} from 'vue-i18n'
 import {useTranslated} from '@/composables/useTranslated'
+import useClipboard from '@/composables/useClipboard'
+import ShareMenu from '@/components/widgets/ShareMenu'
 
 export default defineComponent({
   name: 'CollectionListItem',
@@ -55,12 +58,14 @@ export default defineComponent({
   },
   emits: ['detail'],
   components: {
+    ShareMenu,
     SearchHighlight,
     StatusRibbon
   },
   setup(props) {
     const $q = useQuasar()
     const {locale} = useI18n()
+    const {copy2clip} = useClipboard()
     const {mt} = useTranslated(locale)
 
     const m = computed(() => {
@@ -81,7 +86,7 @@ export default defineComponent({
       }
     })
 
-    return {m, mt, dateCreated, thumbnailSize}
+    return {m, mt, dateCreated, thumbnailSize, copy2clip}
   }
 })
 </script>

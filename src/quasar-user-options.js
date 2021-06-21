@@ -18,7 +18,7 @@ import {
     QExpansionItem,
     QItem,
     QItemSection,
-    QList,
+    QList, QMenu,
     QTab,
     QTabs,
     QTooltip
@@ -42,7 +42,7 @@ export default {
     components: [
         QExpansionItem, QList, QItem,
         QItemSection, QBadge, QCheckbox,
-        QTabs, QTab, QBtn, QChip, QTooltip
+        QTabs, QTab, QBtn, QChip, QTooltip, QMenu
     ],
     plugins: {
         AddressbarColor,
