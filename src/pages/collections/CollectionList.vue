@@ -2,12 +2,11 @@
 q-page.q-mx-lg-xl(padding)
   collection-list-header(:collection="collection")
   .column.q-mt-md.q-gutter-y-md(v-if="collection.records.length")
-    collection-list-item.col.cursor-pointer.non-selectable(
+    collection-list-item.col.non-selectable(
       v-for="record in collection.records" :key="record.id"
       :loading="!collection.loaded"
       :item="record"
-      @detail="navigateDetail(record)"
-      @click.native="navigateDetail(record)")
+      @detail="navigateDetail(record)")
     .col
       pagination.q-mt-lg(:collection="collection")
   no-data.full-height(v-else)

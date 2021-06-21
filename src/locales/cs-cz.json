@@ -1,6 +1,8 @@
 {
   "accessibility": {},
   "action": {
+    "copyPermalink": "Kopírovat perzistentní odkaz do schránky",
+    "share": "Sdílet",
     "ok": "OK",
     "cancel": "Zrušit",
     "accept": "Souhlasím",

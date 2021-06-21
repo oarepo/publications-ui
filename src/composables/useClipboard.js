@@ -5,7 +5,13 @@ export default function useClipboard() {
     const {notifySuccess} = useNotify()
 
     function copy2clip(data) {
-        copyToClipboard(JSON.stringify(data, null, 4))
+        let content = ''
+        if (typeof data === 'string') {
+            content = data
+        } else {
+            content = JSON.stringify(data, null, 4)
+        }
+        copyToClipboard(content)
             .then(() => {
                 notifySuccess('message.copiedToClip')
             })

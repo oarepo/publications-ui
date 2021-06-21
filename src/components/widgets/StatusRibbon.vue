@@ -1,23 +1,26 @@
 <template lang="pug">
-q-chip.absolute
+q-chip.z-top
   .text-accent.text-overline.text-bold(v-if="isDraft") DRAFT
-  .text-accent.text-overline.text-bold(v-if="isEdited")
+  div(v-if="isEdited")
+    .text-accent.text-overline.text-bold
     q-tooltip {{ $t('label.isEdited') }}
-  q-icon(
-    :class="dense ? 'q-pa-xs' : 'q-pa-sm'"
-    :size="dense ? 'sm' : 'md'"
-    name="pending_actions"
-    v-if="isPendingApproval")
+  div(v-if="isPendingApproval")
+    q-icon(
+      :class="dense ? 'q-pa-xs' : 'q-pa-sm'"
+      :size="dense ? 'sm' : 'md'"
+      name="pending_actions")
     q-tooltip {{ $t('label.isPendingApproval') }}
-  q-icon(
-    :class="dense ? 'q-pa-xs' : 'q-pa-sm'"
-    :size="dense ? 'sm' : 'md'"
-    name="public" v-if="isPublic")
+  div(v-if="isPublic")
+    q-icon(
+      :class="dense ? 'q-pa-xs' : 'q-pa-sm'"
+      :size="dense ? 'sm' : 'md'"
+      name="public" )
     q-tooltip {{ $t('label.isPublic') }}
-  q-icon(
-    :class="dense ? 'q-pa-xs' : 'q-pa-sm'"
-    :size="dense ? 'sm' : 'md'"
-    name="verified" v-if="isApproved")
+  div(v-if="isApproved")
+    q-icon(
+      :class="dense ? 'q-pa-xs' : 'q-pa-sm'"
+      :size="dense ? 'sm' : 'md'"
+      name="verified" )
     q-tooltip {{ $t('label.isApproved') }}
 </template>
 <script>
