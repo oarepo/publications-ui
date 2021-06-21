@@ -1,5 +1,5 @@
 <template lang="pug">
-q-btn.q-mx-md(color="secondary" icon="share" flat round)
+q-btn.q-mx-md(color="secondary" padding="sm sm" icon="share" flat round)
   q-menu(
     anchor="center middle"
     transition-show="flip-right"

@@ -1,12 +1,12 @@
 <template lang="pug">
 teleport(to="#record-actions-drawer" v-if="recordSidebarEnabled")
   q-list(padding separator)
-    q-item(clickable v-ripple @click="edit" v-if="![STATE_APPROVED, STATE_PUBLISHED].includes(record.metadata.state)")
+    q-item(clickable v-ripple @click="edit" v-if="canEdit")
       q-item-section(avatar)
         q-icon(name="edit")
       q-item-section
         q-item-label.text-uppercase.text-caption {{ $t('action.edit') }}
-    q-item(clickable v-if="isDatasets" v-ripple @click="attachArticle")
+    q-item(clickable v-if="canAttachArticle" v-ripple @click="attachArticle")
       q-item-section(avatar)
         q-icon(name="link")
       q-item-section
@@ -20,7 +20,7 @@ teleport(to="#record-actions-drawer" v-if="recordSidebarEnabled")
 </template>
 
 <script>
-import {defineComponent} from 'vue'
+import {computed, defineComponent} from 'vue'
 import useFSM from '@/composables/useFsm'
 import {useContext} from 'vue-context-composition'
 import {record} from '@/contexts/record'
@@ -30,6 +30,7 @@ import useCollection from '@/composables/useCollection'
 import {STATE_APPROVED, STATE_PUBLISHED} from '@/constants'
 import NewArticleDialog from "@/components/widgets/dialogs/NewArticleDialog";
 import {useQuasar} from "quasar";
+import useAuth from "@/composables/useAuth";
 
 export default defineComponent({
   name: 'RecordActions',
@@ -46,6 +47,7 @@ export default defineComponent({
     const router = useRouter()
     const {communityId} = useContext(community)
     const {model, isDatasets} = useCollection()
+    const {authenticated} = useAuth()
 
     function attachArticle() {
       $q.dialog({
@@ -61,6 +63,14 @@ export default defineComponent({
       })
     }
 
+    const canEdit = computed(() => {
+      return ![STATE_APPROVED, STATE_PUBLISHED].includes(props.record.metadata.state) && authenticated
+    })
+
+    const canAttachArticle = computed(() => {
+      return canEdit.value && isDatasets.value
+    })
+
     function edit() {
       router.push({
         name: 'edit',
@@ -72,7 +82,18 @@ export default defineComponent({
       })
     }
 
-    return {attachArticle, transitions, makeTransition, recordSidebarEnabled, isDatasets, edit, STATE_APPROVED, STATE_PUBLISHED}
+    return {
+      attachArticle,
+      transitions,
+      makeTransition,
+      recordSidebarEnabled,
+      isDatasets,
+      edit,
+      canEdit,
+      canAttachArticle,
+      STATE_APPROVED,
+      STATE_PUBLISHED
+    }
   }
 })
 </script>
