@@ -5,6 +5,7 @@ term-select(
   :label="$t('label.localeSwitcher')"
   :hint="$t('hint.localeSwitcher')"
   dense
+  ref="input"
   taxonomy="languages"
   multiple
   :elasticsearch="false"

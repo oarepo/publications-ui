@@ -7,6 +7,7 @@ term-select(
   multiple
   :elasticsearch="false"
   dense
+  ref="input"
   :rules="rules"
   @update:model-value="onChange($event)")
 </template>
@@ -15,7 +16,7 @@ import {defineComponent, ref} from 'vue'
 import ValidateMixin from '@/mixins/ValidateMixin'
 
 export default defineComponent({
-  name: 'LanguagesSelect',
+  name: 'LicensesSelect',
   emits: ['update:modelValue'],
   mixins: [ValidateMixin],
   props: {

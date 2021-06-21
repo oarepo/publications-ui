@@ -312,9 +312,9 @@ export default defineComponent({
           const terms = data.value.map(dat => {
               return _findTermByLink(dat, val)
           })
-          return terms.filter(el => el)
+          return terms.filter(el => el)[0]
         })
-        selected.value.push.apply(selected.value, ...added)
+        selected.value.push(...added)
       }
 
       if (removedVal.length > 0) {

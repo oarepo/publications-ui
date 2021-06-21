@@ -122,12 +122,10 @@ export default defineComponent({
     })
 
     watch(model, async () => {
-      if (termOrArrayChanged(model.value, leafValue.value)) {
-        if (props.elasticsearch) {
-          ctx.emit('update:modelValue', await convertToElasticsearch(model.value))
-        } else {
-          ctx.emit('update:modelValue', model.value)
-        }
+      if (props.elasticsearch) {
+        ctx.emit('update:modelValue', await convertToElasticsearch(model.value))
+      } else {
+        ctx.emit('update:modelValue', model.value)
       }
     })
 
