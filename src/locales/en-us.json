@@ -77,6 +77,9 @@
     "revert_approval": "assignment_return"
   },
   "label": {
+    "filesCount": "Attachments",
+    "filesFound": "{count} file | {count} files",
+    "activeFilters": "Active filters",
     "selectedTerms": "Selected terms",
     "startWriting": "Start writing",
     "showTaxonomyTree": "Choose a term",

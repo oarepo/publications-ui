@@ -76,6 +76,9 @@
     "revert_approval": "assignment_return"
   },
   "label": {
+    "filesCount": "Počet souborů",
+    "filesFound": "žádné soubory | {count} 📎 | {count} \uD83D\uDCCE",
+    "activeFilters": "Aktivní filtry",
     "selectedTerms": "Vybrané pojmy",
     "startWriting": "Začněte psát",
     "showTaxonomyTree": "Vybrat pojem",

@@ -7,6 +7,10 @@ q-drawer.bg-grey-3.text-dark.scrolling-drawer(
   .column.no-wrap.q-gutter-y-md.q-py-xl.q-px-lg.justify-start.full-height
       .col-auto.full-width
         .text-h7.text-grey-7.text-bold.text-uppercase
+          q-icon.q-pr-sm(name="filter_list" size="sm")
+          span {{ $t('label.activeFilters') }}
+      .col-auto.full-width
+        .text-h7.text-grey-7.text-bold.text-uppercase
           q-icon.q-pr-sm(name="filter_alt" size="sm")
           span {{ $t('label.filters') }}
       .col-auto.full-width.column(id="facets-drawer")

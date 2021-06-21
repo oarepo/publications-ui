@@ -1,5 +1,5 @@
 <template lang="pug">
-q-card(flat)
+q-card.item-card(flat)
   q-toolbar.absolute.q-pt-md.q-pb-sm.justify-end
     status-ribbon(v-if="!loading" :metadata="m" dense)
   q-card-section(horizontal)
@@ -10,8 +10,21 @@ q-card(flat)
       q-skeleton.q-mt-sm(type="text" width="300px")
       q-skeleton.q-mx-md.q-mb-sm.absolute-bottom.q-card__section--vert(type="text" :width="`${thumbnailSize}px`")
     q-card-section(v-else)
-      .q-mr-xl.block.text-h5.q-mt-sm.q-mb-xs.gt-xs
-        search-highlight(:item="item" :text="mt(m.title)")
+      .row.full-width.q-mt-sm.q-mb-xs
+        .col-auto.q-mr-xl.block.text-h5.self-center
+          search-highlight.self-center(:item="item" :text="mt(m.title)")
+        q-separator.gt-xs.header-separator(vertical spaced inset color="accent" v-if="m.creators?.length")
+        .gt-xs.col-auto.block.text-subtitle1.self-center(v-if="m.creators?.length") {{ m.creators.map(c => c.person_or_org.name).join(' · ') }}
+          q-tooltip {{ $t('label.author') }}
+        q-separator.gt-sm.header-separator(vertical spaced inset color="accent" v-if="m.languages?.length")
+        .gt-sm.col-auto.block.text-subtitle2.self-center(v-if="m.languages?.length")
+          span {{ m.languages.map(l => mt(l.title)).join(' · ') }}
+          q-tooltip {{ $t('label.language') }}
+        q-separator.gt-sm.header-separator(vertical spaced inset color="accent" v-if="m._files?.length")
+        .gt-sm.col-auto.block.text-subtitle2.self-center(v-if="m._files?.length")
+          span.q-px-xs {{ m._files?.length }}
+          q-icon(name="attachment")
+          q-tooltip {{ $t('label.filesCount') }}
       q-separator
       q-card-section
         .row.q-mb-md
@@ -92,4 +105,9 @@ export default defineComponent({
 </script>
 
 <style lang="sass">
+.item-card
+  border-bottom: 1px solid var(--q-primary)
+
+.header-separator
+  opacity: 0.3
 </style>

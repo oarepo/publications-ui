@@ -1,5 +1,5 @@
 <template lang="pug">
-q-chip.z-top
+q-chip.status-chip
   .text-accent.text-overline.text-bold(v-if="isDraft") DRAFT
   div(v-if="isEdited")
     .text-accent.text-overline.text-bold
@@ -45,3 +45,7 @@ export default defineComponent({
   }
 })
 </script>
+<style lang="sass">
+.status-chip
+  z-index: 10
+</style>

@@ -69,6 +69,7 @@ export default defineComponent({
     }
 
     function navigateDetail(record) {
+      console.log(record.links)
       router.push(pathFromUrl(record.links.self))
     }
 
