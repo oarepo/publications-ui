@@ -1,16 +1,15 @@
 <template lang="pug">
 .row.q-gutter-lg
-  .col-grow
+  .col-grow(v-if="files.length")
     q-table.sticky-name-column(
       flat
-      v-if="files.length"
       :rows="files" row-key="file_id" :columns="fileColumns"
       :no-data-label="$t('message.noFiles')")
       template(v-slot:body-cell-download="props")
         q-td(:props="props")
           div
             q-btn(@click="download(props.value)" outline color="primary" :label="$t('label.download')")
-  .col-auto.q-mt-md(v-if="canUpload")
+  .col-auto.q-mt-md.q-pt-md(v-if="canUpload")
     upload-data(:files="dataset.http.data.links.files")
 </template>
 
@@ -73,7 +72,7 @@ export default defineComponent({
     }
 
     const files = computed(() => {
-      return props.dataset.metadata['_files'].filter(f => f.checksum !== '') || []
+      return props.dataset.metadata._files?.filter(f => f.checksum !== '') || []
     })
 
     // TODO: add check of auth/state need provides
