@@ -35,7 +35,7 @@ q-card.item-card(flat)
           .col-auto(v-html="$sanitize(mt(m.abstract))")
       q-card-section.q-pl-none
         .row.full-width
-          .col-auto.text-subtitle2.text-grey-8.self-center {{ $t('label.createdAt') }} {{ $d(new Date(dateCreated)) }}
+          .col-auto.text-subtitle2.text-grey-8.self-center(v-if="dateCreated") {{ $t('label.createdAt') }} {{ $d(new Date(dateCreated)) }}
           q-space
           share-menu.col-auto(:record="item")
           q-skeleton.col-2.self-end(
