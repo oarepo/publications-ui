@@ -37,22 +37,17 @@ function copyValue (a) {
 
 function termOrArrayChanged (a, b) {
     if (empty(a) && empty(b)) {
-        console.log('empty')
         return false
     }
     if ((empty(a) && !empty(b)) || (!empty(a) && empty(b))) {
-        console.log('differ')
         return true
     }
     if (Array.isArray(a) !== Array.isArray(b)) {
-        console.log('notarray')
         return true
     }
     if (!Array.isArray(a)) {
-        console.log('notarray2')
         return a.slug !== b.slug
     }
-    console.log('diff', a ,b)
     return arraysDiffer(a, b)
 }
 

@@ -31,16 +31,17 @@ q-page(padding)
     q-card-section.q-pa-lg.bg-white
       .text-overline.text-uppercase.text-accent {{ $t('label.abstract') }}
       p(v-html="$sanitize(mt(md.abstract))")
-      .text-overline.text-uppercase.text-accent {{ $t('label.identifiers') }}
-      .row
-        q-chip(v-for="i in md.identifiers" :key="i.identifier" clickable @click="copy2clip(i.identifier)")
-          q-avatar.q-mx-md(color="primary" font-size="1rem" size="xl")
-            strong.text-caption.text-white.text-bold {{ i.scheme }}
-          span {{ i.identifier }}
-      .text-overline.text-uppercase.text-accent.q-mt-md {{ $t('label.license') }}
-      .row
-        q-chip(v-for="r in (md.rights?.length? treeToRoot(md.rights) : [])" :key="r.links.self" )
-          term-span(code="licenses" :term="r")
+      div(v-if="md.idntifiers?.length")
+        .text-overline.text-uppercase.text-accent {{ $t('label.identifiers') }}
+        .row
+          q-chip(v-for="i in md.identifiers" :key="i.identifier" clickable @click="copy2clip(i.identifier)")
+            q-avatar.q-mx-md(color="primary" font-size="1rem" size="xl")
+              strong.text-caption.text-white.text-bold {{ i.scheme }}
+            span {{ i.identifier }}
+      div(v-if="md.rights?.length")
+        .text-overline.text-uppercase.text-accent.q-mt-md {{ $t('label.license') }}
+        .row
+          term-chip(v-for="r in (childrenOnly(md.rights))" :key="r.links.self" :term="r" taxonomy="licenses")
       .text-overline.text-uppercase.text-accent.q-mt-md(v-if="isDatasets") {{ $t('label.files') }}
         dataset-files(:dataset="record")
     metadata-dropdown(:metadata="md")
@@ -87,7 +88,7 @@ export default defineComponent({
     const {copy2clip} = useClipboard(t)
     const {mt} = useTranslated(locale)
     const {isDatasets, isArticles} = useCollection()
-    const {treeToRoot} = useTaxonomy()
+    const {childrenOnly} = useTaxonomy()
 
     const md = computed(() => {
       return props.record.metadata
@@ -103,7 +104,7 @@ export default defineComponent({
       return {title: `${mt(props.record.metadata.title)} - ${t(titlePath)}`}
     })
 
-    return {md, mt, copy2clip, isDatasets, treeToRoot}
+    return {md, mt, copy2clip, isDatasets, childrenOnly}
   }
 })
 </script>

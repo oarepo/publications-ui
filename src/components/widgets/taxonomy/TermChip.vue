@@ -1,16 +1,17 @@
 <template lang="pug">
-q-chip.term-chip(
+q-chip(
+  :class="[removable? 'term-chip' : term.icon? ['term-chip', 'no-padding'] : '']"
   square
   :removable="removable"
   color="primary"
   outline
   @remove="$emit('remove', term)")
   q-avatar.full-width(v-if="term && term.icon")
-    q-icon.full-height.term-icon(:name="term.icon")
+    q-icon.full-height.term-icon(:name="iconName(term)")
     q-tooltip
       mt.self-center(:text="term.title")
   term-span.q-pl-sm(
-    v-if="term"
+    v-if="term && !term.icon"
     :term="term"
     :taxonomy="taxonomy")
 </template>
@@ -30,6 +31,16 @@ export default defineComponent({
     },
     term: Object,
     taxonomy: String
+  },
+  setup () {
+    function iconName(term) {
+      if (term.icon.startsWith('http')) {
+        return `img:${term.icon}`
+      }
+      return term.icon
+    }
+
+    return {iconName}
   }
 })
 </script>
