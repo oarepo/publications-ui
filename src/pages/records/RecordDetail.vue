@@ -3,8 +3,10 @@ q-page(padding)
   q-card.bg-grey-3(flat)
     q-card-section
       .text-h5.no-wrap.row.full-width.q-gutter-md
-        .col-auto
+        .col-auto.items-center
+          q-icon.q-pr-sm(:name="isDatasets? 'assessment' : 'article'" color="grey-5")
           span.text-accent {{ md.id }}
+          q-tooltip {{ $t(isDatasets? 'route.title.datasetItem' : 'route.title.articleItem') }}
         q-separator(color="primary" vertical)
         .col-fit {{ mt(md.title) }}
         q-space

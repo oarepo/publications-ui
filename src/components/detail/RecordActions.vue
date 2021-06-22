@@ -17,6 +17,11 @@ teleport(to="#record-actions-drawer" v-if="recordSidebarEnabled")
         q-icon(:name="t.icon" color="dark")
       q-item-section
         q-item-label.text-uppercase.text-caption {{ t.label }}
+    q-item.q-pa-md(color="grey-3" v-if="!canAttachArticle && !canEdit && transitions.length === 0")
+      q-item-section(avatar)
+        q-icon(name="info" color="grey-5")
+      q-item-section
+        q-item-label.text-grey-7.text-caption {{ $t('message.noActions') }}
 </template>
 
 <script>

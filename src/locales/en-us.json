@@ -160,6 +160,7 @@
     "titles": "Titles"
   },
   "message": {
+    "noActions" : "No Actions Available",
     "saveChangesSuccess": "Changes successfully saved",
     "articleExistsError": "An article record with this DOI already exists in this repository. Would you like to attach the dataset to this article?",
     "authRequired": "This page requires authentication.",

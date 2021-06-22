@@ -167,6 +167,7 @@
     "titles": "Název záznamu"
   },
   "message": {
+    "noActions" : "Žádné dostupné akce",
     "saveChangesSuccess": "Změny uloženy",
     "articleExistsError": "Článek se zadaným DOI je již v repozitáři. Přejete si provázat dataset s tímto článkem?",
     "authRequired": "Tato stránka vyžaduje autentizaci. Kliknutím na tlačítko níže se přihlásíte.",
