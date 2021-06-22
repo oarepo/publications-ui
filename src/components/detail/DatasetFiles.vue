@@ -72,7 +72,7 @@ export default defineComponent({
     }
 
     const files = computed(() => {
-      return props.dataset.metadata._files?.filter(f => f.checksum !== '') || []
+      return props.dataset.metadata._files?.filter(f => f.checksum && f.checksum !== '') || []
     })
 
     // TODO: add check of auth/state need provides

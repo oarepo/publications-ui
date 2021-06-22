@@ -1,14 +1,14 @@
 <template lang="pug">
 q-card.item-card(flat)
   q-card-section(horizontal)
-    q-card-section
-      q-skeleton(v-if="loading" :width="`${thumbnailSize}px`" :height="`${thumbnailSize}px`")
+    q-card-section(v-if="loading")
+      q-skeleton(:width="`${thumbnailSize}px`" :height="`${thumbnailSize}px`")
     q-card-section(v-if="loading")
       q-skeleton(type="rect" width="400px" height="40px")
       q-skeleton.q-mt-sm(type="text" width="300px")
       q-skeleton.q-mx-md.q-mb-sm.absolute-bottom.q-card__section--vert(type="text" :width="`${thumbnailSize}px`")
     q-card-section.full-width(v-else)
-      .row.no-wrap.justify-between
+      .row.no-wrap.q-ml-sm.justify-between
         .row.col-fit
           .col-auto.q-mr-xl.block.text-h5.self-center
             search-highlight.self-center(:item="item" :text="mt(m.title)")
@@ -28,15 +28,15 @@ q-card.item-card(flat)
           q-toolbar
             status-ribbon(v-if="!loading" :metadata="m" dense)
       q-separator
-      q-card-section.q-pl-none
+      q-card-section.q-pl-sm
         .row.full-width.q-mb-md
           q-chip.col-auto(v-for="(kw, idx) in m.keywords" :key="idx") {{ kw }}
         .row.full-width.text-subtitle1.ellipsis-3-lines
           .col-auto(v-html="$sanitize(mt(m.abstract))")
-      q-card-section.q-pl-none
+      q-card-section.q-pl-sm
         .row.full-width
           .col-auto.text-subtitle2.text-grey-8.self-center(v-if="dateCreated") {{ $t('label.createdAt') }} {{ $d(new Date(dateCreated)) }}
-          q-space
+          q-space(v-if="dateCreated")
           share-menu.col-auto(:record="item")
           q-skeleton.col-2.self-end(
             v-if="loading"
