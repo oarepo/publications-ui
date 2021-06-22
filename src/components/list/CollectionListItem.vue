@@ -35,8 +35,8 @@ q-card.item-card(flat)
           .col-auto(v-html="$sanitize(mt(m.abstract))")
       q-card-section.q-pl-sm
         .row.full-width
-          .col-auto.text-subtitle2.text-grey-8.self-center(v-if="dateCreated") {{ $t('label.createdAt') }} {{ $d(new Date(dateCreated)) }}
-          q-space(v-if="dateCreated")
+          .col-auto.text-subtitle2.text-grey-8.self-center(v-if="dateCreated") {{ $t('label.createdAt') }} {{ $d(dateCreated) }}
+          q-space
           share-menu.col-auto(:record="item")
           q-skeleton.col-2.self-end(
             v-if="loading"
@@ -90,9 +90,15 @@ export default defineComponent({
     })
 
     const dateCreated = computed(() => {
-      return m.value.dates?.find((dat) => {
+      const timestamp = Date.parse(m.value.dates?.find((dat) => {
         return dat.type === 'created'
-      }).date || m.value.created
+      }).date || m.value.created)
+
+      if (isNaN(timestamp) == false) {
+        const d = new Date(timestamp)
+        return d
+      }
+      return false
     })
 
     const thumbnailSize = computed(() => {
