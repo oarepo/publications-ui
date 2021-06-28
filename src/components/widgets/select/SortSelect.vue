@@ -15,6 +15,12 @@
     v-model="query.sort")
       template(v-slot:prepend)
         q-icon(size="xs" name="sort_by_alpha")
+      template(v-slot:option="scope")
+        q-item(v-bind="scope.itemProps")
+          q-item-section
+            q-item-label {{ $t(scope.opt.label) }}
+          q-item-section(avatar)
+            q-icon(:name="scope.opt.icon")
 </template>
 <script>
 import {defineComponent, ref} from 'vue'
@@ -28,9 +34,15 @@ export default defineComponent({
     const orderingOptions = ref(
       [
         {
+          icon: 'arrow_upward',
+          label: 'label.sort.alphabetical',
+          value: 'alphabetical_desc'
+        },
+        {
+          icon: 'arrow_downward',
           label: 'label.sort.alphabetical',
           value: 'alphabetical'
-        }
+        },
       ]
     )
 

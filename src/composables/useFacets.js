@@ -1,8 +1,11 @@
 import {computed, ref} from 'vue'
 import deepmerge from 'deepmerge'
+import {useI18n} from "vue-i18n";
 
 
 export default function useFacets(collection) {
+    const {t} = useI18n()
+
     const defaults = ref({
         components: {
             bucketsContainer: {
@@ -28,6 +31,14 @@ export default function useFacets(collection) {
     })
 
     const definitions = ref({
+        creators: {
+            type: 'nested',
+            aggs: {
+                inner_facet: {
+                    label: t('label.authors')
+                }
+            }
+        },
         contributors: {
             type: 'nested',
             aggs: {
@@ -35,6 +46,14 @@ export default function useFacets(collection) {
                     label: "contributors"
                 }
             }
+        },
+        affiliations: {
+          type: 'nested',
+          aggs: {
+              inner_facet: {
+                  label: t('label.affiliations')
+              }
+          }
         },
         resourceType: {
             type: 'nested',
@@ -48,7 +67,7 @@ export default function useFacets(collection) {
             type: 'nested',
             aggs: {
                 inner_facet: {
-                    label: "languages"
+                    label: t('label.languages')
                 }
             }
         },
@@ -56,7 +75,7 @@ export default function useFacets(collection) {
             type: 'nested',
             aggs: {
                 inner_facet: {
-                    label: "rights"
+                    label: t('label.license')
                 }
             }
         }
