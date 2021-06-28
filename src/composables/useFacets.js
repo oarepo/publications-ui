@@ -31,6 +31,12 @@ export default function useFacets(collection) {
     })
 
     const definitions = ref({
+        state: {
+            label: t('label.state')
+        },
+        keywords: {
+            label: t('label.forms.keywords')
+        },
         creators: {
             type: 'nested',
             aggs: {

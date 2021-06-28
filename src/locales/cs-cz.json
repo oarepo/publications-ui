@@ -76,6 +76,7 @@
     "revert_approval": "assignment_return"
   },
   "label": {
+    "state": "Stav záznamu",
     "filesCount": "Počet souborů",
     "filesFound": "žádné soubory | {count} 📎 | {count} \uD83D\uDCCE",
     "activeFilters": "Aktivní filtry",

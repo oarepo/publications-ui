@@ -77,6 +77,7 @@
     "revert_approval": "assignment_return"
   },
   "label": {
+    "state": "Stav záznamu",
     "filesCount": "Attachments",
     "filesFound": "{count} file | {count} files",
     "activeFilters": "Active filters",
